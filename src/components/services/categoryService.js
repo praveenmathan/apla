@@ -3,26 +3,23 @@ import axios from 'axios';
 /* eslint-disable */
 const instance = axios.create({
     baseURL:
-        'http://localhost/'
+        'http://slim-apla-nike.com/'
 });
 
 export default {
-    getData: (parameter) =>
+    getData: () =>
         instance({
             method: 'GET',
-            url: '/test',
-            params: {
-                q: parameter,
-            },
+            url: '/api/v1/inventory-selectionfilters-details',
         }),
     postData: (dataContent) =>
         instance({
             method: 'POST',
-            url: '/prod/filetracking',
+            url: '/api/v1/inventory-selectionfilters-details',
             data: dataContent.query,
             headers: {
                 'content-type': 'application/json',
-                'Authorization': `Bearer ${dataContent.accessToken}`
+                'Authorization': `Bearer Token`
             }
         }),
 };

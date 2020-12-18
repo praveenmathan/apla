@@ -3,9 +3,7 @@ import axios from 'axios';
 /* eslint-disable */
 const instance = axios.create({
     baseURL:
-        'http://localhost:57657/'
-
-    //http://localhost:57657/api/v2/inventory-user-details
+        'http://slim-apla-nike.com/'
 });
 
 export default {
