@@ -53,3 +53,7 @@
 .lock-pinned {
   background: #ddd;
 }
+
+.ag-header-group-text, .ag-header-cell-text{
+  text-transform: uppercase;
+}

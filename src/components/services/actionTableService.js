@@ -10,16 +10,16 @@ export default {
     getData: (parameter) =>
         instance({
             method: 'GET',
-            url: '/api/v2/inventory-user-details',
+            url: '/api/v1/inventory-action-details',
             params: {
                 userName: parameter,
             },
         }),
-    postData: (dataContent) =>
+    postData: (reqData) =>
         instance({
             method: 'POST',
-            url: '/api/v2/inventory-user-details',
-            data: dataContent.query,
+            url: '/api/v1/inventory-action-details',
+            data: reqData,
             headers: {
                 'content-type': 'application/json',
                 'Authorization': `Bearer Token`

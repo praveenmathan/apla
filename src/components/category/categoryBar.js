@@ -6,14 +6,6 @@ import Skeleton from '@material-ui/lab/Skeleton';
 
 const CategoryBar = (props) => {
     let isLoading = props.isLoading;
-    const formType = {
-        marketPlace: '',
-        retailWeek: '',
-        channel: '',
-        category: [],
-        gender: '',
-        division: ''
-    }
 
     const [isFetching, setIsFetching] = useState(false);
     const [channelOptions, setChannelOptions] = useState([]);
@@ -21,7 +13,7 @@ const CategoryBar = (props) => {
     const [marketPlaceValue, setMarketPlaceValue] = useState('');
     const [retailWeekOptions, setRetailWeekOptions] = useState([]);
     const [retailWeekValue, setRetailWeekValue] = useState('');
-    // const [channelValue, setChannelValue] = useState('');
+    const [channelValue, setChannelValue] = useState('');
     const [categoryOptions, setCategoryOptions] = useState([]);
     const [categoryValue, setCategoryValue] = useState('');
     const [genderOptions, setGenderOptions] = useState([]);
@@ -30,7 +22,6 @@ const CategoryBar = (props) => {
     const [divisionValue, setDivisionValue] = useState('');
     const [tableOptions, setTableOptions] = useState([]);
     const [tableValue, setTableValue] = useState('');
-    const [consolidatedForm, setConsolidatedForm] = useState(formType);
 
     useEffect(() => {
         /* To initialise marketplace options */
@@ -129,6 +120,11 @@ const CategoryBar = (props) => {
         setRetailWeekValue(value);
     };
 
+    /* To handle channel change */
+    const handleChannelChange = (e, { value }) => {
+        setChannelValue(value);
+    };
+
     /* To handle category change */
     const handleCategoryChange = (e, { value }) => {
         setCategoryValue(value);
@@ -150,8 +146,16 @@ const CategoryBar = (props) => {
     };
 
     const handleSubmit = () => {
-        setConsolidatedForm({ marketPlace: marketPlaceValue });
-        console.log(consolidatedForm);
+        const formDataUpdated = {
+            marketPlace: marketPlaceValue,
+            retailWeek: retailWeekValue,
+            channel: channelValue,
+            category: categoryValue,
+            gender: genderValue,
+            division: divisionValue,
+            action: tableValue
+        };
+        props.onCatergorySubmit(formDataUpdated);
     }
 
     return (<>
@@ -164,7 +168,6 @@ const CategoryBar = (props) => {
                                 control={Select}
                                 options={marketPlaceOptions}
                                 placeholder='Marketplace'
-                                clearable
                                 search
                                 searchInput={{ id: 'form-select-control-marketplace' }}
                                 onChange={handleMarketPlaceChange}
@@ -196,6 +199,7 @@ const CategoryBar = (props) => {
                                 loading={isFetching}
                                 search
                                 searchInput={{ id: 'form-select-control-channel' }}
+                                onChange={handleChannelChange}
                             /> : <Skeleton variant="rect" width={130} height={40} />}
                             <h1>CHANNEL</h1>
                         </Segment>
