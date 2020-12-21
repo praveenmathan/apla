@@ -71,7 +71,7 @@ function App() {
     history.push(`${newValue.action}`);
 
     let requestDataForTable = {
-      "action": '',
+      "action": 'ACTION',
       "selectionFilters": {
         "marketplace": reqDataMarket(newValue),
         "retailWeek": reqDataRetailWeek(newValue),
