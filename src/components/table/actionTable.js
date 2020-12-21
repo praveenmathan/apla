@@ -38,7 +38,7 @@ const ActionTable = (props) => {
 
                 <AgGridColumn headerName="Product Attribution">
                     <AgGridColumn field="style" />
-                    <AgGridColumn field="CATEGORY" />
+                    <AgGridColumn field="category" />
                     <AgGridColumn field="subCategory" />
                     <AgGridColumn field="division" />
                     <AgGridColumn field="gender" />
@@ -114,7 +114,7 @@ const ActionTable = (props) => {
                     <AgGridColumn field="demandSalesSTDUSD" />
                     <AgGridColumn field="demandAURLWUSD" />
                     <AgGridColumn field="demandAURFourWeekAvgUSD" />
-                    <AgGridColumn field="FIRST ORDER DATE" />
+                    <AgGridColumn field="firstOrderDate" />
                     <AgGridColumn field="daysOnSale" />
                 </AgGridColumn>
 
