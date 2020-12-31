@@ -28,8 +28,8 @@ const CategoryBar = (props) => {
         let marketPlaceOptions = [];
         if (isLoading) {
             props.auth.userAccessDetails.map(eachitem => marketPlaceOptions.push({
-                key: eachitem.marketplaceId,
-                value: eachitem.marketplaceId,
+                key: eachitem.marketplaceDescription,
+                value: eachitem.marketplaceDescription,
                 text: eachitem.marketplaceDescription
             }));
         }
@@ -41,8 +41,8 @@ const CategoryBar = (props) => {
         let retailWeekOptions = [];
         if (isLoading) {
             props.data.selectionFilters.retailWeek.map(eachitem => retailWeekOptions.push({
-                key: eachitem.weekId,
-                value: eachitem.weekId,
+                key: eachitem.weekDescription,
+                value: eachitem.weekDescription,
                 text: eachitem.weekDescription
             }));
         }
@@ -52,8 +52,8 @@ const CategoryBar = (props) => {
         let categoryOptions = [];
         if (isLoading) {
             props.data.selectionFilters.category.map(eachitem => categoryOptions.push({
-                key: eachitem.categoryId,
-                value: eachitem.categoryId,
+                key: eachitem.categoryDescription,
+                value: eachitem.categoryDescription,
                 text: eachitem.categoryDescription
             }));
         }
@@ -63,8 +63,8 @@ const CategoryBar = (props) => {
         let genderOptions = [];
         if (isLoading) {
             props.data.selectionFilters.gender.map(eachitem => genderOptions.push({
-                key: eachitem.genderId,
-                value: eachitem.genderId,
+                key: eachitem.genderDescription,
+                value: eachitem.genderDescription,
                 text: eachitem.genderDescription
             }));
         }
@@ -74,8 +74,8 @@ const CategoryBar = (props) => {
         let divisionOptions = [];
         if (isLoading) {
             props.data.selectionFilters.division.map(eachitem => divisionOptions.push({
-                key: eachitem.divisionId,
-                value: eachitem.divisionId,
+                key: eachitem.divisionDescription,
+                value: eachitem.divisionDescription,
                 text: eachitem.divisionDescription
             }));
         }
@@ -85,8 +85,8 @@ const CategoryBar = (props) => {
         let tableOptions = [];
         if (isLoading) {
             props.data.selectionFilters.table.map(eachitem => tableOptions.push({
-                key: eachitem.tableId,
-                value: eachitem.tableId,
+                key: eachitem.tableDescription,
+                value: eachitem.tableDescription,
                 text: eachitem.tableDescription
             }));
         }
@@ -98,12 +98,12 @@ const CategoryBar = (props) => {
         setMarketPlaceValue(value);
         setIsFetching(true);
         props.auth.userAccessDetails.map(eachitem => {
-            if (eachitem.marketplaceId === value) {
+            if (eachitem.marketplaceDescription === value) {
                 let tempChannel = [];
                 eachitem.channels.map(eachChannel => {
                     tempChannel.push({
-                        key: eachChannel.channelId,
-                        value: eachChannel.channelId,
+                        key: eachChannel.channelDescription,
+                        value: eachChannel.channelDescription,
                         text: eachChannel.channelDescription
                     });
                     setChannelOptions(tempChannel);
@@ -156,6 +156,7 @@ const CategoryBar = (props) => {
             action: tableValue
         };
         props.onCatergorySubmit(formDataUpdated);
+        //console.log('formed request data - ', formDataUpdated);
     }
 
     return (<>
@@ -210,14 +211,12 @@ const CategoryBar = (props) => {
                                 <Grid.Column>
                                     {isLoading ? <Form.Field
                                         control={Select}
-                                        options={categoryOptions}
-                                        placeholder='Category'
+                                        options={divisionOptions}
+                                        placeholder='Division'
                                         clearable
-                                        fluid
-                                        selection
                                         search
-                                        searchInput={{ id: 'form-select-control-category' }}
-                                        onChange={handleCategoryChange}
+                                        searchInput={{ id: 'form-select-control-division' }}
+                                        onChange={handleDivisionChange}
                                     /> : <Skeleton variant="rect" width={130} height={40} />}
                                 </Grid.Column>
                                 <Grid.Column>
@@ -234,12 +233,14 @@ const CategoryBar = (props) => {
                                 <Grid.Column>
                                     {isLoading ? <Form.Field
                                         control={Select}
-                                        options={divisionOptions}
-                                        placeholder='Division'
+                                        options={categoryOptions}
+                                        placeholder='Category'
                                         clearable
+                                        fluid
+                                        selection
                                         search
-                                        searchInput={{ id: 'form-select-control-division' }}
-                                        onChange={handleDivisionChange}
+                                        searchInput={{ id: 'form-select-control-category' }}
+                                        onChange={handleCategoryChange}
                                     /> : <Skeleton variant="rect" width={130} height={40} />}
                                 </Grid.Column>
                             </Grid>
