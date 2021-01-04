@@ -14,6 +14,33 @@ code {
     monospace;
 }
 
+/**
+Customised CSS
+*/
 .ag-header-group-cell-with-group {
   background: #cdcdcd;
+}
+
+.ui.selection.dropdown {
+  border: 1px solid #ff7f50 !important;
+}
+
+.ui.primary.button, .ui.primary.buttons .button {
+  background-color: #ff7f50 !important;
+}
+
+.ui.selection.dropdown>.dropdown.icon {
+  color: #ff7f50 !important;
+}
+
+.ui.selection.active.dropdown .menu {
+  border-color: #ff7f50 !important;
+}
+
+.custom-font-color {
+  color: #ff7f50 !important;
+}
+
+.ag-theme-alpine .ag-header-cell-resize::after {
+  background-color:  rgba(0,0,0,0.5) !important;
 }

@@ -22,6 +22,7 @@ const CategoryBar = (props) => {
     const [divisionValue, setDivisionValue] = useState('');
     const [tableOptions, setTableOptions] = useState([]);
     const [tableValue, setTableValue] = useState('');
+    const [isDisabled, setIsDisabled] = useState(true);
 
     useEffect(() => {
         /* To initialise marketplace options */
@@ -143,6 +144,7 @@ const CategoryBar = (props) => {
     /* To handle table change */
     const handleTableChange = (e, { value }) => {
         setTableValue(value);
+        setIsDisabled(false);
     };
 
     const handleSubmit = () => {
@@ -262,7 +264,7 @@ const CategoryBar = (props) => {
                         </Segment>
                     </Grid.Column>
                     <Grid.Column>
-                        <Form.Button>Load</Form.Button>
+                        <Form.Button fluid primary disabled={isDisabled}>LOAD</Form.Button>
                         {/* <Button>Save</Button> */}
                     </Grid.Column>
                 </Grid>

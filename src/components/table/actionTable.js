@@ -26,9 +26,25 @@ const ActionTable = (props) => {
                     <AgGridColumn field="slimLifecycleSeason" />
                 </AgGridColumn>
 
-                <AgGridColumn headerName="Recommendations">
-                    <AgGridColumn field="recommendedAction" />
-                    <AgGridColumn field="recommendedActionOverride" />
+                <AgGridColumn headerName="Recommendations" className="custom-font-color">
+                    <AgGridColumn field="recommendedAction" className="custom-font-color" />
+                    <AgGridColumn field="recommendedActionOverride" className="custom-font-color"
+                    // editable={true}
+                    // cellEditor="agSelectCellEditor"
+                    // cellEditorParams={function (params) {
+                    //     let givenValue = params.data.recommendedActionOverride;
+                    //     if (givenValue != null) {
+                    //         let actionOveride = givenValue.split(',');
+                    //         return {
+                    //             values: actionOveride
+                    //         }
+                    //     } else {
+                    //         return {
+                    //             values: []
+                    //         }
+                    //     }
+                    // }} 
+                    />
                 </AgGridColumn>
 
                 <AgGridColumn headerName="Calendar">
