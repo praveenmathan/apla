@@ -26,9 +26,9 @@ const ActionTable = (props) => {
                     <AgGridColumn field="slimLifecycleSeason" />
                 </AgGridColumn>
 
-                <AgGridColumn headerName="Recommendations" className="custom-font-color">
-                    <AgGridColumn field="recommendedAction" className="custom-font-color" />
-                    <AgGridColumn field="recommendedActionOverride" className="custom-font-color"
+                <AgGridColumn headerName="Recommendations" headerClass='custom-font-color'>
+                    <AgGridColumn field="recommendedAction" headerClass='custom-font-color' />
+                    <AgGridColumn field="recommendedActionOverride" headerClass='custom-font-color'
                     // editable={true}
                     // cellEditor="agSelectCellEditor"
                     // cellEditorParams={function (params) {

@@ -59,7 +59,7 @@ function CustomSnackbar({ status, msg }) {
                 horizontal: 'center'
             }}
             open={open}
-            autoHideDuration={4000}
+            autoHideDuration={6000}
             onClose={handleClose}
             TransitionComponent={SlideTransition}
         >

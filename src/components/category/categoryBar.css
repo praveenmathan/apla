@@ -21,8 +21,8 @@ h1 {
 
 .ui.segment {
     padding: 10px !important;
-    -webkit-box-shadow: 0 1px 15px 2px rgba(34,36,38,.10) !important;
-    box-shadow: 0 1px 15px 2px rgba(34,36,38,.10) !important;
+    -webkit-box-shadow: 0 14px 26px -12px rgba(153, 153, 153, 0.42), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(153, 153, 153, 0.2) !important;
+    box-shadow: 0 14px 26px -12px rgba(153, 153, 153, 0.42), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(153, 153, 153, 0.2) !important;
     margin: 1rem 0;
     padding: 1em 1em;
     border-radius: 0 !important;

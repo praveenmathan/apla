@@ -77,7 +77,547 @@ function App() {
         setLoading(true);
       }
     }).catch((err) => {
+      setCategoryApi({
+
+        "returnCode": 0,
+
+        "returnMessage": "Success",
+
+        "selectionFilters": {
+
+          "marketplace": null,
+
+          "retailWeek": [
+
+            {
+
+              "weekId": 0,
+
+              "weekDescription": "FA20 WK12"
+
+            },
+
+            {
+
+              "weekId": 0,
+
+              "weekDescription": "FA20 WK13"
+
+            },
+
+            {
+
+              "weekId": 40,
+
+              "weekDescription": "HO20 WK1"
+
+            },
+
+            {
+
+              "weekId": 41,
+
+              "weekDescription": "HO20 WK2"
+
+            },
+
+            {
+
+              "weekId": 42,
+
+              "weekDescription": "HO20 WK3"
+
+            },
+
+            {
+
+              "weekId": 43,
+
+              "weekDescription": "HO20 WK4"
+
+            },
+
+            {
+
+              "weekId": 44,
+
+              "weekDescription": "HO20 WK5"
+
+            },
+
+            {
+
+              "weekId": 45,
+
+              "weekDescription": "HO20 WK6"
+
+            },
+
+            {
+
+              "weekId": 46,
+
+              "weekDescription": "HO20 WK7"
+
+            },
+
+            {
+
+              "weekId": 47,
+
+              "weekDescription": "HO20 WK8"
+
+            },
+
+            {
+
+              "weekId": 48,
+
+              "weekDescription": "HO20 WK9"
+
+            },
+
+            {
+
+              "weekId": 49,
+
+              "weekDescription": "HO20 WK10"
+
+            },
+
+            {
+
+              "weekId": 50,
+
+              "weekDescription": "HO20 WK11"
+
+            }
+
+          ],
+
+          "channel": null,
+
+          "category": [
+
+            {
+
+              "categoryId": 1001,
+
+              "categoryDescription": "RUNNING"
+
+            },
+
+            {
+
+              "categoryId": 1002,
+
+              "categoryDescription": "BASKETBALL"
+
+            },
+
+            {
+
+              "categoryId": 1003,
+
+              "categoryDescription": "FOOTBALL/SOCCER"
+
+            },
+
+            {
+
+              "categoryId": 1004,
+
+              "categoryDescription": "FOOTBALL, BASEBALL, AT"
+
+            },
+
+            {
+
+              "categoryId": 1005,
+
+              "categoryDescription": "WOMEN TRAINING"
+
+            },
+
+            {
+
+              "categoryId": 1006,
+
+              "categoryDescription": "NIKE SPORTSWEAR"
+
+            },
+
+            {
+
+              "categoryId": 1007,
+
+              "categoryDescription": "ACTION OUTDOOR"
+
+            },
+
+            {
+
+              "categoryId": 1009,
+
+              "categoryDescription": "YOUNG ATHLETES"
+
+            },
+
+            {
+
+              "categoryId": 1010,
+
+              "categoryDescription": "GOLF"
+
+            },
+
+            {
+
+              "categoryId": 1011,
+
+              "categoryDescription": "OTHER"
+
+            },
+
+            {
+
+              "categoryId": 1012,
+
+              "categoryDescription": "HURLEY"
+
+            }
+
+          ],
+
+          "gender": [
+
+            {
+
+              "genderId": 1,
+
+              "genderDescription": "ADULT UNISEX"
+
+            },
+
+            {
+
+              "genderId": 2,
+
+              "genderDescription": "BOYS"
+
+            },
+
+            {
+
+              "genderId": 3,
+
+              "genderDescription": "BOYS GRADE SCHL"
+
+            },
+
+            {
+
+              "genderId": 4,
+
+              "genderDescription": "BOYS INFANT"
+
+            },
+
+            {
+
+              "genderId": 5,
+
+              "genderDescription": "BOYS PRE SCHOOL"
+
+            },
+
+            {
+
+              "genderId": 6,
+
+              "genderDescription": "BOYS TODDLER"
+
+            },
+
+            {
+
+              "genderId": 7,
+
+              "genderDescription": "CHILD UNISEX"
+
+            },
+
+            {
+
+              "genderId": 8,
+
+              "genderDescription": "GIRL GRADE SCHL"
+
+            },
+
+            {
+
+              "genderId": 9,
+
+              "genderDescription": "GIRL PRE SCHOOL"
+
+            },
+
+            {
+
+              "genderId": 10,
+
+              "genderDescription": "GIRLS"
+
+            },
+
+            {
+
+              "genderId": 11,
+
+              "genderDescription": "GIRLS INFANT"
+
+            },
+
+            {
+
+              "genderId": 12,
+
+              "genderDescription": "GIRLS TODDLER"
+
+            },
+
+            {
+
+              "genderId": 13,
+
+              "genderDescription": "GRD SCHOOL UNSX"
+
+            },
+
+            {
+
+              "genderId": 14,
+
+              "genderDescription": "INFANT UNISEX"
+
+            },
+
+            {
+
+              "genderId": 15,
+
+              "genderDescription": "INFANTS"
+
+            },
+
+            {
+
+              "genderId": 16,
+
+              "genderDescription": "LITTLE BOYS"
+
+            },
+
+            {
+
+              "genderId": 17,
+
+              "genderDescription": "LITTLE GIRLS"
+
+            },
+
+            {
+
+              "genderId": 18,
+
+              "genderDescription": "MENS"
+
+            },
+
+            {
+
+              "genderId": 19,
+
+              "genderDescription": "NOT APPLICABLE"
+
+            },
+
+            {
+
+              "genderId": 20,
+
+              "genderDescription": "PRE SCHOOL UNSX"
+
+            },
+
+            {
+
+              "genderId": 21,
+
+              "genderDescription": "TODDLER UNISEX"
+
+            },
+
+            {
+
+              "genderId": 22,
+
+              "genderDescription": "WOMENS"
+
+            },
+
+            {
+
+              "genderId": 23,
+
+              "genderDescription": "YOUNG MEN"
+
+            },
+
+            {
+
+              "genderId": 24,
+
+              "genderDescription": "YOUNG WOMEN"
+
+            },
+
+            {
+
+              "genderId": 25,
+
+              "genderDescription": "YOUTH UNISEX"
+
+            },
+
+            {
+
+              "genderId": 77,
+
+              "genderDescription": "QAST2 SMK TEST"
+
+            }
+
+          ],
+
+          "division": [
+
+            {
+
+              "divisionId": 10,
+
+              "divisionDescription": "Apparel"
+
+            },
+
+            {
+
+              "divisionId": 20,
+
+              "divisionDescription": "Footwear"
+
+            },
+
+            {
+
+              "divisionId": 30,
+
+              "divisionDescription": "Equipment"
+
+            }
+
+          ],
+
+          "table": [
+
+            {
+
+              "tableId": 1,
+
+              "tableDescription": "ACTION"
+
+            },
+
+            {
+
+              "tableId": 2,
+
+              "tableDescription": "CANCEL"
+
+            },
+
+            {
+
+              "tableId": 3,
+
+              "tableDescription": "CLOSEOUT"
+
+            },
+
+            {
+
+              "tableId": 4,
+
+              "tableDescription": "CM REVIEW"
+
+            },
+
+            {
+
+              "tableId": 5,
+
+              "tableDescription": "CHASE"
+
+            },
+
+            {
+
+              "tableId": 6,
+
+              "tableDescription": "IMPROVE CONVERSION"
+
+            },
+
+            {
+
+              "tableId": 7,
+
+              "tableDescription": "IMPROVE TRAFFIC"
+
+            },
+
+            {
+
+              "tableId": 8,
+
+              "tableDescription": "EXCLUDE"
+
+            },
+
+            {
+
+              "tableId": 9,
+
+              "tableDescription": "MARKDOWN"
+
+            },
+
+            {
+
+              "tableId": 10,
+
+              "tableDescription": "EXCEPTION"
+
+            }
+
+          ]
+
+        }
+
+      });
       console.log(err);
+      setLoading(true);
     });
   }
 
@@ -258,9 +798,14 @@ function App() {
       if (response.status === 200) {
         setIsTableLoading(false);
         const { data } = response;
-        setRowData(data.inventoryDetails);
-        setStatus('success');
-        setMessage('Table data are loaded');
+        if (data.inventoryDetails.length != 0) {
+          setRowData(data.inventoryDetails);
+          setStatus('success');
+          setMessage('Table data are loaded');
+        } else {
+          setStatus('error');
+          setMessage('Table is empty, Please contact the support');
+        }
       }
     }).catch((err) => {
       setIsTableLoading(false);

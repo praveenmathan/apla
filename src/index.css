@@ -22,25 +22,38 @@ Customised CSS
 }
 
 .ui.selection.dropdown {
-  border: 1px solid #ff7f50 !important;
+  border: 1px solid #A0A0A0 !important;
 }
 
 .ui.primary.button, .ui.primary.buttons .button {
-  background-color: #ff7f50 !important;
+  background-color: #fa8231 !important;
 }
 
 .ui.selection.dropdown>.dropdown.icon {
-  color: #ff7f50 !important;
+  color: #fa8231 !important;
 }
 
 .ui.selection.active.dropdown .menu {
-  border-color: #ff7f50 !important;
+  border-color: #A0A0A0 !important;
 }
 
 .custom-font-color {
-  color: #ff7f50 !important;
+  color: #fa8231 !important;
 }
 
 .ag-theme-alpine .ag-header-cell-resize::after {
   background-color:  rgba(0,0,0,0.5) !important;
+}
+
+.ui.default.dropdown:not(.button)>.text, .ui.dropdown:not(.button)>.default.text {
+  color: rgb(104, 104, 104) !important;
+}
+
+.ui.dropdown>.dropdown.icon:before {
+  font-size: 18px;
+}
+
+.ui.primary.button {
+  margin: 5px 0px !important;
+  box-shadow: 0 14px 26px -12px rgba(153, 153, 153, 0.42), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(153, 153, 153, 0.2) !important;
 }
