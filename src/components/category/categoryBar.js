@@ -250,11 +250,6 @@ const CategoryBar = (props) => {
                         </Segment>
                     </Grid.Column>
                     <Grid.Column>
-                        <Form.Button fluid primary disabled={isDisabled}>LOAD</Form.Button>
-                        <Form.Button fluid primary disabled={true}>SAVE</Form.Button>
-                        {/* <Button>Save</Button> */}
-                    </Grid.Column>
-                    <Grid.Column>
                         <Segment>
                             {isLoading ? <Form.Field
                                 control={Select}
@@ -268,7 +263,11 @@ const CategoryBar = (props) => {
                             <h1>TABLE</h1>
                         </Segment>
                     </Grid.Column>
-
+                    <Grid.Column>
+                        <Form.Button fluid primary disabled={isDisabled}>LOAD</Form.Button>
+                        <Form.Button fluid primary disabled={true}>SAVE</Form.Button>
+                        {/* <Button>Save</Button> */}
+                    </Grid.Column>
                 </Grid>
             </Form.Group>
         </Form>

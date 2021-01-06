@@ -7,6 +7,7 @@ import IconButton from '@material-ui/core/IconButton';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
+import logo from '../../assets/images/nike-logo.png';
 //import grey from '@material-ui/core/colors/grey';
 
 //const primary = grey[900];
@@ -46,6 +47,7 @@ export default function MenuAppBar(props) {
         <div className={classes.root}>
             <AppBar position="static" className={classes.appBar}>
                 <Toolbar>
+                    <img src={logo} className="App-logo" alt="logo" />
                     <Typography variant="h6" className={classes.title}>
                         APLA - Strategic Lifecycle Inventory Management
                     </Typography>
