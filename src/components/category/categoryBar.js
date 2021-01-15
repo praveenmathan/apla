@@ -15,7 +15,7 @@ const CategoryBar = (props) => {
     const [retailWeekValue, setRetailWeekValue] = useState('');
     const [channelValue, setChannelValue] = useState('');
     const [categoryOptions, setCategoryOptions] = useState([]);
-    const [categoryValue, setCategoryValue] = useState('');
+    const [categoryValue, setCategoryValue] = useState([]);
     const [genderOptions, setGenderOptions] = useState([]);
     const [genderValue, setGenderValue] = useState('');
     const [divisionOptions, setDivisionOptions] = useState([]);
@@ -128,6 +128,7 @@ const CategoryBar = (props) => {
 
     /* To handle category change */
     const handleCategoryChange = (e, { value }) => {
+        console.log('value from the category', value);
         setCategoryValue(value);
     };
 
@@ -147,6 +148,7 @@ const CategoryBar = (props) => {
         setIsDisabled(false);
     };
 
+    /* Handle Load/submit button */
     const handleSubmit = () => {
         const formDataUpdated = {
             marketPlace: marketPlaceValue,
@@ -164,8 +166,8 @@ const CategoryBar = (props) => {
     return (<>
         <Form onSubmit={handleSubmit}>
             <Form.Group widths='equal'>
-                <Grid columns='equal'>
-                    <Grid.Column>
+                <Grid columns='equal' className="center">
+                    <Grid.Column width={2}>
                         <Segment>
                             {isLoading ? <Form.Field
                                 control={Select}
@@ -178,7 +180,7 @@ const CategoryBar = (props) => {
                             <h1>MARKETPLACE</h1>
                         </Segment>
                     </Grid.Column>
-                    <Grid.Column>
+                    <Grid.Column width={2}>
                         <Segment>
                             {isLoading ? <Form.Field
                                 control={Select}
@@ -192,7 +194,7 @@ const CategoryBar = (props) => {
                             <h1>RETAIL WEEK</h1>
                         </Segment>
                     </Grid.Column>
-                    <Grid.Column>
+                    <Grid.Column width={2}>
                         <Segment>
                             {isLoading ? <Form.Field
                                 control={Select}
@@ -210,7 +212,7 @@ const CategoryBar = (props) => {
                     <Grid.Column width={6}>
                         <Segment>
                             <Grid columns='equal' >
-                                <Grid.Column>
+                                <Grid.Column width={5}>
                                     {isLoading ? <Form.Field
                                         control={Select}
                                         options={divisionOptions}
@@ -221,7 +223,7 @@ const CategoryBar = (props) => {
                                         onChange={handleDivisionChange}
                                     /> : <Skeleton variant="rect" width={130} height={40} />}
                                 </Grid.Column>
-                                <Grid.Column>
+                                <Grid.Column width={5}>
                                     {isLoading ? <Form.Field
                                         control={Select}
                                         options={genderOptions}
@@ -238,9 +240,9 @@ const CategoryBar = (props) => {
                                         options={categoryOptions}
                                         placeholder='Category'
                                         clearable
+                                        multiple
                                         fluid
                                         selection
-                                        search
                                         searchInput={{ id: 'form-select-control-category' }}
                                         onChange={handleCategoryChange}
                                     /> : <Skeleton variant="rect" width={130} height={40} />}
@@ -249,7 +251,7 @@ const CategoryBar = (props) => {
                             <h1>MERCHANDISE HIERARCHY</h1>
                         </Segment>
                     </Grid.Column>
-                    <Grid.Column>
+                    <Grid.Column width={2}>
                         <Segment>
                             {isLoading ? <Form.Field
                                 control={Select}
@@ -263,7 +265,7 @@ const CategoryBar = (props) => {
                             <h1>TABLE</h1>
                         </Segment>
                     </Grid.Column>
-                    <Grid.Column>
+                    <Grid.Column width={2}>
                         <Form.Button fluid primary disabled={isDisabled}>LOAD</Form.Button>
                         <Form.Button fluid primary disabled={true}>SAVE</Form.Button>
                         {/* <Button>Save</Button> */}

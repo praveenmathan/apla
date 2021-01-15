@@ -49,7 +49,7 @@ function CustomSnackbar({ status, msg }) {
 
     /* Slide Transition */
     function SlideTransition(props) {
-        return <Slide {...props} direction="up" />;
+        return <Slide {...props} direction="down" />;
     }
 
     return (
