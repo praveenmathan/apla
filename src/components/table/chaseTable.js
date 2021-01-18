@@ -1,0 +1,81 @@
+
+import { AgGridColumn, AgGridReact } from 'ag-grid-react';
+
+const ChaseTable = (props) => {
+    return (
+        <div className="ag-theme-alpine" style={{ height: '70vh' }}>
+            <AgGridReact
+                defaultColDef={{
+                    width: 175,
+                    sortable: true,
+                    resizable: true,
+                    filter: true
+                }}
+                onGridReady={props.onGridReady}
+                rowData={props.rowData}
+                pagination={true}
+            >
+
+                <AgGridColumn headerName="Products">
+                    <AgGridColumn field="StyleColor" pinned="left" lockPinned={true} cellClass="lock-pinned" cellRenderer={function (params) {
+                        return "<a target='_blank' href='http://images6.nike.com/is/image/DPILS/"
+                            + params.value
+                            + "-PV'>" + params.value + "</a>";
+                    }} />
+                    <AgGridColumn field="Comment" />
+                    <AgGridColumn field="Description" />
+                    <AgGridColumn field="SlimLifecycleSeason" />
+                </AgGridColumn>
+
+                <AgGridColumn headerName="Product Attribution">
+                    <AgGridColumn field="RPT" />
+                </AgGridColumn>
+
+                <AgGridColumn headerName="Recommendations" headerClass='custom-font-color' >
+                    <AgGridColumn field="RecommendedAction" headerClass='custom-font-color' headerName="Action" width='200' />
+                    <AgGridColumn field="RecommendedActionOverride" headerClass='custom-font-color' headerName="Action Override"
+                        width='225'
+                    // editable={true}
+                    // cellEditor="agSelectCellEditor"
+                    // cellEditorParams={function (params) {
+                    //     let givenValue = params.data.recommendedActionOverride;
+                    //     if (givenValue != null) {
+                    //         let actionOveride = givenValue.split(',');
+                    //         return {
+                    //             values: actionOveride
+                    //         }
+                    //     } else {
+                    //         return {
+                    //             values: []
+                    //         }
+                    //     }
+                    // }} 
+                    />
+                </AgGridColumn>
+
+                <AgGridColumn headerName="Inventory">
+                    <AgGridColumn field="RecommendedChaseUnits" headerClass='custom-font-color' />
+                    <AgGridColumn field="Contracts" />
+                    <AgGridColumn field="unassignedZerotoThirtyDaysOut" headerName='Unassigned Qty 0_30' />
+                    <AgGridColumn field="UnassignedThirtyonetoSixtyDaysOut" headerName='Unassigned Qty 31_60' />
+                    <AgGridColumn field="UnassignedSixtyonePlusDaysOut" headerName='Unassigned Qty 61 Plus' />
+                    <AgGridColumn field="1083_Contracts" headerName='1083 Contracts' />
+                    <AgGridColumn field="1084_Contracts" headerName='1084 Contracts' />
+                    <AgGridColumn field="1085_Contracts" headerName='1085 Contracts' />
+                    <AgGridColumn field="GA_1083" headerName="GA 1083" />
+                    <AgGridColumn field="GA_1084" headerName="GA 1084" />
+                    <AgGridColumn field="GA_1085" headerName="GA 1085" />
+                </AgGridColumn>
+
+                <AgGridColumn headerName="Sales">
+                    <AgGridColumn field="NetSalesLW" />
+                    <AgGridColumn field="NetSalesFourWkAvg" headerName="Net Sales 4w avg" />
+                    <AgGridColumn field="DemandUnitsLW" />
+                    <AgGridColumn field="DemandUnitsFourWeekRolling" headerName="Demand Units 4W rolling" />
+                </AgGridColumn>
+            </AgGridReact>
+        </div>
+    );
+}
+
+export default ChaseTable;

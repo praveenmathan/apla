@@ -36,8 +36,6 @@ const CategoryBar = (props) => {
         }
         setMarketPlaceOptions(marketPlaceOptions);
 
-        console.log('props -', props);
-
         /* To initialise retailweek options */
         let retailWeekOptions = [];
         if (isLoading) {
@@ -128,7 +126,6 @@ const CategoryBar = (props) => {
 
     /* To handle category change */
     const handleCategoryChange = (e, { value }) => {
-        console.log('value from the category', value);
         setCategoryValue(value);
     };
 

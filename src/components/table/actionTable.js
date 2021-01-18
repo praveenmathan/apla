@@ -6,7 +6,7 @@ const ActionTable = (props) => {
         <div className="ag-theme-alpine" style={{ height: '70vh' }}>
             <AgGridReact
                 defaultColDef={{
-                    width: 150,
+                    width: 175,
                     sortable: true,
                     resizable: true,
                     filter: true
@@ -17,20 +17,20 @@ const ActionTable = (props) => {
             >
 
                 <AgGridColumn headerName="Products">
-                    <AgGridColumn field="styleColor" pinned="left" lockPinned={true} cellClass="lock-pinned" cellRenderer={function (params) {
+                    <AgGridColumn field="StyleColor" pinned="left" lockPinned={true} cellClass="lock-pinned" cellRenderer={function (params) {
                         return "<a target='_blank' href='http://images6.nike.com/is/image/DPILS/"
                             + params.value
                             + "-PV'>" + params.value + "</a>";
                     }} />
-                    <AgGridColumn field="comment" />
-                    <AgGridColumn field="description" />
-                    <AgGridColumn field="slimLifecycleSeason" />
+                    <AgGridColumn field="Comment" />
+                    <AgGridColumn field="Description" />
+                    <AgGridColumn field="SlimLifecycleSeason" />
                 </AgGridColumn>
 
-                <AgGridColumn headerName="Recommendations" headerClass='custom-font-color'>
-                    <AgGridColumn field="recommendedAction" headerClass='custom-font-color' width='225' />
-                    <AgGridColumn field="recommendedActionOverride" headerClass='custom-font-color'
-                        width='300'
+                <AgGridColumn headerName="Recommendations" headerClass='custom-font-color' >
+                    <AgGridColumn field="RecommendedAction" headerClass='custom-font-color' headerName="Action" width='200' />
+                    <AgGridColumn field="RecommendedActionOverride" headerClass='custom-font-color' headerName="Action Override"
+                        width='225'
                     // editable={true}
                     // cellEditor="agSelectCellEditor"
                     // cellEditorParams={function (params) {
@@ -50,126 +50,127 @@ const ActionTable = (props) => {
                 </AgGridColumn>
 
                 <AgGridColumn headerName="Calendar">
-                    <AgGridColumn field="retailWeek" />
-                    <AgGridColumn field="currentSeason" />
+                    <AgGridColumn field="RetailWeek" />
+                    <AgGridColumn field="CurrentSeason" />
                 </AgGridColumn>
 
                 <AgGridColumn headerName="Product Attribution">
-                    <AgGridColumn field="style" />
-                    <AgGridColumn field="category" />
-                    <AgGridColumn field="subCategory" />
-                    <AgGridColumn field="division" />
-                    <AgGridColumn field="gender" />
-                    <AgGridColumn field="rpt" />
-                    <AgGridColumn field="franchise" />
-                    <AgGridColumn field="nikeLABIND" />
-                    <AgGridColumn field="nrgind" />
-                    <AgGridColumn field="league" />
-                    <AgGridColumn field="team" />
-                    <AgGridColumn field="athleteName" />
-                    <AgGridColumn field="merchClassification" />
-                    <AgGridColumn field="nikeIDIND" />
+                    <AgGridColumn field="Style" />
+                    <AgGridColumn field="Category" />
+                    <AgGridColumn field="SubCategory" />
+                    <AgGridColumn field="Division" />
+                    <AgGridColumn field="Gender" />
+                    <AgGridColumn field="RPT" />
+                    <AgGridColumn field="Franchise" />
+                    <AgGridColumn field="NikeLABIND" />
+                    <AgGridColumn field="NRGIND" />
+                    <AgGridColumn field="League" />
+                    <AgGridColumn field="Team" />
+                    <AgGridColumn field="AthleteName" />
+                    <AgGridColumn field="MerchClassification" />
+                    <AgGridColumn field="NikeIDIND" />
                 </AgGridColumn>
 
                 <AgGridColumn headerName="Inventory">
-                    <AgGridColumn field="contracts" />
-                    <AgGridColumn field="unassignedSixtyonePlusDaysOut" headerName='Unassigned Qty 61 Plus' />
+                    <AgGridColumn field="Contracts" />
                     <AgGridColumn field="unassignedZerotoThirtyDaysOut" headerName='Unassigned Qty 0_30' />
-                    <AgGridColumn field="unassignedThirtyonetoSixtyDaysOut" headerName='Unassigned Qty 31_60' />
-                    <AgGridColumn field="oneZeroEightThreeContracts" headerName='1083 Contracts' />
-                    <AgGridColumn field="oneZeroEightFourContracts" headerName='1084 Contracts' />
-                    <AgGridColumn field="oneZeroEightFiveContracts" headerName='1085 Contracts' />
-                    <AgGridColumn field="nsoContracts" />
-                    <AgGridColumn field="wholesaleContract" />
-                    <AgGridColumn field="storeIOH" />
-                    <AgGridColumn field="inTransit" />
-                    <AgGridColumn field="onOrder" />
-                    <AgGridColumn field="gaOneZeroEightThree" headerName="GA 1083" />
-                    <AgGridColumn field="gaOneZeroEightFour" headerName="GA 1084" />
-                    <AgGridColumn field="gaOneZeroEightFive" headerName="GA 1085" />
-                    <AgGridColumn field="sizeCountOwned" />
-                    <AgGridColumn field="sizeCountTotal" />
-                    <AgGridColumn field="sizeIntegrity" />
-                    <AgGridColumn field="slimWOS" />
-                    <AgGridColumn field="recommendedChaseUnits" />
-                    <AgGridColumn field="recommendedCancelUnits" />
+                    <AgGridColumn field="UnassignedThirtyonetoSixtyDaysOut" headerName='Unassigned Qty 31_60' />
+                    <AgGridColumn field="UnassignedSixtyonePlusDaysOut" headerName='Unassigned Qty 61 Plus' />
+                    <AgGridColumn field="1083_Contracts" headerName='1083 Contracts' />
+                    <AgGridColumn field="1084_Contracts" headerName='1084 Contracts' />
+                    <AgGridColumn field="1085_Contracts" headerName='1085 Contracts' />
+                    <AgGridColumn field="NSO_Contracts" />
+                    <AgGridColumn field="WholesaleContract" />
+                    <AgGridColumn field="StoreIOH" />
+                    <AgGridColumn field="InTransit" />
+                    <AgGridColumn field="OnOrder" />
+                    <AgGridColumn field="GA_1083" headerName="GA 1083" />
+                    <AgGridColumn field="GA_1084" headerName="GA 1084" />
+                    <AgGridColumn field="GA_1085" headerName="GA 1085" />
+                    <AgGridColumn field="SizeCountOwned" />
+                    <AgGridColumn field="SizeCountTotal" />
+                    <AgGridColumn field="SizeIntegrity" />
+                    <AgGridColumn field="SlimWOS" />
+                    <AgGridColumn field="RecommendedChaseUnits" />
+                    <AgGridColumn field="RecommendedCancelUnits" />
                 </AgGridColumn>
 
                 <AgGridColumn headerName="Sales">
-                    <AgGridColumn field="netUnitsLastWeek" />
-                    <AgGridColumn field="netUnitsFourWkAvg" headerName="Net Units 4W Avg" />
-                    <AgGridColumn field="netUnitsFourWkRolling" headerName="Net Units 4W rolling" />
-                    <AgGridColumn field="netUnitsMTD" />
-                    <AgGridColumn field="netUnitsSTD" />
-                    <AgGridColumn field="netSalesLW" />
-                    <AgGridColumn field="netSalesFourWkRolling" headerName="Net Sales 4w rolling" />
-                    <AgGridColumn field="netSalesMTD" />
-                    <AgGridColumn field="netSalesSTD" />
-                    <AgGridColumn field="netAURLW" headerName="Net AUR LW" />
-                    <AgGridColumn field="netAURFourWeekAvg" headerName="Net AUR 4W Avg" />
-                    <AgGridColumn field="netSalesLWUSD" />
-                    <AgGridColumn field="netSalesFourWeekRollingUSD" headerName="Net Sales 4w rolling USD" />
-                    <AgGridColumn field="netSalesFourWeekAvgUSD" headerName="Net Sales 4W Avg USD" />
-                    <AgGridColumn field="netSalesMTDUSD" />
-                    <AgGridColumn field="netSalesSTDUSD" />
-                    <AgGridColumn field="netAURLWUSD" headerName="Net AUR LW USD" />
-                    <AgGridColumn field="netAURFourWeekAvgUSD" headerName="Net AUR 4W Avg USD" />
-                    <AgGridColumn field="demandUnitsLW" />
-                    <AgGridColumn field="demandUnitsFourWeekRolling" headerName="Demand Units 4W rolling" />
-                    <AgGridColumn field="demandUnitsFourWeekAvg" headerName="Demand Units 4W avg" />
-                    <AgGridColumn field="demandUnitsMTD" />
-                    <AgGridColumn field="demandUnitsSTD" />
-                    <AgGridColumn field="demandSalesLW" />
-                    <AgGridColumn field="demandSalesFourWeekRolling" headerName="Demand Sales 4W rolling" />
-                    <AgGridColumn field="demandSalesFourWeekAvg" headerName="Demand Sales 4W avg" />
-                    <AgGridColumn field="demandSalesMTD" />
-                    <AgGridColumn field="demandSalesSTD" />
-                    <AgGridColumn field="demandAURLW" headerName="Demand AUR LW" />
-                    <AgGridColumn field="demandAURFourWeekAvg" headerName="Demand AUR 4W avg" />
-                    <AgGridColumn field="demandSalesLWUSD" />
-                    <AgGridColumn field="demandSalesFourWeekRollingUSD" headerName="Demand Sales 4W rolling USD" />
-                    <AgGridColumn field="demandSalesFourWeekAvgUSD" headerName="Demand Sales 4W Avg USD" />
-                    <AgGridColumn field="demandSalesMTDUSD" />
-                    <AgGridColumn field="demandSalesSTDUSD" />
-                    <AgGridColumn field="demandAURLWUSD" headerName="Demand AUR LW USD" />
-                    <AgGridColumn field="demandAURFourWeekAvgUSD" headerName="Demand AUR 4W avg USD" />
-                    <AgGridColumn field="firstOrderDate" />
-                    <AgGridColumn field="daysOnSale" />
+                    <AgGridColumn field="NetUnitsLastWeek" />
+                    <AgGridColumn field="NetUnitsFourWkAvg" headerName="Net Units 4W Avg" />
+                    <AgGridColumn field="NetUnitsFourWkRolling" headerName="Net Units 4W rolling" />
+                    <AgGridColumn field="NetUnitsMTD" />
+                    <AgGridColumn field="NetUnitsSTD" />
+                    <AgGridColumn field="NetSalesLW" />
+                    <AgGridColumn field="NetSalesFourWkAvg" headerName="Net Sales 4w avg" />
+                    <AgGridColumn field="NetSalesFourWkRolling" headerName="Net Sales 4w rolling" />
+                    <AgGridColumn field="NetSalesMTD" />
+                    <AgGridColumn field="NetSalesSTD" />
+                    <AgGridColumn field="NetAURLW" headerName="Net AUR LW" />
+                    <AgGridColumn field="NetAURFourWeekAvg" headerName="Net AUR 4W Avg" />
+                    <AgGridColumn field="NetSalesLWUSD" />
+                    <AgGridColumn field="NetSalesFourWeekRollingUSD" headerName="Net Sales 4w rolling USD" />
+                    <AgGridColumn field="NetSalesFourWeekAvgUSD" headerName="Net Sales 4W Avg USD" />
+                    <AgGridColumn field="NetSalesMTDUSD" />
+                    <AgGridColumn field="NetSalesSTDUSD" />
+                    <AgGridColumn field="NetAURLWUSD" headerName="Net AUR LW USD" />
+                    <AgGridColumn field="NetAURFourWeekAvgUSD" headerName="Net AUR 4W Avg USD" />
+                    <AgGridColumn field="DemandUnitsLW" />
+                    <AgGridColumn field="DemandUnitsFourWeekRolling" headerName="Demand Units 4W rolling" />
+                    <AgGridColumn field="DemandUnitsFourWeekAvg" headerName="Demand Units 4W avg" />
+                    <AgGridColumn field="DemandUnitsMTD" />
+                    <AgGridColumn field="DemandUnitsSTD" />
+                    <AgGridColumn field="DemandSalesLW" />
+                    <AgGridColumn field="DemandSalesFourWeekRolling" headerName="Demand Sales 4W rolling" />
+                    <AgGridColumn field="DemandSalesFourWeekAvg" headerName="Demand Sales 4W avg" />
+                    <AgGridColumn field="DemandSalesMTD" />
+                    <AgGridColumn field="DemandSalesSTD" />
+                    <AgGridColumn field="DemandAURLW" headerName="Demand AUR LW" />
+                    <AgGridColumn field="DemandAURFourWeekAvg" headerName="Demand AUR 4W avg" />
+                    <AgGridColumn field="DemandSalesLWUSD" />
+                    <AgGridColumn field="DemandSalesFourWeekRollingUSD" headerName="Demand Sales 4W rolling USD" />
+                    <AgGridColumn field="DemandSalesFourWeekAvgUSD" headerName="Demand Sales 4W Avg USD" />
+                    <AgGridColumn field="DemandSalesMTDUSD" />
+                    <AgGridColumn field="DemandSalesSTDUSD" />
+                    <AgGridColumn field="DemandAURLWUSD" headerName="Demand AUR LW USD" />
+                    <AgGridColumn field="DemandAURFourWeekAvgUSD" headerName="Demand AUR 4W avg USD" />
+                    <AgGridColumn field="FirstOrderDate" />
+                    <AgGridColumn field="DaysOnSale" />
                 </AgGridColumn>
 
                 <AgGridColumn headerName="Web Traffic">
-                    <AgGridColumn field="webConversionPct" />
-                    <AgGridColumn field="webConversionFourWeekAvgRPT" />
+                    <AgGridColumn field="WebConversionPct" />
+                    <AgGridColumn field="WebConversionFourWeekAvgRPT" />
                 </AgGridColumn>
 
                 <AgGridColumn headerName="Plan">
-                    <AgGridColumn field="lastSeasonPlanned" />
-                    <AgGridColumn field="lastSeasonPlannedEndDate" />
-                    <AgGridColumn field="inLastFPPlannedSeason" />
-                    <AgGridColumn field="clearanceSeason" />
-                    <AgGridColumn field="clearanceSeasonEndDate" />
-                    <AgGridColumn field="status" />
-                    <AgGridColumn field="epod" />
-                    <AgGridColumn field="launchTier" />
+                    <AgGridColumn field="LastSeasonPlanned" />
+                    <AgGridColumn field="LastSeasonPlannedEndDate" />
+                    <AgGridColumn field="InLastFPPlannedSeason" />
+                    <AgGridColumn field="ClearanceSeason" />
+                    <AgGridColumn field="ClearanceSeasonEndDate" />
+                    <AgGridColumn field="Status" />
+                    <AgGridColumn field="EPOD" />
+                    <AgGridColumn field="LaunchTier" />
                 </AgGridColumn>
 
                 <AgGridColumn headerName="Price">
-                    <AgGridColumn field="msrp" />
-                    <AgGridColumn field="wholesalePriceLocal" />
-                    <AgGridColumn field="currentSellingPrice" />
-                    <AgGridColumn field="totalDiscount" />
-                    <AgGridColumn field="lastMDDate" />
-                    <AgGridColumn field="mdCount" />
-                    <AgGridColumn field="contributionMargin" />
-                    <AgGridColumn field="priceElasticitySC" />
-                    <AgGridColumn field="priceElasticityRPT" />
-                    <AgGridColumn field="priceElasticityConfidence" />
-                    <AgGridColumn field="recommendedMarkPCTElasticity" />
-                    <AgGridColumn field="recommendedMarkPRCElasticity" />
-                    <AgGridColumn field="totalDiscountAfterMarkElasticity" />
-                    <AgGridColumn field="recommendedMarkPCTInterval" />
-                    <AgGridColumn field="recommendedMarkPRCInterval" />
-                    <AgGridColumn field="totalDiscountAfterMarkInterval" />
+                    <AgGridColumn field="MSRP" />
+                    <AgGridColumn field="WholesalePriceLocal" />
+                    <AgGridColumn field="CurrentSellingPrice" />
+                    <AgGridColumn field="TotalDiscount" />
+                    <AgGridColumn field="LastMDDate" />
+                    <AgGridColumn field="MDCount" />
+                    <AgGridColumn field="ContributionMargin" />
+                    <AgGridColumn field="PriceElasticitySC" />
+                    <AgGridColumn field="PriceElasticityRPT" />
+                    <AgGridColumn field="PriceElasticityConfidence" />
+                    <AgGridColumn field="RecommendedMarkPCTElasticity" />
+                    <AgGridColumn field="RecommendedMarkPRCElasticity" />
+                    <AgGridColumn field="TotalDiscountAfterMarkElasticity" />
+                    <AgGridColumn field="RecommendedMarkPCTInterval" />
+                    <AgGridColumn field="RecommendedMarkPRCInterval" />
+                    <AgGridColumn field="TotalDiscountAfterMarkInterval" />
                 </AgGridColumn>
             </AgGridReact>
         </div>
