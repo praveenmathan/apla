@@ -22,6 +22,13 @@ import NotFound from '../utilities/notFoundPage';
 import CommonTable from '../table/commonTable';
 import CancelTable from '../table/cancelTable';
 import ChaseTable from '../table/chaseTable';
+import CloseOutTable from '../table/closeOutTable';
+import CmReviewTable from '../table/cmReviewTable';
+import ExceptionTable from '../table/exceptionTable';
+import ExcludeTable from '../table/exclude';
+import ImproveConversionTable from '../table/improveConversionTable';
+import ImproveTrafficTable from '../table/improveTrafficTable';
+import MarkdownTable from '../table/markdownTable';
 
 /* eslint-disable */
 const useStyles = makeStyles((theme) => ({
@@ -1110,12 +1117,12 @@ function App() {
               <div className={classes.root}>
                 <CircularProgress color="secondary" />
               </div> :
-              <CommonTable rowData={rowData} onGridReady={onGridReady} />}</Route>
+              <CloseOutTable rowData={rowData} onGridReady={onGridReady} />}</Route>
             <Route exact path="/cmreview">{isTableLoading ?
               <div className={classes.root}>
                 <CircularProgress color="secondary" />
               </div> :
-              <CommonTable rowData={rowData} onGridReady={onGridReady} />}</Route>
+              <CmReviewTable rowData={rowData} onGridReady={onGridReady} />}</Route>
             <Route exact path="/chase">{isTableLoading ?
               <div className={classes.root}>
                 <CircularProgress color="secondary" />
@@ -1125,27 +1132,27 @@ function App() {
               <div className={classes.root}>
                 <CircularProgress color="secondary" />
               </div> :
-              <CommonTable rowData={rowData} onGridReady={onGridReady} />}</Route>
+              <ImproveConversionTable rowData={rowData} onGridReady={onGridReady} />}</Route>
             <Route exact path="/improvetraffic">{isTableLoading ?
               <div className={classes.root}>
                 <CircularProgress color="secondary" />
               </div> :
-              <CommonTable rowData={rowData} onGridReady={onGridReady} />}</Route>
+              <ImproveTrafficTable rowData={rowData} onGridReady={onGridReady} />}</Route>
             <Route exact path="/exclude">{isTableLoading ?
               <div className={classes.root}>
                 <CircularProgress color="secondary" />
               </div> :
-              <CommonTable rowData={rowData} onGridReady={onGridReady} />}</Route>
+              <ExcludeTable rowData={rowData} onGridReady={onGridReady} />}</Route>
             <Route exact path="/markdown">{isTableLoading ?
               <div className={classes.root}>
                 <CircularProgress color="secondary" />
               </div> :
-              <CommonTable rowData={rowData} onGridReady={onGridReady} />}</Route>
+              <MarkdownTable rowData={rowData} onGridReady={onGridReady} />}</Route>
             <Route exact path="/exception">{isTableLoading ?
               <div className={classes.root}>
                 <CircularProgress color="secondary" />
               </div> :
-              <CommonTable rowData={rowData} onGridReady={onGridReady} />}</Route>
+              <ExceptionTable rowData={rowData} onGridReady={onGridReady} />}</Route>
             <Route exact path="*" component={NotFound} />
           </Switch>
         </div>
