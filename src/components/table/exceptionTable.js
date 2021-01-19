@@ -1,15 +1,15 @@
-
 import { AgGridColumn, AgGridReact } from 'ag-grid-react';
 
 const ExcludeTable = (props) => {
+
     return (
-        <div className="ag-theme-alpine" style={{ height: '70vh' }}>
+        <div className="ag-theme-alpine" style={{ width: '100%', height: '70vh' }}>
             <AgGridReact
                 defaultColDef={{
-                    width: 175,
+                    width: 275,
                     sortable: true,
                     resizable: true,
-                    filter: true
+                    filter: true,
                 }}
                 onGridReady={props.onGridReady}
                 rowData={props.rowData}
@@ -32,7 +32,7 @@ const ExcludeTable = (props) => {
                 </AgGridColumn>
 
                 <AgGridColumn headerName="Recommendations" headerClass='custom-font-color' >
-                    <AgGridColumn field="RecommendedAction" headerClass='custom-font-color' headerName="Action" width='200' />
+                    <AgGridColumn field="RecommendedAction" headerClass='custom-font-color' headerName="Action" />
                 </AgGridColumn>
             </AgGridReact>
         </div>

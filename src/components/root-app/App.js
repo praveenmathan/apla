@@ -72,6 +72,59 @@ function App() {
         getCategoryAPI();
       }
     }).catch((err) => {
+      setAuthorisationApi({
+        "returnCode": 0,
+
+        "returnMessage": "Success",
+
+        "userName": "NIKE\\SUppoo",
+
+        "isAuthorisedUser": true,
+
+        "userAccessDetails": [
+
+          {
+
+            "userAccessMode": "ReadWrite",
+
+            "marketplaceId": "1",
+
+            "marketplaceDescription": "Japan",
+
+            "channels": [
+
+              {
+
+                "channelId": 1,
+
+                "channelDescription": "NDDC"
+
+              },
+
+              {
+
+                "channelId": 3,
+
+                "channelDescription": "NSO"
+
+              },
+
+              {
+
+                "channelId": 4,
+
+                "channelDescription": "ZOZO TOWN"
+
+              }
+
+            ]
+
+          }
+
+        ]
+
+      });
+      getCategoryAPI();
       console.log(err);
     });
   }, []);
@@ -81,585 +134,38 @@ function App() {
       if (response.status === 200) {
         const { data } = response;
         const formattedData = getFormattedCategoryApi(data);
-        setCategoryApi(data);
+        setCategoryApi(formattedData);
         setLoading(true);
       }
     }).catch((err) => {
-      let data = {
-        "returnCode": 0,
-
-        "returnMessage": "Success",
-
-        "selectionFilters": {
-
-          "marketplace": null,
-
-          "retailWeek": [
-
-            {
-
-              "weekId": 0,
-
-              "weekDescription": "FA20 WK12"
-
-            },
-
-            {
-
-              "weekId": 0,
-
-              "weekDescription": "FA20 WK13"
-
-            },
-
-            {
-
-              "weekId": 40,
-
-              "weekDescription": "HO20 WK1"
-
-            },
-
-            {
-
-              "weekId": 41,
-
-              "weekDescription": "HO20 WK2"
-
-            },
-
-            {
-
-              "weekId": 42,
-
-              "weekDescription": "HO20 WK3"
-
-            },
-
-            {
-
-              "weekId": 43,
-
-              "weekDescription": "HO20 WK4"
-
-            },
-
-            {
-
-              "weekId": 44,
-
-              "weekDescription": "HO20 WK5"
-
-            },
-
-            {
-
-              "weekId": 45,
-
-              "weekDescription": "HO20 WK6"
-
-            },
-
-            {
-
-              "weekId": 46,
-
-              "weekDescription": "HO20 WK7"
-
-            },
-
-            {
-
-              "weekId": 47,
-
-              "weekDescription": "HO20 WK8"
-
-            },
-
-            {
-
-              "weekId": 48,
-
-              "weekDescription": "HO20 WK9"
-
-            },
-
-            {
-
-              "weekId": 49,
-
-              "weekDescription": "HO20 WK10"
-
-            },
-
-            {
-
-              "weekId": 50,
-
-              "weekDescription": "HO20 WK11"
-
-            }
-
-          ],
-
-          "channel": null,
-
-          "category": [
-
-            {
-
-              "categoryId": 1001,
-
-              "categoryDescription": "RUNNING"
-
-            },
-
-            {
-
-              "categoryId": 1002,
-
-              "categoryDescription": "BASKETBALL"
-
-            },
-
-            {
-
-              "categoryId": 1003,
-
-              "categoryDescription": "FOOTBALL/SOCCER"
-
-            },
-
-            {
-
-              "categoryId": 1004,
-
-              "categoryDescription": "FOOTBALL, BASEBALL, AT"
-
-            },
-
-            {
-
-              "categoryId": 1005,
-
-              "categoryDescription": "WOMEN TRAINING"
-
-            },
-
-            {
-
-              "categoryId": 1006,
-
-              "categoryDescription": "NIKE SPORTSWEAR"
-
-            },
-
-            {
-
-              "categoryId": 1007,
-
-              "categoryDescription": "ACTION OUTDOOR"
-
-            },
-
-            {
-
-              "categoryId": 1009,
-
-              "categoryDescription": "YOUNG ATHLETES"
-
-            },
-
-            {
-
-              "categoryId": 1010,
-
-              "categoryDescription": "GOLF"
-
-            },
-
-            {
-
-              "categoryId": 1011,
-
-              "categoryDescription": "OTHER"
-
-            },
-
-            {
-
-              "categoryId": 1012,
-
-              "categoryDescription": "HURLEY"
-
-            }
-
-          ],
-
-          "gender": [
-
-            {
-
-              "genderId": 1,
-
-              "genderDescription": "ADULT UNISEX"
-
-            },
-
-            {
-
-              "genderId": 2,
-
-              "genderDescription": "BOYS"
-
-            },
-
-            {
-
-              "genderId": 3,
-
-              "genderDescription": "BOYS GRADE SCHL"
-
-            },
-
-            {
-
-              "genderId": 4,
-
-              "genderDescription": "BOYS INFANT"
-
-            },
-
-            {
-
-              "genderId": 5,
-
-              "genderDescription": "BOYS PRE SCHOOL"
-
-            },
-
-            {
-
-              "genderId": 6,
-
-              "genderDescription": "BOYS TODDLER"
-
-            },
-
-            {
-
-              "genderId": 7,
-
-              "genderDescription": "CHILD UNISEX"
-
-            },
-
-            {
-
-              "genderId": 8,
-
-              "genderDescription": "GIRL GRADE SCHL"
-
-            },
-
-            {
-
-              "genderId": 9,
-
-              "genderDescription": "GIRL PRE SCHOOL"
-
-            },
-
-            {
-
-              "genderId": 10,
-
-              "genderDescription": "GIRLS"
-
-            },
-
-            {
-
-              "genderId": 11,
-
-              "genderDescription": "GIRLS INFANT"
-
-            },
-
-            {
-
-              "genderId": 12,
-
-              "genderDescription": "GIRLS TODDLER"
-
-            },
-
-            {
-
-              "genderId": 13,
-
-              "genderDescription": "GRD SCHOOL UNSX"
-
-            },
-
-            {
-
-              "genderId": 14,
-
-              "genderDescription": "INFANT UNISEX"
-
-            },
-
-            {
-
-              "genderId": 15,
-
-              "genderDescription": "INFANTS"
-
-            },
-
-            {
-
-              "genderId": 16,
-
-              "genderDescription": "LITTLE BOYS"
-
-            },
-
-            {
-
-              "genderId": 17,
-
-              "genderDescription": "LITTLE GIRLS"
-
-            },
-
-            {
-
-              "genderId": 18,
-
-              "genderDescription": "MENS"
-
-            },
-
-            {
-
-              "genderId": 19,
-
-              "genderDescription": "NOT APPLICABLE"
-
-            },
-
-            {
-
-              "genderId": 20,
-
-              "genderDescription": "PRE SCHOOL UNSX"
-
-            },
-
-            {
-
-              "genderId": 21,
-
-              "genderDescription": "TODDLER UNISEX"
-
-            },
-
-            {
-
-              "genderId": 22,
-
-              "genderDescription": "WOMENS"
-
-            },
-
-            {
-
-              "genderId": 23,
-
-              "genderDescription": "YOUNG MEN"
-
-            },
-
-            {
-
-              "genderId": 24,
-
-              "genderDescription": "YOUNG WOMEN"
-
-            },
-
-            {
-
-              "genderId": 25,
-
-              "genderDescription": "YOUTH UNISEX"
-
-            },
-
-            {
-
-              "genderId": 77,
-
-              "genderDescription": "QAST2 SMK TEST"
-
-            }
-
-          ],
-
-          "division": [
-
-            {
-
-              "divisionId": 10,
-
-              "divisionDescription": "Apparel"
-
-            },
-
-            {
-
-              "divisionId": 20,
-
-              "divisionDescription": "Footwear"
-
-            },
-
-            {
-
-              "divisionId": 30,
-
-              "divisionDescription": "Equipment"
-
-            }
-
-          ],
-
-          "table": [
-
-            {
-
-              "tableId": 1,
-
-              "tableDescription": "ACTION"
-
-            },
-
-            {
-
-              "tableId": 2,
-
-              "tableDescription": "CANCEL"
-
-            },
-
-            {
-
-              "tableId": 3,
-
-              "tableDescription": "CLOSEOUT"
-
-            },
-
-            {
-
-              "tableId": 4,
-
-              "tableDescription": "CM REVIEW"
-
-            },
-
-            {
-
-              "tableId": 5,
-
-              "tableDescription": "CHASE"
-
-            },
-
-            {
-
-              "tableId": 6,
-
-              "tableDescription": "IMPROVE CONVERSION"
-
-            },
-
-            {
-
-              "tableId": 7,
-
-              "tableDescription": "IMPROVE TRAFFIC"
-
-            },
-
-            {
-
-              "tableId": 8,
-
-              "tableDescription": "EXCLUDE"
-
-            },
-
-            {
-
-              "tableId": 9,
-
-              "tableDescription": "MARKDOWN"
-
-            },
-
-            {
-
-              "tableId": 10,
-
-              "tableDescription": "EXCEPTION"
-
-            }
-
-          ]
-
-        }
-      };
-      const formattedData = getFormattedCategoryApi(data);
-      setCategoryApi(data);
       console.log(err);
       setLoading(true);
     });
   }
 
+  function stringCompare(a, b) {
+    let comparison = 0;
+    if (a.tableDescription > b.tableDescription) {
+      comparison = 1;
+    } else if (a.tableDescription < b.tableDescription) {
+      comparison = -1;
+    }
+    return comparison;
+  }
+
   function getFormattedCategoryApi(data) {
     let formattedData = { ...data };
-    const table = formattedData.selectionFilters.table.map(eachTable => {
-      eachTable.tableDescription.toLowerCase().capitalize();
+    let capitalisedData = [];
+    formattedData.selectionFilters.table.map(eachTable => {
+      capitalisedData.push({ 'tableDescription': eachTable.tableDescription.toLowerCase().capitalize() });
     });
+
+    let sortedCapitalisedData = capitalisedData.sort(stringCompare);
+    formattedData.selectionFilters['formattedTableData'] = [...sortedCapitalisedData];
     return formattedData;
   }
 
   function onGridReady(params) {
-    const newColumns = params.api.getColumnDefs();
-    newColumns.forEach((newColumn, index) => {
-      if (newColumn.headerName === 'Inventory') {
-        newColumn.children.push({
-          "width": 150,
-          "sortable": true,
-          "resizable": true,
-          "filter": true,
-          "field": "NddcContract",
-          "colId": "NddcContract",
-          "rowGroup": false,
-          "rowGroupIndex": null,
-          "pivot": false,
-          "pivotIndex": null,
-          "aggFunc": null,
-          "pinned": null,
-          "sort": null,
-          "sortIndex": null
-        })
-      }
-    });
-
     setGridApi(params.api);
     setGridColumnApi(params.columnApi);
   }
@@ -824,7 +330,7 @@ function App() {
       if (each === 'selectionFilters') {
         Object.keys(categoryApi[each]).map(eachfilters => {
           let selectionFilters = categoryApi[each];
-          if (eachfilters === 'table') {
+          if (eachfilters === 'formattedTableData') {
             selectionFilters[eachfilters].map(eachDivision => {
               if (newValue.action === eachDivision.tableDescription) {
                 // tablearray.push({
@@ -842,6 +348,7 @@ function App() {
 
   function getTableAPI(requestDataForTable) {
     setIsTableLoading(true);
+    setRowData([]);
     let actionText = trimAndLowerCase(requestDataForTable.action);
     /* just for now */
     if (actionText === 'action') {
@@ -887,10 +394,10 @@ function App() {
         if (data.InventoryDetails.length != 0) {
           setRowData(data.InventoryDetails);
           setStatus('success');
-          setMessage('Table data are loaded');
+          setMessage('All Action data are loaded');
         } else {
           setStatus('error');
-          setMessage('Table is empty, Please contact the support');
+          setMessage('All Action is empty, Please contact the support');
         }
       }
     }).catch((err) => {
@@ -909,16 +416,16 @@ function App() {
         if (data.InventoryDetails.length != 0) {
           setRowData(data.InventoryDetails);
           setStatus('success');
-          setMessage('Table data are loaded');
+          setMessage('Cancel data are loaded');
         } else {
           setStatus('error');
-          setMessage('Table is empty, Please contact the support');
+          setMessage('Cancel table is empty, Please contact the support');
         }
       }
     }).catch((err) => {
       setIsTableLoading(false);
       setStatus('error');
-      setMessage('Error in loading the table data');
+      setMessage('Error in loading the table data, Please contact the support');
       console.log(err);
     });
   }
@@ -931,16 +438,16 @@ function App() {
         if (data.InventoryDetails.length != 0) {
           setRowData(data.InventoryDetails);
           setStatus('success');
-          setMessage('Table data are loaded');
+          setMessage('Close Out data are loaded');
         } else {
           setStatus('error');
-          setMessage('Table is empty, Please contact the support');
+          setMessage('Close Out is empty, Please contact the support');
         }
       }
     }).catch((err) => {
       setIsTableLoading(false);
       setStatus('error');
-      setMessage('Error in loading the table data');
+      setMessage('Error in loading the table data, Please contact the support');
       console.log(err);
     });
   }
@@ -953,16 +460,16 @@ function App() {
         if (data.InventoryDetails.length != 0) {
           setRowData(data.InventoryDetails);
           setStatus('success');
-          setMessage('Table data are loaded');
+          setMessage('CM Review data are loaded');
         } else {
           setStatus('error');
-          setMessage('Table is empty, Please contact the support');
+          setMessage('CM Review table is empty, Please contact the support');
         }
       }
     }).catch((err) => {
       setIsTableLoading(false);
       setStatus('error');
-      setMessage('Error in loading the table data');
+      setMessage('Error in loading the table data, Please contact the support');
       console.log(err);
     });
   }
@@ -975,16 +482,16 @@ function App() {
         if (data.InventoryDetails.length != 0) {
           setRowData(data.InventoryDetails);
           setStatus('success');
-          setMessage('Table data are loaded');
+          setMessage('Chase data are loaded');
         } else {
           setStatus('error');
-          setMessage('Table is empty, Please contact the support');
+          setMessage('Chase table is empty, Please contact the support');
         }
       }
     }).catch((err) => {
       setIsTableLoading(false);
       setStatus('error');
-      setMessage('Error in loading the table data');
+      setMessage('Error in loading the table data, Please contact the support');
       console.log(err);
     });
   }
@@ -997,16 +504,16 @@ function App() {
         if (data.InventoryDetails.length != 0) {
           setRowData(data.InventoryDetails);
           setStatus('success');
-          setMessage('Table data are loaded');
+          setMessage('Exception data are loaded');
         } else {
           setStatus('error');
-          setMessage('Table is empty, Please contact the support');
+          setMessage('Exception table is empty, Please contact the support');
         }
       }
     }).catch((err) => {
       setIsTableLoading(false);
       setStatus('error');
-      setMessage('Error in loading the table data');
+      setMessage('Error in loading the table data, Please contact the support');
       console.log(err);
     });
   }
@@ -1019,16 +526,16 @@ function App() {
         if (data.InventoryDetails.length != 0) {
           setRowData(data.InventoryDetails);
           setStatus('success');
-          setMessage('Table data are loaded');
+          setMessage('Exclude data are loaded');
         } else {
           setStatus('error');
-          setMessage('Table is empty, Please contact the support');
+          setMessage('Exclude table is empty, Please contact the support');
         }
       }
     }).catch((err) => {
       setIsTableLoading(false);
       setStatus('error');
-      setMessage('Error in loading the table data');
+      setMessage('Error in loading the table data, Please contact the support');
       console.log(err);
     });
   }
@@ -1041,16 +548,16 @@ function App() {
         if (data.InventoryDetails.length != 0) {
           setRowData(data.InventoryDetails);
           setStatus('success');
-          setMessage('Table data are loaded');
+          setMessage('Markdown data are loaded');
         } else {
           setStatus('error');
-          setMessage('Table is empty, Please contact the support');
+          setMessage('Markdown table is empty, Please contact the support');
         }
       }
     }).catch((err) => {
       setIsTableLoading(false);
       setStatus('error');
-      setMessage('Error in loading the table data');
+      setMessage('Error in loading the table data, Please contact the support');
       console.log(err);
     });
   }
@@ -1152,7 +659,7 @@ function App() {
               <div className={classes.root}>
                 <CircularProgress color="secondary" />
               </div> :
-              <ExceptionTable rowData={rowData} onGridReady={onGridReady} />}</Route>
+              <ExceptionTable rowData={rowData} onGridReady={onGridReady} gridApi={gridApi} />}</Route>
             <Route exact path="*" component={NotFound} />
           </Switch>
         </div>

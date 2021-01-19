@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 import { Grid, Segment } from 'semantic-ui-react';
 import './categoryBar.css';
 import { Form, Select } from 'semantic-ui-react';
@@ -83,7 +83,7 @@ const CategoryBar = (props) => {
         /* To initialise table options */
         let tableOptions = [];
         if (isLoading) {
-            props.data.selectionFilters.table.map(eachitem => tableOptions.push({
+            props.data.selectionFilters.formattedTableData.map(eachitem => tableOptions.push({
                 key: eachitem.tableDescription,
                 value: eachitem.tableDescription,
                 text: eachitem.tableDescription
@@ -157,7 +157,7 @@ const CategoryBar = (props) => {
             action: tableValue
         };
         props.onCatergorySubmit(formDataUpdated);
-        //console.log('formed request data - ', formDataUpdated);
+        console.log('formed request data - ', formDataUpdated);
     }
 
     return (<>
