@@ -3,7 +3,7 @@ import { Grid, Segment } from 'semantic-ui-react';
 import './categoryBar.css';
 import { Form, Select } from 'semantic-ui-react';
 import Skeleton from '@material-ui/lab/Skeleton';
-import { RowDetailsContext } from '../context/rowDetailsContext';
+import { RowDetailsContext, SaveBtnContext } from '../context/rowDetailsContext';
 
 const CategoryBar = (props) => {
     let isLoading = props.isLoading;
@@ -25,7 +25,9 @@ const CategoryBar = (props) => {
     const [tableValue, setTableValue] = useState('');
     const [isDisabled, setIsDisabled] = useState(true);
 
-    const { rowDetailValue, setRowDetailValue } = useContext(RowDetailsContext)
+    const { rowDetailValue } = useContext(RowDetailsContext);
+    const { setSaveBtnLoading } = useContext(SaveBtnContext);
+    const { saveBtnDisable } = useContext(SaveBtnContext);
 
     useEffect(() => {
         /* To initialise marketplace options */
@@ -150,16 +152,20 @@ const CategoryBar = (props) => {
 
     /* Handle Load/submit button */
     const handleSubmit = () => {
-        const selectionFilterDataUpdated = {
-            marketPlace: marketPlaceValue,
-            retailWeek: retailWeekValue,
-            channel: channelValue,
-            category: categoryValue,
-            gender: genderValue,
-            division: divisionValue,
-            action: tableValue
-        };
-        props.onCatergorySubmit(selectionFilterDataUpdated);
+        if (rowDetailValue.length !== 0) {
+            alert('Table Rows have been modified, Please Save');
+        } else {
+            const selectionFilterDataUpdated = {
+                marketPlace: marketPlaceValue,
+                retailWeek: retailWeekValue,
+                channel: channelValue,
+                category: categoryValue,
+                gender: genderValue,
+                division: divisionValue,
+                action: tableValue
+            };
+            props.onCatergorySubmit(selectionFilterDataUpdated);
+        }
     }
 
     function getFilteredArray(rows) {
@@ -171,6 +177,7 @@ const CategoryBar = (props) => {
 
     /* Handle Save button */
     const handleSave = () => {
+        setSaveBtnLoading(true);
         let filteredArray = getFilteredArray(rowDetailValue)
         props.OnTableRowSave(filteredArray);
     }
@@ -279,7 +286,7 @@ const CategoryBar = (props) => {
                     </Grid.Column>
                     <Grid.Column width={2}>
                         <Form.Button fluid primary onClick={handleSubmit} disabled={isDisabled}>LOAD</Form.Button>
-                        <Form.Button fluid primary onClick={handleSave}>SAVE</Form.Button>
+                        <Form.Button fluid primary onClick={handleSave} disabled={saveBtnDisable}>SAVE</Form.Button>
                         {/* <Button>Save</Button> */}
                     </Grid.Column>
                 </Grid>

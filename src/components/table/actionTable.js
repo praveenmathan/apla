@@ -1,22 +1,13 @@
 import React from 'react';
 import Dialog from '@material-ui/core/Dialog';
 import { AgGridColumn, AgGridReact } from 'ag-grid-react';
-import ColorsRenderer from './sample-renderer/colorsRenderer';
-import { RowDetailsContext } from '../context/rowDetailsContext';
-
-const ChildMessageRenderer = props => {
-    // setSelectedStyleColor(props.value);
-    // console.log('selected stylecolor cell renderer', selectedStyleColor);
-    return "<a target='_blank' href='http://images6.nike.com/is/image/DPILS/"
-        + props.value
-        + "-PV'>" + props.value + "</a>";
-};
+import { RowDetailsContext, SaveBtnContext } from '../context/rowDetailsContext';
 
 const ActionTable = (props) => {
     let consolidatedRows = [];
     const [open, setOpen] = React.useState(false);
-    const { rowDetailValue, setRowDetailValue } = React.useContext(RowDetailsContext);
-    const [selectedStyleColor, setSelectedStyleColor] = React.useState(null);
+    const { setRowDetailValue } = React.useContext(RowDetailsContext);
+    const { setSaveBtnDisable } = React.useContext(SaveBtnContext);
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -31,6 +22,7 @@ const ActionTable = (props) => {
             params.node.data['changed'] = true;
             consolidatedRows.push(params.data);
             setRowDetailValue(consolidatedRows);
+            setSaveBtnDisable(false);
         }
     }
 
@@ -55,9 +47,6 @@ const ActionTable = (props) => {
                     onGridReady={props.onGridReady}
                     rowData={props.rowData}
                     pagination={true}
-                    frameworkComponents={{
-                        colorsRenderer: ColorsRenderer
-                    }}
                 >
 
                     <AgGridColumn headerName="Products">
@@ -117,6 +106,7 @@ const ActionTable = (props) => {
                         <AgGridColumn field="AthleteName" />
                         <AgGridColumn field="MerchClassification" />
                         <AgGridColumn field="NikeIDIND" />
+                        <AgGridColumn field="Silhouette" />
                     </AgGridColumn>
 
                     <AgGridColumn headerName="Inventory">
@@ -200,6 +190,7 @@ const ActionTable = (props) => {
                         <AgGridColumn field="Status" />
                         <AgGridColumn field="EPOD" />
                         <AgGridColumn field="LaunchTier" />
+                        <AgGridColumn field="LOB" />
                     </AgGridColumn>
 
                     <AgGridColumn headerName="Price">
