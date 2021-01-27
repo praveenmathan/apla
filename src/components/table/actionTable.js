@@ -1,6 +1,8 @@
 import React from 'react';
 import Dialog from '@material-ui/core/Dialog';
 import { AgGridColumn, AgGridReact } from 'ag-grid-react';
+import ColorsRenderer from './sample-renderer/colorsRenderer';
+import { RowDetailsContext } from '../context/rowDetailsContext';
 
 const ChildMessageRenderer = props => {
     // setSelectedStyleColor(props.value);
@@ -11,7 +13,9 @@ const ChildMessageRenderer = props => {
 };
 
 const ActionTable = (props) => {
+    let consolidatedRows = [];
     const [open, setOpen] = React.useState(false);
+    const { rowDetailValue, setRowDetailValue } = React.useContext(RowDetailsContext);
     const [selectedStyleColor, setSelectedStyleColor] = React.useState(null);
 
     const handleClickOpen = () => {
@@ -21,6 +25,14 @@ const ActionTable = (props) => {
     const handleClose = () => {
         setOpen(false);
     };
+
+    const onCellValueChanged = (params) => {
+        if (!(params.oldValue === null && params.newValue === undefined)) {
+            params.node.data['changed'] = true;
+            consolidatedRows.push(params.data);
+            setRowDetailValue(consolidatedRows);
+        }
+    }
 
     return (
         <React.Fragment>
@@ -44,7 +56,7 @@ const ActionTable = (props) => {
                     rowData={props.rowData}
                     pagination={true}
                     frameworkComponents={{
-                        childMessageRenderer: ChildMessageRenderer
+                        colorsRenderer: ColorsRenderer
                     }}
                 >
 
@@ -54,30 +66,34 @@ const ActionTable = (props) => {
                                 + params.value
                                 + "-PV'>" + params.value + "</a>";
                         }} />
-                        <AgGridColumn field="Comment" />
+                        <AgGridColumn field="Comment"
+                            editable={true}
+                            cellEditor="agLargeTextCellEditor"
+                            onCellValueChanged={onCellValueChanged} />
                         <AgGridColumn field="Description" />
                         <AgGridColumn field="SlimLifecycleSeason" />
                     </AgGridColumn>
 
                     <AgGridColumn headerName="Recommendations" headerClass='custom-font-color' >
                         <AgGridColumn field="RecommendedAction" headerClass='custom-font-color' headerName="Action" width='200' />
-                        <AgGridColumn field="RecommendedActionOverride" headerClass='custom-font-color' headerName="Action Override"
+                        <AgGridColumn field="SelectedRecommendedActionOverride" headerClass='custom-font-color' headerName="Action Override"
                             width='225'
-                        // editable={true}
-                        // cellEditor="agSelectCellEditor"
-                        // cellEditorParams={function (params) {
-                        //     let givenValue = params.data.recommendedActionOverride;
-                        //     if (givenValue != null) {
-                        //         let actionOveride = givenValue.split(',');
-                        //         return {
-                        //             values: actionOveride
-                        //         }
-                        //     } else {
-                        //         return {
-                        //             values: []
-                        //         }
-                        //     }
-                        // }} 
+                            editable={true}
+                            cellEditor="agSelectCellEditor"
+                            cellEditorParams={function (params) {
+                                let givenValue = params.data.RecommendedActionOverride;
+                                if (givenValue != null) {
+                                    let actionOveride = givenValue.split(',');
+                                    return {
+                                        values: actionOveride
+                                    }
+                                } else {
+                                    return {
+                                        values: []
+                                    }
+                                }
+                            }}
+                            onCellValueChanged={onCellValueChanged}
                         />
                     </AgGridColumn>
 

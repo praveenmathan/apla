@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Grid, Segment } from 'semantic-ui-react';
 import './categoryBar.css';
 import { Form, Select } from 'semantic-ui-react';
 import Skeleton from '@material-ui/lab/Skeleton';
+import { RowDetailsContext } from '../context/rowDetailsContext';
 
 const CategoryBar = (props) => {
     let isLoading = props.isLoading;
@@ -23,6 +24,8 @@ const CategoryBar = (props) => {
     const [tableOptions, setTableOptions] = useState([]);
     const [tableValue, setTableValue] = useState('');
     const [isDisabled, setIsDisabled] = useState(true);
+
+    const { rowDetailValue, setRowDetailValue } = useContext(RowDetailsContext)
 
     useEffect(() => {
         /* To initialise marketplace options */
@@ -147,7 +150,7 @@ const CategoryBar = (props) => {
 
     /* Handle Load/submit button */
     const handleSubmit = () => {
-        const formDataUpdated = {
+        const selectionFilterDataUpdated = {
             marketPlace: marketPlaceValue,
             retailWeek: retailWeekValue,
             channel: channelValue,
@@ -156,12 +159,24 @@ const CategoryBar = (props) => {
             division: divisionValue,
             action: tableValue
         };
-        props.onCatergorySubmit(formDataUpdated);
-        console.log('formed request data - ', formDataUpdated);
+        props.onCatergorySubmit(selectionFilterDataUpdated);
+    }
+
+    function getFilteredArray(rows) {
+        let arr = rows;
+        let ids = arr.map(o => o.StyleColor);
+        let filtered = arr.filter(({ StyleColor }, index) => !ids.includes(StyleColor, index + 1));
+        return filtered;
+    }
+
+    /* Handle Save button */
+    const handleSave = () => {
+        let filteredArray = getFilteredArray(rowDetailValue)
+        props.OnTableRowSave(filteredArray);
     }
 
     return (<>
-        <Form onSubmit={handleSubmit}>
+        <Form>
             <Form.Group widths='equal'>
                 <Grid columns='equal' className="center">
                     <Grid.Column width={2}>
@@ -263,8 +278,8 @@ const CategoryBar = (props) => {
                         </Segment>
                     </Grid.Column>
                     <Grid.Column width={2}>
-                        <Form.Button fluid primary disabled={isDisabled}>LOAD</Form.Button>
-                        <Form.Button fluid primary disabled={true}>SAVE</Form.Button>
+                        <Form.Button fluid primary onClick={handleSubmit} disabled={isDisabled}>LOAD</Form.Button>
+                        <Form.Button fluid primary onClick={handleSave}>SAVE</Form.Button>
                         {/* <Button>Save</Button> */}
                     </Grid.Column>
                 </Grid>
