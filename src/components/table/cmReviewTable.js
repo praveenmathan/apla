@@ -1,7 +1,21 @@
-
+import React from 'react';
 import { AgGridColumn, AgGridReact } from 'ag-grid-react';
+import { RowDetailsContext, SaveBtnContext } from '../context/rowDetailsContext';
 
 const CmReviewTable = (props) => {
+    let consolidatedRows = [];
+    const { setRowDetailValue } = React.useContext(RowDetailsContext);
+    const { setSaveBtnDisable } = React.useContext(SaveBtnContext);
+
+    const onCellValueChanged = (params) => {
+        if (!(params.oldValue === null && params.newValue === undefined)) {
+            params.node.data['changed'] = true;
+            consolidatedRows.push(params.data);
+            setRowDetailValue(consolidatedRows);
+            setSaveBtnDisable(false);
+        }
+    }
+
     return (
         <div className="ag-theme-alpine" style={{ height: '70vh' }}>
             <AgGridReact
@@ -22,7 +36,10 @@ const CmReviewTable = (props) => {
                             + params.value
                             + "-PV'>" + params.value + "</a>";
                     }} />
-                    <AgGridColumn field="Comment" />
+                    <AgGridColumn field="Comment"
+                        editable={true}
+                        cellEditor="agLargeTextCellEditor"
+                        onCellValueChanged={onCellValueChanged} />
                     <AgGridColumn field="Description" />
                     <AgGridColumn field="SlimLifecycleSeason" />
                 </AgGridColumn>
@@ -33,23 +50,24 @@ const CmReviewTable = (props) => {
 
                 <AgGridColumn headerName="Recommendations" headerClass='custom-font-color' >
                     <AgGridColumn field="RecommendedAction" headerClass='custom-font-color' headerName="Action" width='200' />
-                    <AgGridColumn field="RecommendedActionOverride" headerClass='custom-font-color' headerName="Action Override"
+                    <AgGridColumn field="SelectedRecommendedActionOverride" headerClass='custom-font-color' headerName="Action Override"
                         width='225'
-                    // editable={true}
-                    // cellEditor="agSelectCellEditor"
-                    // cellEditorParams={function (params) {
-                    //     let givenValue = params.data.recommendedActionOverride;
-                    //     if (givenValue != null) {
-                    //         let actionOveride = givenValue.split(',');
-                    //         return {
-                    //             values: actionOveride
-                    //         }
-                    //     } else {
-                    //         return {
-                    //             values: []
-                    //         }
-                    //     }
-                    // }} 
+                        editable={true}
+                        cellEditor="agSelectCellEditor"
+                        cellEditorParams={function (params) {
+                            let givenValue = params.data.RecommendedActionOverride;
+                            if (givenValue != null) {
+                                let actionOveride = givenValue.split(',');
+                                return {
+                                    values: actionOveride
+                                }
+                            } else {
+                                return {
+                                    values: []
+                                }
+                            }
+                        }}
+                        onCellValueChanged={onCellValueChanged}
                     />
                 </AgGridColumn>
 

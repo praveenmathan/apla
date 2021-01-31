@@ -32,6 +32,7 @@ import MarkdownTable from '../table/markdownTable';
 import { RowDetailsContext, SaveBtnContext } from '../context/rowDetailsContext';
 import saveTableRowService from '../services/saveTableRowService';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import exportToExcelService from '../services/exportToExcelService';
 
 /* eslint-disable */
 const useStyles = makeStyles((theme) => ({
@@ -51,6 +52,7 @@ function App() {
   const [authorisationApi, setAuthorisationApi] = useState({});
   const [loading, setLoading] = useState(false);
   const [isTableLoading, setIsTableLoading] = useState(false);
+  const [exportLoading, setExportLoading] = useState(false);
   const [categoryApi, setCategoryApi] = useState({});
   const [gridApi, setGridApi] = useState(null);
   const [gridColumnApi, setGridColumnApi] = useState(null);
@@ -62,9 +64,10 @@ function App() {
   const setStatus = msg => setStatusBase({ msg, date: new Date() });
   const setMessage = msg => setMessageBase(msg);
   const [rowDetailValue, setRowDetailValue] = React.useState([]);
-  const [saveBtnLoading, setSaveBtnLoading] = React.useState(false);
+  const [categoryBarLoading, setCategoryBarLoading] = React.useState(false);
   const [saveBtnDisable, setSaveBtnDisable] = React.useState(true);
   const [selectionFilterForSave, setSelectionFilterForSave] = React.useState(null);
+  const [selectionFilterDataForExport, setSelectionFilterDataForExport] = React.useState(null);
 
   useEffect(() => {
     /* Get CUP roles, Marketplace and Channel details  */
@@ -737,6 +740,9 @@ function App() {
     /* testing AG grid - for now */
     getTableAPI(requestDataForTable);
 
+    /* for Export to Excel */
+    setSelectionFilterDataForExport(requestDataForTable);
+
     /* for SAVE request */
     setSelectionFilterForSave(newValue);
   }
@@ -777,16 +783,42 @@ function App() {
       if (response.status === 200) {
         const { data } = response;
         setRowDetailValue([]);
-        setSaveBtnLoading(false);
+        setCategoryBarLoading(false);
         setSaveBtnDisable(true);
         setStatus('success');
         setMessage('Updated values are saved');
       }
     }).catch((err) => {
       setRowDetailValue([]);
-      setSaveBtnLoading(false);
+      setCategoryBarLoading(false);
       setStatus('error');
       setMessage('Error while saving the data, Contact support : productionsupport@nike.com');
+      console.log(err);
+    });
+  }
+
+  function onExportToExcel() {
+    exportToExcelService.postData(selectionFilterDataForExport).then((response) => {
+      if (response.status === 200) {
+        const { data } = response;
+        if (data.ReturnCode === 0) {
+          const anchor = document.createElement("a");
+          anchor.setAttribute("href", 'excel/SampleData.xlsx');
+          anchor.setAttribute("download", 'InventoryDetailsExcel.xlsx');
+          anchor.click();
+          setCategoryBarLoading(false);
+          setStatus('success');
+          setMessage('Updated values are saved');
+        } else {
+          setCategoryBarLoading(false);
+          setStatus('error');
+          setMessage('Error while downloading Excel, Contact support');
+        }
+      }
+    }).catch((err) => {
+      setCategoryBarLoading(false);
+      setStatus('error');
+      setMessage('Error while saving the data, Contact support');
       console.log(err);
     });
   }
@@ -1001,6 +1033,94 @@ function App() {
       }
     }).catch((err) => {
       setIsTableLoading(false);
+      setStatus('error');
+      setMessage('Error in loading the table data');
+      console.log(err);
+    });
+  }
+
+  function cancelTableApiService(requestDataForTable) {
+    cancelTableService.postData(requestDataForTable).then((response) => {
+      if (response.status === 200) {
+        setIsTableLoading(false);
+        const { data } = response;
+        if (data.InventoryDetails.length != 0) {
+          setRowData(data.InventoryDetails);
+          setStatus('success');
+          setMessage('Cancel data are loaded');
+        } else {
+          setStatus('error');
+          setMessage('Cancel table is empty, Please contact the support');
+        }
+      }
+    }).catch((err) => {
+      setIsTableLoading(false);
+      setStatus('error');
+      setMessage('Error in loading the table data, Please contact the support');
+      console.log(err);
+    });
+  }
+
+  function closeOutTableApiService(requestDataForTable) {
+    closeOutTableService.postData(requestDataForTable).then((response) => {
+      if (response.status === 200) {
+        setIsTableLoading(false);
+        const { data } = response;
+        if (data.InventoryDetails.length != 0) {
+          setRowData(data.InventoryDetails);
+          setStatus('success');
+          setMessage('Close Out data are loaded');
+        } else {
+          setStatus('error');
+          setMessage('Close Out is empty, Please contact the support');
+        }
+      }
+    }).catch((err) => {
+      setIsTableLoading(false);
+      setStatus('error');
+      setMessage('Error in loading the table data, Please contact the support');
+      console.log(err);
+    });
+  }
+
+  function cmReviewTableApiService(requestDataForTable) {
+    cmReviewTableService.postData(requestDataForTable).then((response) => {
+      if (response.status === 200) {
+        setIsTableLoading(false);
+        const { data } = response;
+        if (data.InventoryDetails.length != 0) {
+          setRowData(data.InventoryDetails);
+          setStatus('success');
+          setMessage('CM Review data are loaded');
+        } else {
+          setStatus('error');
+          setMessage('CM Review table is empty, Please contact the support');
+        }
+      }
+    }).catch((err) => {
+      setIsTableLoading(false);
+      setStatus('error');
+      setMessage('Error in loading the table data, Please contact the support');
+      console.log(err);
+    });
+  }
+
+  function chaseTableApiService(requestDataForTable) {
+    chaseTableService.postData(requestDataForTable).then((response) => {
+      if (response.status === 200) {
+        setIsTableLoading(false);
+        const { data } = response;
+        if (data.InventoryDetails.length != 0) {
+          setRowData(data.InventoryDetails);
+          setStatus('success');
+          setMessage('Chase data are loaded');
+        } else {
+          setStatus('error');
+          setMessage('Chase table is empty, Please contact the support');
+        }
+      }
+    }).catch((err) => {
+      setIsTableLoading(false);
       setRowData([{
         "StyleColor": "CK2571-100",
         "Comment": 'this is a registered comment',
@@ -1008,7 +1128,7 @@ function App() {
         "SlimLifecycleSeason": "Post Season",
         "RecommendedAction": "NO ACTION",
         "SelectedRecommendedActionOverride": 'Exclude',
-        "RecommendedActionOverride": 'Exclude, Include, Out Swing',
+        "RecommendedActionOverride": 'Exclude,Include,Out Swing',
         "RetailWeek": "SP2021WK1",
         "CurrentSeason": "SP2021",
         "Style": "CK2571",
@@ -24661,95 +24781,7 @@ function App() {
         "RecommendedMarkPCTInterval": null,
         "RecommendedMarkPRCInterval": null,
         "TotalDiscountAfterMarkInterval": null
-      }])
-      setStatus('error');
-      setMessage('Error in loading the table data');
-      console.log(err);
-    });
-  }
-
-  function cancelTableApiService(requestDataForTable) {
-    cancelTableService.postData(requestDataForTable).then((response) => {
-      if (response.status === 200) {
-        setIsTableLoading(false);
-        const { data } = response;
-        if (data.InventoryDetails.length != 0) {
-          setRowData(data.InventoryDetails);
-          setStatus('success');
-          setMessage('Cancel data are loaded');
-        } else {
-          setStatus('error');
-          setMessage('Cancel table is empty, Please contact the support');
-        }
-      }
-    }).catch((err) => {
-      setIsTableLoading(false);
-      setStatus('error');
-      setMessage('Error in loading the table data, Please contact the support');
-      console.log(err);
-    });
-  }
-
-  function closeOutTableApiService(requestDataForTable) {
-    closeOutTableService.postData(requestDataForTable).then((response) => {
-      if (response.status === 200) {
-        setIsTableLoading(false);
-        const { data } = response;
-        if (data.InventoryDetails.length != 0) {
-          setRowData(data.InventoryDetails);
-          setStatus('success');
-          setMessage('Close Out data are loaded');
-        } else {
-          setStatus('error');
-          setMessage('Close Out is empty, Please contact the support');
-        }
-      }
-    }).catch((err) => {
-      setIsTableLoading(false);
-      setStatus('error');
-      setMessage('Error in loading the table data, Please contact the support');
-      console.log(err);
-    });
-  }
-
-  function cmReviewTableApiService(requestDataForTable) {
-    cmReviewTableService.postData(requestDataForTable).then((response) => {
-      if (response.status === 200) {
-        setIsTableLoading(false);
-        const { data } = response;
-        if (data.InventoryDetails.length != 0) {
-          setRowData(data.InventoryDetails);
-          setStatus('success');
-          setMessage('CM Review data are loaded');
-        } else {
-          setStatus('error');
-          setMessage('CM Review table is empty, Please contact the support');
-        }
-      }
-    }).catch((err) => {
-      setIsTableLoading(false);
-      setStatus('error');
-      setMessage('Error in loading the table data, Please contact the support');
-      console.log(err);
-    });
-  }
-
-  function chaseTableApiService(requestDataForTable) {
-    chaseTableService.postData(requestDataForTable).then((response) => {
-      if (response.status === 200) {
-        setIsTableLoading(false);
-        const { data } = response;
-        if (data.InventoryDetails.length != 0) {
-          setRowData(data.InventoryDetails);
-          setStatus('success');
-          setMessage('Chase data are loaded');
-        } else {
-          setStatus('error');
-          setMessage('Chase table is empty, Please contact the support');
-        }
-      }
-    }).catch((err) => {
-      setIsTableLoading(false);
+      }]);
       setStatus('error');
       setMessage('Error in loading the table data, Please contact the support');
       console.log(err);
@@ -24851,7 +24883,7 @@ function App() {
         <MenuAppBar auth={authorisationApi} />
       </section>
       <RowDetailsContext.Provider value={{ rowDetailValue, setRowDetailValue }}>
-        <SaveBtnContext.Provider value={{ saveBtnLoading, setSaveBtnLoading, saveBtnDisable, setSaveBtnDisable }} >
+        <SaveBtnContext.Provider value={{ categoryBarLoading, setCategoryBarLoading, saveBtnDisable, setSaveBtnDisable }} >
           <section>
             <div className="category-bar-wrapper">
               <CategoryBar
@@ -24860,9 +24892,10 @@ function App() {
                 isLoading={loading}
                 onCatergorySubmit={onCatergorySubmit}
                 OnTableRowSave={onTableRowSave}
+                onExportToExcel={onExportToExcel}
               />
             </div>
-            {saveBtnLoading ? <LinearProgress color="secondary" /> : null}
+            {categoryBarLoading ? <LinearProgress color="secondary" /> : null}
           </section>
 
           <main className="container-fluid">

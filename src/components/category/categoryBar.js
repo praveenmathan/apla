@@ -5,6 +5,7 @@ import { Form, Select } from 'semantic-ui-react';
 import Skeleton from '@material-ui/lab/Skeleton';
 import { RowDetailsContext, SaveBtnContext } from '../context/rowDetailsContext';
 
+/* eslint-disable */
 const CategoryBar = (props) => {
     let isLoading = props.isLoading;
 
@@ -26,8 +27,13 @@ const CategoryBar = (props) => {
     const [isDisabled, setIsDisabled] = useState(true);
 
     const { rowDetailValue } = useContext(RowDetailsContext);
-    const { setSaveBtnLoading } = useContext(SaveBtnContext);
+    const { setCategoryBarLoading } = useContext(SaveBtnContext);
     const { saveBtnDisable } = useContext(SaveBtnContext);
+
+    const handleExportToExcel = () => {
+        setCategoryBarLoading(true);
+        props.onExportToExcel();
+    }
 
     useEffect(() => {
         /* To initialise marketplace options */
@@ -177,7 +183,7 @@ const CategoryBar = (props) => {
 
     /* Handle Save button */
     const handleSave = () => {
-        setSaveBtnLoading(true);
+        setCategoryBarLoading(true);
         let filteredArray = getFilteredArray(rowDetailValue)
         props.OnTableRowSave(filteredArray);
     }
@@ -287,7 +293,9 @@ const CategoryBar = (props) => {
                     <Grid.Column width={2}>
                         <Form.Button fluid primary onClick={handleSubmit} disabled={isDisabled}>LOAD</Form.Button>
                         <Form.Button fluid primary onClick={handleSave} disabled={saveBtnDisable}>SAVE</Form.Button>
-                        {/* <Button>Save</Button> */}
+                        <Form.Button fluid primary onClick={handleExportToExcel}>
+                            E2E
+                        </Form.Button>
                     </Grid.Column>
                 </Grid>
             </Form.Group>
