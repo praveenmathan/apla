@@ -733,7 +733,8 @@ function App() {
         "channel": reqDataChannel(newValue),
         "gender": reqDataGender(newValue),
         "category": reqDataCategory(newValue),
-        "division": reqDataDivision(newValue)
+        "division": reqDataDivision(newValue),
+        "table": reqDataTableArr(newValue)
       }
     };
 
@@ -968,6 +969,27 @@ function App() {
                 //   "tableDescription": eachDivision.tableDescription
                 // });
                 tablearray = eachDivision.tableDescription
+              }
+            });
+          }
+        });
+      }
+    });
+    return tablearray;
+  }
+
+  function reqDataTableArr(newValue) {
+    let tablearray = [];
+    Object.keys(categoryApi).map(each => {
+      if (each === 'selectionFilters') {
+        Object.keys(categoryApi[each]).map(eachfilters => {
+          let selectionFilters = categoryApi[each];
+          if (eachfilters === 'formattedTableData') {
+            selectionFilters[eachfilters].map(eachDivision => {
+              if (newValue.action === eachDivision.tableDescription) {
+                tablearray.push({
+                  "tableDescription": eachDivision.tableDescription
+                });
               }
             });
           }

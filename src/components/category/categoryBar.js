@@ -10,30 +10,45 @@ const CategoryBar = (props) => {
     let isLoading = props.isLoading;
 
     const [isFetching, setIsFetching] = useState(false);
-    const [channelOptions, setChannelOptions] = useState([]);
     const [marketPlaceOptions, setMarketPlaceOptions] = useState([]);
     const [marketPlaceValue, setMarketPlaceValue] = useState('');
+    const [marketPlaceError, setMarketPlaceError] = useState(false);
+
     const [retailWeekOptions, setRetailWeekOptions] = useState([]);
     const [retailWeekValue, setRetailWeekValue] = useState('');
+    const [retailWeekError, setRetailWeekError] = useState(false);
+
+    const [channelOptions, setChannelOptions] = useState([]);
     const [channelValue, setChannelValue] = useState('');
+    const [channelError, setChannelError] = useState(false);
+
     const [categoryOptions, setCategoryOptions] = useState([]);
     const [categoryValue, setCategoryValue] = useState([]);
+    const [categoryError, setCategoryError] = useState(false);
+
     const [genderOptions, setGenderOptions] = useState([]);
     const [genderValue, setGenderValue] = useState('');
+    const [genderError, setGenderError] = useState(false);
+
     const [divisionOptions, setDivisionOptions] = useState([]);
     const [divisionValue, setDivisionValue] = useState('');
+    const [divisionError, setDivisionError] = useState(false);
+
     const [tableOptions, setTableOptions] = useState([]);
     const [tableValue, setTableValue] = useState('');
-    const [isDisabled, setIsDisabled] = useState(true);
+    const [tableError, setTableError] = useState(false);
 
+    /* Context */
     const { rowDetailValue } = useContext(RowDetailsContext);
     const { setCategoryBarLoading } = useContext(SaveBtnContext);
     const { saveBtnDisable } = useContext(SaveBtnContext);
 
-    const handleExportToExcel = () => {
-        setCategoryBarLoading(true);
-        props.onExportToExcel();
+    const canBeSubmitted = () => {
+        return retailWeekValue != '' && channelValue != '' && divisionValue != '' && genderValue != '' && categoryValue.length != 0 && tableValue != '';
     }
+
+    const isEnabled = canBeSubmitted();
+    console.log('isEnabled', isEnabled);
 
     useEffect(() => {
         /* To initialise marketplace options */
@@ -105,55 +120,96 @@ const CategoryBar = (props) => {
 
     /* To handle marketplace change */
     const handleMarketPlaceChange = (e, { value }) => {
-        setMarketPlaceValue(value);
-        setIsFetching(true);
-        props.auth.userAccessDetails.map(eachitem => {
-            if (eachitem.marketplaceDescription === value) {
-                let tempChannel = [];
-                eachitem.channels.map(eachChannel => {
-                    tempChannel.push({
-                        key: eachChannel.channelDescription,
-                        value: eachChannel.channelDescription,
-                        text: eachChannel.channelDescription
+        if (value != '') {
+            setMarketPlaceError(false);
+            setMarketPlaceValue(value);
+            setIsFetching(true);
+            props.auth.userAccessDetails.map(eachitem => {
+                if (eachitem.marketplaceDescription === value) {
+                    let tempChannel = [];
+                    eachitem.channels.map(eachChannel => {
+                        tempChannel.push({
+                            key: eachChannel.channelDescription,
+                            value: eachChannel.channelDescription,
+                            text: eachChannel.channelDescription
+                        });
+                        setChannelOptions(tempChannel);
+                        setIsFetching(false);
                     });
-                    setChannelOptions(tempChannel);
-                    setIsFetching(false);
-                });
-            } else {
-                return;
-            }
-        });
+                } else {
+                    return;
+                }
+            });
+        } else {
+            setMarketPlaceValue(value);
+            setMarketPlaceError(true);
+        }
     };
 
     /* To handle retail week change */
     const handleRetailWeekChange = (e, { value }) => {
-        setRetailWeekValue(value);
+        if (value != '') {
+            setRetailWeekError(false);
+            setRetailWeekValue(value);
+        } else {
+            setRetailWeekError(true);
+            setRetailWeekValue(value);
+        }
     };
 
     /* To handle channel change */
     const handleChannelChange = (e, { value }) => {
-        setChannelValue(value);
+        if (value != '') {
+            setChannelError(false);
+            setChannelValue(value);
+        } else {
+            setChannelError(true);
+            setChannelValue(value);
+        }
     };
 
     /* To handle category change */
     const handleCategoryChange = (e, { value }) => {
-        setCategoryValue(value);
+        if (value.length != 0) {
+            setCategoryError(false);
+            setCategoryValue(value);
+        } else {
+            setCategoryError(true);
+            setCategoryValue(value);
+        }
     };
 
     /* To handle gender change */
     const handleGenderChange = (e, { value }) => {
-        setGenderValue(value);
+        if (value != '') {
+            setGenderError(false);
+            setGenderValue(value);
+        } else {
+            setGenderError(true);
+            setGenderValue(value);
+        }
     };
 
     /* To handle division change */
     const handleDivisionChange = (e, { value }) => {
-        setDivisionValue(value);
+        if (value != '') {
+            setDivisionError(false);
+            setDivisionValue(value);
+        } else {
+            setDivisionError(true);
+            setDivisionValue(value);
+        }
     };
 
     /* To handle table change */
     const handleTableChange = (e, { value }) => {
-        setTableValue(value);
-        setIsDisabled(false);
+        if (value != '') {
+            setTableError(false);
+            setTableValue(value);
+        } else {
+            setTableError(true);
+            setTableValue(value);
+        }
     };
 
     /* Handle Load/submit button */
@@ -188,6 +244,12 @@ const CategoryBar = (props) => {
         props.OnTableRowSave(filteredArray);
     }
 
+    /* Handle Export to excel */
+    const handleExportToExcel = () => {
+        setCategoryBarLoading(true);
+        props.onExportToExcel();
+    }
+
     return (<>
         <Form>
             <Form.Group widths='equal'>
@@ -201,6 +263,10 @@ const CategoryBar = (props) => {
                                 search
                                 searchInput={{ id: 'form-select-control-marketplace' }}
                                 onChange={handleMarketPlaceChange}
+                                error={marketPlaceError ? {
+                                    content: 'Please choose a Market Place',
+                                    pointing: 'above',
+                                } : false}
                             /> : <Skeleton variant="rect" width={130} height={40} />}
                             <h1>MARKETPLACE</h1>
                         </Segment>
@@ -215,6 +281,10 @@ const CategoryBar = (props) => {
                                 search
                                 searchInput={{ id: 'form-select-control-week' }}
                                 onChange={handleRetailWeekChange}
+                                error={retailWeekError ? {
+                                    content: 'Please choose a Retail Week',
+                                    pointing: 'above',
+                                } : false}
                             /> : <Skeleton variant="rect" width={130} height={40} />}
                             <h1>RETAIL WEEK</h1>
                         </Segment>
@@ -230,6 +300,10 @@ const CategoryBar = (props) => {
                                 search
                                 searchInput={{ id: 'form-select-control-channel' }}
                                 onChange={handleChannelChange}
+                                error={channelError ? {
+                                    content: 'Please choose a Channel',
+                                    pointing: 'above',
+                                } : false}
                             /> : <Skeleton variant="rect" width={130} height={40} />}
                             <h1>CHANNEL</h1>
                         </Segment>
@@ -246,6 +320,10 @@ const CategoryBar = (props) => {
                                         search
                                         searchInput={{ id: 'form-select-control-division' }}
                                         onChange={handleDivisionChange}
+                                        error={divisionError ? {
+                                            content: 'Please choose a Division',
+                                            pointing: 'above',
+                                        } : false}
                                     /> : <Skeleton variant="rect" width={130} height={40} />}
                                 </Grid.Column>
                                 <Grid.Column width={5}>
@@ -257,6 +335,10 @@ const CategoryBar = (props) => {
                                         search
                                         searchInput={{ id: 'form-select-control-gender' }}
                                         onChange={handleGenderChange}
+                                        error={genderError ? {
+                                            content: 'Please choose a gender',
+                                            pointing: 'above',
+                                        } : false}
                                     /> : <Skeleton variant="rect" width={130} height={40} />}
                                 </Grid.Column>
                                 <Grid.Column>
@@ -270,6 +352,10 @@ const CategoryBar = (props) => {
                                         selection
                                         searchInput={{ id: 'form-select-control-category' }}
                                         onChange={handleCategoryChange}
+                                        error={categoryError ? {
+                                            content: 'Please choose a category',
+                                            pointing: 'above',
+                                        } : false}
                                     /> : <Skeleton variant="rect" width={130} height={40} />}
                                 </Grid.Column>
                             </Grid>
@@ -286,16 +372,18 @@ const CategoryBar = (props) => {
                                 search
                                 searchInput={{ id: 'form-select-control-action' }}
                                 onChange={handleTableChange}
+                                error={tableError ? {
+                                    content: 'Please choose an Action',
+                                    pointing: 'above',
+                                } : false}
                             /> : <Skeleton variant="rect" width={130} height={40} />}
                             <h1>TABLE</h1>
                         </Segment>
                     </Grid.Column>
                     <Grid.Column width={2}>
-                        <Form.Button fluid primary onClick={handleSubmit} disabled={isDisabled}>LOAD</Form.Button>
+                        <Form.Button fluid primary onClick={handleSubmit} disabled={!isEnabled}>LOAD</Form.Button>
                         <Form.Button fluid primary onClick={handleSave} disabled={saveBtnDisable}>SAVE</Form.Button>
-                        <Form.Button fluid primary onClick={handleExportToExcel}>
-                            E2E
-                        </Form.Button>
+                        <Form.Button fluid primary onClick={handleExportToExcel} disabled={!isEnabled}>E2E</Form.Button>
                     </Grid.Column>
                 </Grid>
             </Form.Group>
