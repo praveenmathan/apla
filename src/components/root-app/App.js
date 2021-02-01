@@ -67,7 +67,6 @@ function App() {
   const [categoryBarLoading, setCategoryBarLoading] = React.useState(false);
   const [saveBtnDisable, setSaveBtnDisable] = React.useState(true);
   const [selectionFilterForSave, setSelectionFilterForSave] = React.useState(null);
-  const [selectionFilterDataForExport, setSelectionFilterDataForExport] = React.useState(null);
 
   useEffect(() => {
     /* Get CUP roles, Marketplace and Channel details  */
@@ -733,16 +732,12 @@ function App() {
         "channel": reqDataChannel(newValue),
         "gender": reqDataGender(newValue),
         "category": reqDataCategory(newValue),
-        "division": reqDataDivision(newValue),
-        "table": reqDataTableArr(newValue)
+        "division": reqDataDivision(newValue)
       }
     };
 
     /* testing AG grid - for now */
     getTableAPI(requestDataForTable);
-
-    /* for Export to Excel */
-    setSelectionFilterDataForExport(requestDataForTable);
 
     /* for SAVE request */
     setSelectionFilterForSave(newValue);
@@ -798,18 +793,32 @@ function App() {
     });
   }
 
-  function onExportToExcel() {
-    exportToExcelService.postData(selectionFilterDataForExport).then((response) => {
+  function onExportToExcel(selectionFilterDataForExport) {
+
+    /* formatting the request - for export to excel */
+    let requestDataForE2e = {
+      "action": 'export to excel',
+      "selectionFilters": {
+        "marketplace": reqDataMarket(selectionFilterDataForExport),
+        "retailWeek": reqDataRetailWeek(selectionFilterDataForExport),
+        "channel": reqDataChannel(selectionFilterDataForExport),
+        "gender": reqDataGender(selectionFilterDataForExport),
+        "category": reqDataCategory(selectionFilterDataForExport),
+        "division": reqDataDivision(selectionFilterDataForExport)
+      }
+    };
+
+    exportToExcelService.postData(requestDataForE2e).then((response) => {
       if (response.status === 200) {
         const { data } = response;
-        if (data.ReturnCode === 0) {
+        if (data.returnCode === 0) {
           const anchor = document.createElement("a");
           anchor.setAttribute("href", 'excel/SampleData.xlsx');
           anchor.setAttribute("download", 'InventoryDetailsExcel.xlsx');
           anchor.click();
           setCategoryBarLoading(false);
           setStatus('success');
-          setMessage('Updated values are saved');
+          setMessage('Data are exported to excel');
         } else {
           setCategoryBarLoading(false);
           setStatus('error');

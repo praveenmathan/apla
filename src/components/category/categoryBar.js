@@ -247,7 +247,18 @@ const CategoryBar = (props) => {
     /* Handle Export to excel */
     const handleExportToExcel = () => {
         setCategoryBarLoading(true);
-        props.onExportToExcel();
+
+        let selectionFilterDataUpdated = {
+            marketPlace: marketPlaceValue,
+            retailWeek: retailWeekValue,
+            channel: channelValue,
+            category: categoryValue,
+            gender: genderValue,
+            division: divisionValue,
+            table: tableValue
+        };
+
+        props.onExportToExcel(selectionFilterDataUpdated);
     }
 
     return (<>
