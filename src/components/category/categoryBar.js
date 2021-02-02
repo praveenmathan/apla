@@ -48,7 +48,6 @@ const CategoryBar = (props) => {
     }
 
     const isEnabled = canBeSubmitted();
-    console.log('isEnabled', isEnabled);
 
     useEffect(() => {
         /* To initialise marketplace options */
@@ -347,7 +346,7 @@ const CategoryBar = (props) => {
                                         searchInput={{ id: 'form-select-control-gender' }}
                                         onChange={handleGenderChange}
                                         error={genderError ? {
-                                            content: 'Please choose a gender',
+                                            content: 'Please choose a Gender',
                                             pointing: 'above',
                                         } : false}
                                     /> : <Skeleton variant="rect" width={130} height={40} />}
@@ -364,7 +363,7 @@ const CategoryBar = (props) => {
                                         searchInput={{ id: 'form-select-control-category' }}
                                         onChange={handleCategoryChange}
                                         error={categoryError ? {
-                                            content: 'Please choose a category',
+                                            content: 'Please choose a Category',
                                             pointing: 'above',
                                         } : false}
                                     /> : <Skeleton variant="rect" width={130} height={40} />}
