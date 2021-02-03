@@ -33,6 +33,7 @@ import { RowDetailsContext, SaveBtnContext } from '../context/rowDetailsContext'
 import saveTableRowService from '../services/saveTableRowService';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import exportToExcelService from '../services/exportToExcelService';
+import LoginModal from '../utilities/loginModal';
 
 /* eslint-disable */
 const useStyles = makeStyles((theme) => ({
@@ -67,6 +68,7 @@ function App() {
   const [categoryBarLoading, setCategoryBarLoading] = React.useState(false);
   const [saveBtnDisable, setSaveBtnDisable] = React.useState(true);
   const [selectionFilterForSave, setSelectionFilterForSave] = React.useState(null);
+  const [openLogin, setOpenLogin] = React.useState(true);
 
   useEffect(() => {
     /* Get CUP roles, Marketplace and Channel details  */
@@ -24910,6 +24912,7 @@ function App() {
   return (
     <React.Fragment>
       {status ? <CustomSnackbar key={status.date} status={status.msg} msg={message} /> : null}
+      {openLogin ? <LoginModal /> : null}
       <section>
         <MenuAppBar auth={authorisationApi} />
       </section>
