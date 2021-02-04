@@ -1,5 +1,6 @@
 import React from 'react';
 import { AgGridColumn, AgGridReact } from 'ag-grid-react';
+import { RichSelectModule } from '@ag-grid-enterprise/rich-select';
 import { RowDetailsContext, SaveBtnContext } from '../context/rowDetailsContext';
 
 const ChaseTable = (props) => {
@@ -20,7 +21,8 @@ const ChaseTable = (props) => {
         <div className="ag-theme-alpine" style={{ height: '70vh' }}>
             <AgGridReact
                 defaultColDef={{
-                    width: 175,
+                    flex: 1,
+                    minWidth: 175,
                     sortable: true,
                     resizable: true,
                     filter: true
@@ -28,6 +30,9 @@ const ChaseTable = (props) => {
                 onGridReady={props.onGridReady}
                 rowData={props.rowData}
                 pagination={true}
+                modules={[
+                    RichSelectModule
+                ]}
             >
 
                 <AgGridColumn headerName="Products">
@@ -53,7 +58,7 @@ const ChaseTable = (props) => {
                     <AgGridColumn field="SelectedRecommendedActionOverride" headerClass='custom-font-color' headerName="Action Override"
                         width='225'
                         editable={true}
-                        cellEditor="agSelectCellEditor"
+                        cellEditor="agRichSelectCellEditor"
                         cellEditorParams={function (params) {
                             let givenValue = params.data.RecommendedActionOverride;
                             if (givenValue != null) {
@@ -94,7 +99,7 @@ const ChaseTable = (props) => {
                     <AgGridColumn field="DemandUnitsFourWeekRolling" headerName="Demand Units 4W rolling" />
                 </AgGridColumn>
             </AgGridReact>
-        </div>
+        </div >
     );
 }
 
