@@ -83,6 +83,8 @@ const ChaseTable = (props) => {
                     <AgGridColumn field="GA_1083" headerName="GA 1083" />
                     <AgGridColumn field="GA_1084" headerName="GA 1084" />
                     <AgGridColumn field="GA_1085" headerName="GA 1085" />
+                    <AgGridColumn field="ChannelWOS" />
+                    <AgGridColumn field="MarketplaceWOS" />
                 </AgGridColumn>
 
                 <AgGridColumn headerName="Sales">

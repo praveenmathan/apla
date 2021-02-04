@@ -80,6 +80,11 @@ const ImproveConversionTable = (props) => {
                     <AgGridColumn field="FirstOrderDate" />
                     <AgGridColumn field="DaysOnSale" />
                 </AgGridColumn>
+
+                <AgGridColumn headerName="Inventory">
+                    <AgGridColumn field="ChannelWOS" />
+                    <AgGridColumn field="MarketplaceWOS" />
+                </AgGridColumn>
             </AgGridReact>
         </div>
     );

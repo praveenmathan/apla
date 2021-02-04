@@ -79,6 +79,8 @@ const CancelTable = (props) => {
                     <AgGridColumn field="UnassignedSixtyonePlusDaysOut" headerName='Unassigned Qty 61 Plus' />
                     <AgGridColumn field="1083_Contracts" headerName='1083 Contracts' />
                     <AgGridColumn field="1084_Contracts" headerName='1084 Contracts' />
+                    <AgGridColumn field="ChannelWOS" />
+                    <AgGridColumn field="MarketplaceWOS" />
                     <AgGridColumn field="1085_Contracts" headerName='1085 Contracts' />
                 </AgGridColumn>
 

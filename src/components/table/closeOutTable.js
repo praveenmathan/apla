@@ -87,6 +87,8 @@ const CloseOutTable = (props) => {
                     <AgGridColumn field="SizeCountOwned" />
                     <AgGridColumn field="SizeCountTotal" />
                     <AgGridColumn field="SizeIntegrity" />
+                    <AgGridColumn field="ChannelWOS" />
+                    <AgGridColumn field="MarketplaceWOS" />
                 </AgGridColumn>
 
                 <AgGridColumn headerName="Plan">
