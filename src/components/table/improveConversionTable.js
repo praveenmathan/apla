@@ -83,7 +83,7 @@ const ImproveConversionTable = (props) => {
 
                 <AgGridColumn headerName="Inventory">
                     <AgGridColumn field="ChannelWOS" />
-                    <AgGridColumn field="MarketplaceWOS" />
+                    <AgGridColumn field="MarketPlaceWOS" />
                 </AgGridColumn>
             </AgGridReact>
         </div>

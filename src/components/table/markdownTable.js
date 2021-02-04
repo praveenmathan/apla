@@ -91,7 +91,7 @@ const MarkdownTable = (props) => {
                     <AgGridColumn field="SizeCountTotal" />
                     <AgGridColumn field="SizeIntegrity" />
                     <AgGridColumn field="ChannelWOS" />
-                    <AgGridColumn field="MarketplaceWOS" />
+                    <AgGridColumn field="MarketPlaceWOS" />
                     <AgGridColumn field="RecommendedChaseUnits" />
                     <AgGridColumn field="RecommendedCancelUnits" />
                 </AgGridColumn>

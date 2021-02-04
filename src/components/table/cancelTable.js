@@ -80,7 +80,7 @@ const CancelTable = (props) => {
                     <AgGridColumn field="1083_Contracts" headerName='1083 Contracts' />
                     <AgGridColumn field="1084_Contracts" headerName='1084 Contracts' />
                     <AgGridColumn field="ChannelWOS" />
-                    <AgGridColumn field="MarketplaceWOS" />
+                    <AgGridColumn field="MarketPlaceWOS" />
                     <AgGridColumn field="1085_Contracts" headerName='1085 Contracts' />
                 </AgGridColumn>
 
