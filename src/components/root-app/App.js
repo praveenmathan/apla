@@ -34,6 +34,7 @@ import saveTableRowService from '../services/saveTableRowService';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import exportToExcelService from '../services/exportToExcelService';
 import releaseTableService from '../services/releaseTableService';
+import CrossChannelTable from '../table/crossChannelTable';
 
 /* eslint-disable */
 const useStyles = makeStyles((theme) => ({
@@ -1049,6 +1050,9 @@ function App() {
     }
     if (actionText === 'release') {
       releaseTableApiService(requestDataForTable);
+    }
+    if (actionText === 'crosschannel') {
+      crossChannelApiService(requestDataForTable);
     }
   }
 
@@ -24933,6 +24937,28 @@ function App() {
     });
   }
 
+  function crossChannelApiService(requestDataForTable) {
+    crossChannelTableService.postData(requestDataForTable).then((response) => {
+      if (response.status === 200) {
+        setIsTableLoading(false);
+        const { data } = response;
+        if (data.InventoryDetails.length != 0) {
+          setRowData(data.InventoryDetails);
+          setStatus('success');
+          setMessage('Release data are loaded');
+        } else {
+          setStatus('error');
+          setMessage('Release table is empty, Please contact the support');
+        }
+      }
+    }).catch((err) => {
+      setIsTableLoading(false);
+      setStatus('error');
+      setMessage('Error in loading the table data, Please contact the support');
+      console.log(err);
+    });
+  }
+
   return (
     <React.Fragment>
       {status ? <CustomSnackbar key={status.date} status={status.msg} msg={message} /> : null}
@@ -25024,6 +25050,11 @@ function App() {
                       <CircularProgress color="secondary" />
                     </div> :
                     <ReleaseTable rowData={rowData} onGridReady={onGridReady} gridApi={gridApi} />}</Route>
+                  <Route exact path="/crosschannel">{isTableLoading ?
+                    <div className={classes.root}>
+                      <CircularProgress color="secondary" />
+                    </div> :
+                    <CrossChannelTable rowData={rowData} onGridReady={onGridReady} gridApi={gridApi} />}</Route>
                   <Route exact path="*" component={NotFound} />
                 </Switch>
               </div>
