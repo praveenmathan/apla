@@ -395,7 +395,7 @@ const CategoryBar = (props) => {
                     <Grid.Column width={2}>
                         <Form.Button fluid primary onClick={handleSubmit} disabled={!isEnabled}>LOAD</Form.Button>
                         <Form.Button fluid primary onClick={handleSave} disabled={saveBtnDisable}>SAVE</Form.Button>
-                        <Form.Button fluid primary onClick={handleExportToExcel} disabled={!isEnabled}>E2E</Form.Button>
+                        <Form.Button fluid primary onClick={handleExportToExcel} disabled={!isEnabled}>EXPORT</Form.Button>
                     </Grid.Column>
                 </Grid>
             </Form.Group>
