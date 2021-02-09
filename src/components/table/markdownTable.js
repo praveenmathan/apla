@@ -1,6 +1,6 @@
 import React from 'react';
-import { AgGridColumn, AgGridReact } from 'ag-grid-react';
-import { RowDetailsContext, SaveBtnContext, SelectedChannelContext } from '../context/rowDetailsContext';
+import { AgGridReact, AgGridColumn } from '@ag-grid-community/react';
+import { RowDetailsContext, SaveBtnContext } from '../context/rowDetailsContext';
 
 const MarkdownTable = (props) => {
     let consolidatedRows = [];

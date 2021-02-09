@@ -1,4 +1,4 @@
-import { AgGridColumn, AgGridReact } from 'ag-grid-react';
+import { AgGridReact, AgGridColumn } from '@ag-grid-community/react';
 
 const ExcludeTable = (props) => {
 

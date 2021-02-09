@@ -45,6 +45,10 @@ Customised CSS
   background-color:  rgba(0,0,0,0.5) !important;
 }
 
+.ag-theme-alpine .ag-cell {
+  font-feature-settings: "tnum" 1 !important;
+}
+
 .ui.default.dropdown:not(.button)>.text, .ui.dropdown:not(.button)>.default.text {
   color: rgb(104, 104, 104) !important;
 }

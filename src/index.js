@@ -5,8 +5,12 @@ import App from "./components/root-app/App";
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter } from "react-router-dom";
-import 'ag-grid-community/dist/styles/ag-grid.css';
-import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
+
+import "@ag-grid-enterprise/all-modules/dist/styles/ag-grid.css";
+import "@ag-grid-enterprise/all-modules/dist/styles/ag-theme-alpine.css";
+
+import { LicenseManager } from "@ag-grid-enterprise/core";
+LicenseManager.setLicenseKey("Insight_Enterprises_Inc_on_behalf_of_Nike_Inc_DSM_Multiple_Applications_10_Devs__1_February_2021_[v2]_MTYxMjEzNzYwMDAwMA==9ed853045a9d2aaa33e5dbee232e31b3");
 
 const styleLink = document.createElement("link");
 styleLink.rel = "stylesheet";
