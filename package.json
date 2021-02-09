@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ag-grid-community/react": "^25.0.1",
     "@ag-grid-enterprise/all-modules": "^25.0.1",
     "@ag-grid-enterprise/column-tool-panel": "^25.0.1",
     "@ag-grid-enterprise/core": "^25.0.1",

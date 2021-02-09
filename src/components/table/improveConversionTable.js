@@ -1,5 +1,5 @@
 import React from 'react';
-import { AgGridColumn, AgGridReact } from 'ag-grid-react';
+import { AgGridReact, AgGridColumn } from '@ag-grid-community/react';
 import { RowDetailsContext, SaveBtnContext } from '../context/rowDetailsContext';
 
 const ImproveConversionTable = (props) => {

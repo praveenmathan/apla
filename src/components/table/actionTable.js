@@ -1,6 +1,6 @@
 import React from 'react';
 import Dialog from '@material-ui/core/Dialog';
-import { AgGridColumn, AgGridReact } from 'ag-grid-react';
+import { AgGridReact, AgGridColumn } from '@ag-grid-community/react';
 import { RowDetailsContext, SaveBtnContext } from '../context/rowDetailsContext';
 
 const ActionTable = (props) => {
