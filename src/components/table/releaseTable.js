@@ -51,7 +51,7 @@ const ReleaseTable = (props) => {
                     <AgGridColumn field="1083_Contracts" headerName='1083 Contracts' />
                     <AgGridColumn field="1084_Contracts" headerName='1084 Contracts' />
                     <AgGridColumn field="1085_Contracts" headerName='1085 Contracts' />
-                    {selectedChannel === 'NDDC' ? <AgGridColumn field="NSO_Contracts" /> : selectedChannel === 'NSO' ? <AgGridColumn field="NDDC_Contracts" /> : null}
+                    {selectedChannel === 'NDDC' ? <AgGridColumn field="NSO_Contracts" /> : selectedChannel === 'NSO' ? <AgGridColumn field="NDDC_Contracts" /> : <AgGridColumn hide={true} />}
                     <AgGridColumn field="WholesaleContract" />
                     <AgGridColumn field="GA_1083" headerName="GA 1083" />
                     <AgGridColumn field="GA_1084" headerName="GA 1084" />

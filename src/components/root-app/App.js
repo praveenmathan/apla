@@ -713,13 +713,20 @@ function App() {
 
   function getFormattedCategoryApi(data) {
     let formattedData = { ...data };
-    let capitalisedData = [];
+    let capitalisedTableData = [];
+    let capitalisedCategoryData = [];
+
     formattedData.selectionFilters.table.map(eachTable => {
-      capitalisedData.push({ 'tableDescription': eachTable.tableDescription.toLowerCase().capitalize() });
+      capitalisedTableData.push({ 'tableDescription': eachTable.tableDescription.toLowerCase().capitalize() });
     });
 
-    let sortedCapitalisedData = capitalisedData.sort(stringCompare);
+    formattedData.selectionFilters.category.map(eachTable => {
+      capitalisedCategoryData.push({ 'categoryDescription': eachTable.categoryDescription.toLowerCase().capitalize() });
+    });
+
+    let sortedCapitalisedData = capitalisedTableData.sort(stringCompare);
     formattedData.selectionFilters['formattedTableData'] = [...sortedCapitalisedData];
+
     return formattedData;
   }
 

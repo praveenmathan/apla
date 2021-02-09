@@ -9,8 +9,6 @@ const CrossChannelTable = (props) => {
     const { setSaveBtnDisable } = React.useContext(SaveBtnContext);
     const { selectedChannel } = React.useContext(SelectedChannelContext);
 
-    console.log('selected channel', selectedChannel);
-
     const onCellValueChanged = (params) => {
         if (!(params.oldValue === <AgGridColumn></AgGridColumn> && params.newValue === undefined)) {
             params.node.data['changed'] = true;
@@ -56,7 +54,7 @@ const CrossChannelTable = (props) => {
                         cellEditor="agSelectCellEditor"
                         cellEditorParams={function (params) {
                             let givenValue = params.data.RecommendedActionOverride;
-                            if (givenValue != <AgGridColumn></AgGridColumn>) {
+                            if (givenValue !== <AgGridColumn></AgGridColumn>) {
                                 let actionOveride = givenValue.split(',');
                                 return {
                                     values: actionOveride
