@@ -6,6 +6,7 @@ const MarkdownTable = (props) => {
     let consolidatedRows = [];
     const { setRowDetailValue } = React.useContext(RowDetailsContext);
     const { setSaveBtnDisable } = React.useContext(SaveBtnContext);
+    const { selectedChannel } = React.useContext(SelectedChannelContext);
 
     const onCellValueChanged = (params) => {
         if (!(params.oldValue === null && params.newValue === undefined)) {
@@ -79,7 +80,7 @@ const MarkdownTable = (props) => {
                     <AgGridColumn field="1083_Contracts" headerName='1083 Contracts' />
                     <AgGridColumn field="1084_Contracts" headerName='1084 Contracts' />
                     <AgGridColumn field="1085_Contracts" headerName='1085 Contracts' />
-                    <AgGridColumn field="NSO_Contracts" />
+                    {selectedChannel === 'NDDC' ? <AgGridColumn field="NSO_Contracts" /> : selectedChannel === 'NSO' ? <AgGridColumn field="NDDC_Contracts" /> : <AgGridColumn hide={true} />}
                     <AgGridColumn field="WholesaleContract" />
                     <AgGridColumn field="StoreIOH" />
                     <AgGridColumn field="InTransit" />
