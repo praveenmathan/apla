@@ -714,14 +714,9 @@ function App() {
   function getFormattedCategoryApi(data) {
     let formattedData = { ...data };
     let capitalisedTableData = [];
-    let capitalisedCategoryData = [];
 
     formattedData.selectionFilters.table.map(eachTable => {
       capitalisedTableData.push({ 'tableDescription': eachTable.tableDescription.toLowerCase().capitalize() });
-    });
-
-    formattedData.selectionFilters.category.map(eachTable => {
-      capitalisedCategoryData.push({ 'categoryDescription': eachTable.categoryDescription.toLowerCase().capitalize() });
     });
 
     let sortedCapitalisedData = capitalisedTableData.sort(stringCompare);
