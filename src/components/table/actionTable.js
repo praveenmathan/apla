@@ -1,7 +1,8 @@
 import React from 'react';
 import Dialog from '@material-ui/core/Dialog';
 import { AgGridReact, AgGridColumn } from '@ag-grid-community/react';
-import { RowDetailsContext, SaveBtnContext } from '../context/rowDetailsContext';
+import { RowDetailsContext, SaveBtnContext, SelectedChannelContext } from '../context/rowDetailsContext';
+import { AllModules } from "@ag-grid-enterprise/all-modules";
 
 const ActionTable = (props) => {
     let consolidatedRows = [];
@@ -40,17 +41,39 @@ const ActionTable = (props) => {
             </Dialog>
             <div className="ag-theme-alpine" style={{ height: '70vh' }}>
                 <AgGridReact
+                    modules={AllModules}
                     defaultColDef={{
-                        width: 175,
+                        flex: 1,
+                        minWidth: 175,
                         sortable: true,
                         resizable: true,
-                        filter: true
+                        filter: true,
+                        enableRowGroup: true,
+                        enablePivot: true
+                    }}
+                    sideBar={{
+                        toolPanels: [
+                            {
+                                id: 'columns',
+                                labelDefault: 'Columns',
+                                labelKey: 'columns',
+                                iconKey: 'columns',
+                                toolPanel: 'agColumnsToolPanel',
+                                toolPanelParams: {
+                                    suppressRowGroups: true,
+                                    suppressValues: true,
+                                    suppressPivots: true,
+                                    suppressPivotMode: true,
+                                    suppressSideButtons: true
+                                },
+                            }]
                     }}
                     onGridReady={props.onGridReady}
                     rowData={props.rowData}
                     pagination={true}
+                    enableCellTextSelection={true}
+                    suppressDragLeaveHidesColumns={true}
                 >
-
                     <AgGridColumn headerName="Products">
                         <AgGridColumn field="StyleColor" pinned="left" lockPinned={true} cellClass="lock-pinned" cellRenderer={function (params) {
                             return "<a target='_blank' href='http://images6.nike.com/is/image/DPILS/"

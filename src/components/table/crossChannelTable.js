@@ -1,6 +1,7 @@
 import React from 'react';
-import { AgGridColumn, AgGridReact } from 'ag-grid-react';
+import { AgGridColumn, AgGridReact } from '@ag-grid-community/react';
 import { RowDetailsContext, SaveBtnContext, SelectedChannelContext } from '../context/rowDetailsContext';
+import { AllModules } from "@ag-grid-enterprise/all-modules";
 
 const CrossChannelTable = (props) => {
 
@@ -21,15 +22,38 @@ const CrossChannelTable = (props) => {
     return (
         <div className="ag-theme-alpine" style={{ height: '70vh' }}>
             <AgGridReact
+                modules={AllModules}
                 defaultColDef={{
-                    width: 175,
+                    flex: 1,
+                    minWidth: 175,
                     sortable: true,
                     resizable: true,
-                    filter: true
+                    filter: true,
+                    enableRowGroup: true,
+                    enablePivot: true
+                }}
+                sideBar={{
+                    toolPanels: [
+                        {
+                            id: 'columns',
+                            labelDefault: 'Columns',
+                            labelKey: 'columns',
+                            iconKey: 'columns',
+                            toolPanel: 'agColumnsToolPanel',
+                            toolPanelParams: {
+                                suppressRowGroups: true,
+                                suppressValues: true,
+                                suppressPivots: true,
+                                suppressPivotMode: true,
+                                suppressSideButtons: true
+                            },
+                        }]
                 }}
                 onGridReady={props.onGridReady}
                 rowData={props.rowData}
                 pagination={true}
+                enableCellTextSelection={true}
+                suppressDragLeaveHidesColumns={true}
             >
 
                 <AgGridColumn headerName="Products">
