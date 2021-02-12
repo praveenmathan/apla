@@ -150,6 +150,13 @@ const ActionTable = (props) => {
                         <AgGridColumn field="GA_1083" headerName="GA 1083" />
                         <AgGridColumn field="GA_1084" headerName="GA 1084" />
                         <AgGridColumn field="GA_1085" headerName="GA 1085" />
+                    <AgGridColumn field="DOMsInventory" headerName="DOMs Inventory"/>
+                    <AgGridColumn field="DOMsNDDCInventory" headerName="DOMs NDDC Inventory" />
+                    <AgGridColumn field="DOMsZOZOInventory" headerName="DOMs ZOZO Inventory" />
+                    <AgGridColumn field="DOMsNSOInventory" headerName="DOMs NSO Inventory" />
+                    <AgGridColumn field="DOMsNFSInventory" headerName="DOMs NFS Inventory" />
+                    <AgGridColumn field="DOMsEMPInventory" headerName="DOMs EMP Inventory" />
+                    <AgGridColumn field="DOMsGAInventory" headerName="DOMs GA Inventory" />
                         <AgGridColumn field="SizeCountOwned" />
                         <AgGridColumn field="SizeCountTotal" />
                         <AgGridColumn field="SizeIntegrity" />
@@ -203,6 +210,7 @@ const ActionTable = (props) => {
                     </AgGridColumn>
 
                     <AgGridColumn headerName="Web Traffic">
+                        <AgGridColumn field='WebTrafficLW' />
                         <AgGridColumn field="WebConversionPct" />
                         <AgGridColumn field="WebConversionFourWeekAvgRPT" />
                     </AgGridColumn>

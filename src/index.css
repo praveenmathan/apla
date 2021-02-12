@@ -61,3 +61,28 @@ Customised CSS
   margin: 5px 0px !important;
   box-shadow: 0 14px 26px -12px rgba(153, 153, 153, 0.42), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(153, 153, 153, 0.2) !important;
 }
+
+.custom-tooltip {
+  position: absolute;
+  width: 150px;
+  height: 70px;
+  border: 1px solid #fa8231;
+  overflow: hidden;
+  pointer-events: none;
+  transition: opacity 1s;
+  background-color: white;
+  box-sizing:unset;
+}
+
+.custom-tooltip.ag-tooltip-hiding {
+  opacity: 0;
+}
+
+.custom-tooltip p {
+  margin: 5px;
+  white-space: nowrap;
+}
+
+.custom-tooltip p:first-of-type {
+  font-weight: bold;
+}

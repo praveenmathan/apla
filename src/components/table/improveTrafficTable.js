@@ -96,6 +96,7 @@ const ImproveTrafficTable = (props) => {
                 </AgGridColumn>
 
                 <AgGridColumn headerName="Web Traffic">
+                    <AgGridColumn field="WebTrafficLW" />
                     <AgGridColumn field="WebConversionPct" />
                     <AgGridColumn field="WebConversionFourWeekAvgRPT" />
                 </AgGridColumn>

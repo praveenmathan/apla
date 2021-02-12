@@ -78,7 +78,7 @@ const CrossChannelTable = (props) => {
                         cellEditor="agSelectCellEditor"
                         cellEditorParams={function (params) {
                             let givenValue = params.data.RecommendedActionOverride;
-                            if (givenValue !== <AgGridColumn></AgGridColumn>) {
+                            if (givenValue != null) {
                                 let actionOveride = givenValue.split(',');
                                 return {
                                     values: actionOveride
