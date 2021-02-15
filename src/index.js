@@ -18,7 +18,10 @@ document.head.appendChild(styleLink);
 const oktaAuth = new OktaAuth({
   issuer: 'https://nike-qa.oktapreview.com/oauth2/ausa0mcornpZLi0C40h7/',
   clientId: 'nike.nikedigital.slim-apla-app',
-  redirectUri: window.location.origin + '/login/callback'
+  redirectUri: 'http://localhost:3000/login/callback',
+  scopes: ['openid', 'profile', 'email'],
+  pkce: true,
+  disableHttpsCheck: false
 });
 
 //https://nike.okta.com/oauth2/aus27z7p76as9Dz0H1t7/

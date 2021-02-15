@@ -8,7 +8,8 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import logo from '../../assets/images/nike-logo.png';
-//import grey from '@material-ui/core/colors/grey';
+import { useOktaAuth } from '@okta/okta-react';
+import { Link } from 'react-router-dom';
 
 //const primary = grey[900];
 
@@ -29,19 +30,16 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function MenuAppBar(props) {
-
+    const { authState, oktaAuth } = useOktaAuth();
     const classes = useStyles();
     const [auth] = React.useState(true);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
 
-    const handleMenu = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
+    const login = async () => oktaAuth.signInWithRedirect();
+    const logout = async () => oktaAuth.signOut();
+    const handleMenu = (event) => setAnchorEl(event.currentTarget);
+    const handleClose = () => setAnchorEl(null);
 
     return (
         <div className={classes.root}>
@@ -53,7 +51,7 @@ export default function MenuAppBar(props) {
                     </Typography>
                     {auth && (
                         <div>
-                            {props.auth.userName}
+                            {(!props.authentication) ? 'fetching data...' : props.authentication.email}
                             <IconButton
                                 aria-label="account of current user"
                                 aria-controls="menu-appbar"
@@ -78,9 +76,17 @@ export default function MenuAppBar(props) {
                                 open={open}
                                 onClose={handleClose}
                             >
-
-                                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                                <MenuItem onClick={handleClose}>My account</MenuItem>
+                                {authState.isAuthenticated && (
+                                    <MenuItem>
+                                        <Link to="/profile">Profile</Link>
+                                    </MenuItem>
+                                )}
+                                {authState.isAuthenticated && (
+                                    <MenuItem id="logout-button" onClick={logout}>Logout</MenuItem>
+                                )}
+                                {!authState.isPending && !authState.isAuthenticated && (
+                                    <MenuItem onClick={login}>Login</MenuItem>
+                                )}
                             </Menu>
                         </div>
                     )}

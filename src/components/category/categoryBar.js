@@ -38,6 +38,8 @@ const CategoryBar = (props) => {
     const [tableValue, setTableValue] = useState('');
     const [tableError, setTableError] = useState(false);
 
+    const [isUserAuthForSave, setIsUserAuthForSave] = useState(false);
+
     /* Context */
     const { rowDetailValue } = useContext(RowDetailsContext);
     const { setCategoryBarLoading } = useContext(SaveBtnContext);
@@ -47,10 +49,10 @@ const CategoryBar = (props) => {
         return retailWeekValue != '' && channelValue != '' && divisionValue != '' && genderValue != '' && categoryValue.length != 0 && tableValue != '';
     }
 
-    const isEnabled = canBeSubmitted();
-    console.log('isEnabled', isEnabled);
+    const isEnabled = canBeSubmitted();;
 
     useEffect(() => {
+
         /* To initialise marketplace options */
         let marketPlaceOptions = [];
         if (isLoading) {
@@ -120,12 +122,14 @@ const CategoryBar = (props) => {
 
     /* To handle marketplace change */
     const handleMarketPlaceChange = (e, { value }) => {
+        console.log('on change - gets triggered');
         if (value != '') {
             setMarketPlaceError(false);
             setMarketPlaceValue(value);
             setIsFetching(true);
             props.auth.userAccessDetails.map(eachitem => {
                 if (eachitem.marketplaceDescription === value) {
+                    /* set channel according to marketplace */
                     let tempChannel = [];
                     eachitem.channels.map(eachChannel => {
                         tempChannel.push({
@@ -136,6 +140,14 @@ const CategoryBar = (props) => {
                         setChannelOptions(tempChannel);
                         setIsFetching(false);
                     });
+
+                    /* set user access mode */
+                    if (eachitem.userAccessMode === 'ReadWrite') {
+                        console.log('global save', saveBtnDisable);
+                        setIsUserAuthForSave(true);
+                    } else {
+                        setIsUserAuthForSave(false);
+                    }
                 } else {
                     return;
                 }
@@ -393,7 +405,7 @@ const CategoryBar = (props) => {
                     </Grid.Column>
                     <Grid.Column width={2}>
                         <Form.Button fluid primary onClick={handleSubmit} disabled={!isEnabled}>LOAD</Form.Button>
-                        <Form.Button fluid primary onClick={handleSave} disabled={saveBtnDisable}>SAVE</Form.Button>
+                        <Form.Button fluid primary onClick={handleSave} disabled={!saveBtnDisable && !isUserAuthForSave}>SAVE</Form.Button>
                         <Form.Button fluid primary onClick={handleExportToExcel} disabled={!isEnabled}>E2E</Form.Button>
                     </Grid.Column>
                 </Grid>

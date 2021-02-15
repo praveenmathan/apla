@@ -34,6 +34,9 @@ import saveTableRowService from '../services/saveTableRowService';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import exportToExcelService from '../services/exportToExcelService';
 import LoginModal from '../utilities/loginModal';
+import { SecureRoute, LoginCallback } from '@okta/okta-react';
+import Profile from '../navigation/profile';
+import { useOktaAuth } from '@okta/okta-react';
 
 /* eslint-disable */
 const useStyles = makeStyles((theme) => ({
@@ -53,24 +56,41 @@ function App() {
   const [authorisationApi, setAuthorisationApi] = useState({});
   const [loading, setLoading] = useState(false);
   const [isTableLoading, setIsTableLoading] = useState(false);
-  const [exportLoading, setExportLoading] = useState(false);
   const [categoryApi, setCategoryApi] = useState({});
   const [gridApi, setGridApi] = useState(null);
   const [gridColumnApi, setGridColumnApi] = useState(null);
   const [rowData, setRowData] = useState([]);
   const history = useHistory();
   const classes = useStyles();
-  const [status, setStatusBase] = React.useState("");
-  const [message, setMessageBase] = React.useState("");
+  const [status, setStatusBase] = useState("");
+  const [message, setMessageBase] = useState("");
   const setStatus = msg => setStatusBase({ msg, date: new Date() });
   const setMessage = msg => setMessageBase(msg);
-  const [rowDetailValue, setRowDetailValue] = React.useState([]);
-  const [categoryBarLoading, setCategoryBarLoading] = React.useState(false);
-  const [saveBtnDisable, setSaveBtnDisable] = React.useState(true);
-  const [selectionFilterForSave, setSelectionFilterForSave] = React.useState(null);
-  const [openLogin, setOpenLogin] = React.useState(true);
+  const [rowDetailValue, setRowDetailValue] = useState([]);
+  const [categoryBarLoading, setCategoryBarLoading] = useState(false);
+  const [saveBtnDisable, setSaveBtnDisable] = useState(false);
+  const [selectionFilterForSave, setSelectionFilterForSave] = useState(null);
+  const [openLogin, setOpenLogin] = useState(false);
+  const { authState, oktaAuth } = useOktaAuth();
+  const [userInfo, setUserInfo] = useState(null);
 
   useEffect(() => {
+    if (!authState.isAuthenticated) {
+      // When user isn't authenticated, forget any user info
+      setOpenLogin(true);
+      setUserInfo(null);
+    } else {
+      setOpenLogin(false);
+      oktaAuth.getUser().then((info) => {
+        setUserInfo(info);
+        getAuthorisation(info);
+      });
+    }
+  }, [authState, oktaAuth]);
+
+  function getAuthorisation(userInfoOkta) {
+    console.log('userInfo', userInfoOkta);
+
     /* Get CUP roles, Marketplace and Channel details  */
     let requestData = {
       query: { userName: "NIKE:SUppoo" },
@@ -88,12 +108,9 @@ function App() {
 
         "returnMessage": "Success",
 
-        "userName": "NIKE\\SUppoo",
-
         "isAuthorisedUser": true,
 
         "userAccessDetails": [
-
           {
 
             "userAccessMode": "ReadWrite",
@@ -130,15 +147,43 @@ function App() {
 
             ]
 
-          }
+          },
+          {
 
+            "userAccessMode": "Read",
+
+            "marketplaceId": "1",
+
+            "marketplaceDescription": "Mexico",
+
+            "channels": [
+
+              {
+
+                "channelId": 1,
+
+                "channelDescription": "NDDC"
+
+              },
+
+              {
+
+                "channelId": 3,
+
+                "channelDescription": "NSO"
+
+              }
+
+            ]
+
+          }
         ]
 
       });
       getCategoryAPI();
       console.log(err);
     });
-  }, []);
+  }
 
   function getCategoryAPI() {
     categoryService.getData().then((response) => {
@@ -24909,12 +24954,14 @@ function App() {
     });
   }
 
+  const closeLoginDialog = () => setOpenLogin(false);
+
   return (
     <React.Fragment>
       {status ? <CustomSnackbar key={status.date} status={status.msg} msg={message} /> : null}
-      {openLogin ? <LoginModal /> : null}
+      {openLogin ? <LoginModal openLoginDialog={openLogin} closeLoginDialog={closeLoginDialog} /> : null}
       <section>
-        <MenuAppBar auth={authorisationApi} />
+        <MenuAppBar authentication={userInfo} />
       </section>
       <RowDetailsContext.Provider value={{ rowDetailValue, setRowDetailValue }}>
         <SaveBtnContext.Provider value={{ categoryBarLoading, setCategoryBarLoading, saveBtnDisable, setSaveBtnDisable }} >
@@ -24936,6 +24983,7 @@ function App() {
             <div className="table-wrapper">
               <Switch>
                 <Route exact path="/"></Route>
+                <Route path="/login/callback" component={LoginCallback} />
                 <Route exact path="/action">
                   {isTableLoading ?
                     <div className={classes.root}>
@@ -24995,6 +25043,7 @@ function App() {
                     <CircularProgress color="secondary" />
                   </div> :
                   <ExceptionTable rowData={rowData} onGridReady={onGridReady} gridApi={gridApi} />}</Route>
+                <SecureRoute exact path="/profile" component={Profile} />
                 <Route exact path="*" component={NotFound} />
               </Switch>
             </div>

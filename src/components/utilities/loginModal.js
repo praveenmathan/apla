@@ -1,58 +1,76 @@
 import React from "react";
-import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Slide from "@material-ui/core/Slide";
+import slimlogin from '../../assets/images/slim-login.png';
+import { Form } from 'semantic-ui-react';
+import { makeStyles } from '@material-ui/core/styles';
+import { useOktaAuth } from '@okta/okta-react';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
-    return <Slide direction="bottom" ref={ref} {...props} />;
+    return <Slide direction="down" ref={ref} {...props} />;
 });
 
-export default function LoginModal() {
-    const [open, setOpen] = React.useState(false);
+const useStyles = makeStyles({
+    root: {
+        justifyContent: 'center'
+    },
+    title: {
+        color: '#fff',
+        fontWeight: 'bold',
+        textAlign: 'center',
+        fontSize: '20px'
+    }
+});
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
+export default function LoginModal(props) {
+    const classes = useStyles();
+    const { authState, oktaAuth } = useOktaAuth();
 
     const handleClose = () => {
-        setOpen(false);
+        props.closeLoginDialog()
     };
+
+    const login = async () => oktaAuth.signInWithRedirect();
+    const logout = async () => oktaAuth.signOut();
 
     return (
         <div>
-            <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-                Slide in alert dialog
-      </Button>
             <Dialog
-                open={open}
+                open={props.openLoginDialog}
                 TransitionComponent={Transition}
                 keepMounted
                 onClose={handleClose}
                 aria-labelledby="alert-dialog-slide-title"
                 aria-describedby="alert-dialog-slide-description"
+                PaperProps={{
+                    style: {
+                        backgroundColor: 'transparent',
+                        boxShadow: 'none',
+                    }
+                }}
+                disableBackdropClick={true}
             >
-                <DialogTitle id="alert-dialog-slide-title">
-                    {"Use Google's location service?"}
-                </DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-slide-description">
-                        Let Google help apps determine location. This means sending
-                        anonymous location data to Google, even when no apps are running.
-          </DialogContentText>
+                        <img src={slimlogin} alt='' className="slim-login" />
+                    </DialogContentText>
                 </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleClose} color="primary">
-                        Disagree
-          </Button>
-                    <Button onClick={handleClose} color="primary">
-                        Agree
-          </Button>
+                <DialogTitle id="alert-dialog-slide-title" className={classes.title}>
+                    {"SLIM - Strategic Lifecycle Inventory Management"}
+                </DialogTitle>
+                <DialogActions className={classes.root}>
+                    {!authState.isPending && !authState.isAuthenticated && (
+                        <Form.Button fluid primary onClick={login}>LOGIN</Form.Button>
+                    )}
+                    {authState.isAuthenticated && (
+                        <Form.Button fluid primary onClick={logout}>Logout</Form.Button>
+                    )}
                 </DialogActions>
             </Dialog>
-        </div>
+        </div >
     );
 }
