@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -29,12 +29,17 @@ const useStyles = makeStyles({
 export default function LoginModal(props) {
     const classes = useStyles();
     const { authState, oktaAuth } = useOktaAuth();
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleClose = () => {
         props.closeLoginDialog()
     };
 
-    const login = async () => oktaAuth.signInWithRedirect();
+    const login = async () => {
+        setIsLoading(true);
+        oktaAuth.signInWithRedirect();
+        setIsLoading(false);
+    }
     const logout = async () => oktaAuth.signOut();
 
     return (
@@ -64,7 +69,7 @@ export default function LoginModal(props) {
                 </DialogTitle>
                 <DialogActions className={classes.root}>
                     {!authState.isPending && !authState.isAuthenticated && (
-                        <Form.Button fluid primary onClick={login}>LOGIN</Form.Button>
+                        <Form.Button fluid primary onClick={login} loading={isLoading}>LOGIN</Form.Button>
                     )}
                     {authState.isAuthenticated && (
                         <Form.Button fluid primary onClick={logout}>Logout</Form.Button>
@@ -73,4 +78,4 @@ export default function LoginModal(props) {
             </Dialog>
         </div >
     );
-}
+}  

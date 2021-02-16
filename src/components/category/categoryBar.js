@@ -143,7 +143,6 @@ const CategoryBar = (props) => {
 
                     /* set user access mode */
                     if (eachitem.userAccessMode === 'ReadWrite') {
-                        console.log('global save', saveBtnDisable);
                         setIsUserAuthForSave(true);
                     } else {
                         setIsUserAuthForSave(false);
@@ -226,7 +225,7 @@ const CategoryBar = (props) => {
 
     /* Handle Load/submit button */
     const handleSubmit = () => {
-        if (rowDetailValue.length !== 0) {
+        if (rowDetailValue.length !== 0 && isUserAuthForSave) {
             alert('Table Rows have been modified, Please Save');
         } else {
             const selectionFilterDataUpdated = {
@@ -271,6 +270,15 @@ const CategoryBar = (props) => {
         };
 
         props.onExportToExcel(selectionFilterDataUpdated);
+    }
+
+    /* Handle Save Disable */
+    const handleSaveDisable = () => {
+        if (isUserAuthForSave) {
+            return saveBtnDisable;
+        } else {
+            return true;
+        }
     }
 
     return (<>
@@ -405,7 +413,7 @@ const CategoryBar = (props) => {
                     </Grid.Column>
                     <Grid.Column width={2}>
                         <Form.Button fluid primary onClick={handleSubmit} disabled={!isEnabled}>LOAD</Form.Button>
-                        <Form.Button fluid primary onClick={handleSave} disabled={!saveBtnDisable && !isUserAuthForSave}>SAVE</Form.Button>
+                        <Form.Button fluid primary onClick={handleSave} disabled={handleSaveDisable()}>SAVE</Form.Button>
                         <Form.Button fluid primary onClick={handleExportToExcel} disabled={!isEnabled}>E2E</Form.Button>
                     </Grid.Column>
                 </Grid>

@@ -3,7 +3,7 @@ import axios from 'axios';
 /* eslint-disable */
 const instance = axios.create({
     baseURL:
-        'http://slim-apla.nike.com:5500/'
+        'https://slim-apla-api.nike.com:500/'
 });
 
 export default {

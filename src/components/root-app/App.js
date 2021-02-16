@@ -68,7 +68,7 @@ function App() {
   const setMessage = msg => setMessageBase(msg);
   const [rowDetailValue, setRowDetailValue] = useState([]);
   const [categoryBarLoading, setCategoryBarLoading] = useState(false);
-  const [saveBtnDisable, setSaveBtnDisable] = useState(false);
+  const [saveBtnDisable, setSaveBtnDisable] = useState(true);
   const [selectionFilterForSave, setSelectionFilterForSave] = useState(null);
   const [openLogin, setOpenLogin] = useState(false);
   const { authState, oktaAuth } = useOktaAuth();
@@ -93,7 +93,7 @@ function App() {
 
     /* Get CUP roles, Marketplace and Channel details  */
     let requestData = {
-      query: { userName: "NIKE:SUppoo" },
+      query: { adGroupNames: userInfoOkta.groups.toString() },
       accessToken: '',
     };
     authorisationAPI.postData(requestData).then((response) => {
