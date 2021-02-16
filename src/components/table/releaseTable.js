@@ -1,24 +1,14 @@
 import React from 'react';
-import { AgGridReact, AgGridColumn } from '@ag-grid-community/react';
-import { RowDetailsContext, SaveBtnContext } from '../context/rowDetailsContext';
+import { AgGridColumn, AgGridReact } from '@ag-grid-community/react';
+import { SelectedChannelContext } from '../context/rowDetailsContext';
 import { AllModules } from "@ag-grid-enterprise/all-modules";
 
-const CancelTable = (props) => {
-    let consolidatedRows = [];
-    const { setRowDetailValue } = React.useContext(RowDetailsContext);
-    const { setSaveBtnDisable } = React.useContext(SaveBtnContext);
+const ReleaseTable = (props) => {
 
-    const onCellValueChanged = (params) => {
-        if (!(params.oldValue === null && params.newValue === undefined)) {
-            params.node.data['changed'] = true;
-            consolidatedRows.push(params.data);
-            setRowDetailValue(consolidatedRows);
-            setSaveBtnDisable(false);
-        }
-    }
+    const { selectedChannel } = React.useContext(SelectedChannelContext);
 
     return (
-        <div className="ag-theme-alpine" style={{ height: '70vh' }}>
+        <div className="ag-theme-alpine" style={{ width: '100%', height: '70vh' }}>
             <AgGridReact
                 modules={AllModules}
                 defaultColDef={{
@@ -60,49 +50,36 @@ const CancelTable = (props) => {
                             + params.value
                             + "-PV'>" + params.value + "</a>";
                     }} />
-                    <AgGridColumn field="Comment"
-                        editable={true}
-                        cellEditor="agLargeTextCellEditor"
-                        onCellValueChanged={onCellValueChanged} />
+                    <AgGridColumn field="Comment" />
                     <AgGridColumn field="Description" />
                     <AgGridColumn field="SlimLifecycleSeason" />
-                </AgGridColumn>
-
-                <AgGridColumn headerName="Recommendations" headerClass='custom-font-color' >
-                    <AgGridColumn field="RecommendedAction" headerClass='custom-font-color' headerName="Action" width='200' />
-                    <AgGridColumn field="SelectedRecommendedActionOverride" headerClass='custom-font-color' headerName="Action Override"
-                        width='225'
-                        editable={true}
-                        cellEditor="agSelectCellEditor"
-                        cellEditorParams={function (params) {
-                            let givenValue = params.data.RecommendedActionOverride;
-                            if (givenValue != null) {
-                                let actionOveride = givenValue.split(',');
-                                return {
-                                    values: actionOveride
-                                }
-                            } else {
-                                return {
-                                    values: []
-                                }
-                            }
-                        }}
-                        onCellValueChanged={onCellValueChanged}
-                    />
                 </AgGridColumn>
 
                 <AgGridColumn headerName="Product Attribution">
                     <AgGridColumn field="RPT" />
                 </AgGridColumn>
 
+                <AgGridColumn headerName="Recommendations" headerClass='custom-font-color' >
+                    <AgGridColumn field="RecommendedAction" headerClass='custom-font-color' headerName="Action" />
+                </AgGridColumn>
+
+                <AgGridColumn headerName="Plan">
+                    <AgGridColumn field="Status" />
+                </AgGridColumn>
+
                 <AgGridColumn headerName="Inventory">
-                    <AgGridColumn field="RecommendedCancelUnits" headerClass='custom-font-color' />
                     <AgGridColumn field="Contracts" />
                     <AgGridColumn field="UnassignedZerotoThirtyDaysOut" headerName='Unassigned Qty 0_30' />
                     <AgGridColumn field="UnassignedThirtyonetoSixtyDaysOut" headerName='Unassigned Qty 31_60' />
                     <AgGridColumn field="UnassignedSixtyonePlusDaysOut" headerName='Unassigned Qty 61 Plus' />
                     <AgGridColumn field="1083_Contracts" headerName='1083 Contracts' />
                     <AgGridColumn field="1084_Contracts" headerName='1084 Contracts' />
+                    <AgGridColumn field="1085_Contracts" headerName='1085 Contracts' />
+                    {selectedChannel === 'NDDC' ? <AgGridColumn field="NSO_Contracts" /> : selectedChannel === 'NSO' ? <AgGridColumn field="NDDC_Contracts" /> : <AgGridColumn hide={true} />}
+                    <AgGridColumn field="WholesaleContract" />
+                    <AgGridColumn field="GA_1083" headerName="GA 1083" />
+                    <AgGridColumn field="GA_1084" headerName="GA 1084" />
+                    <AgGridColumn field="GA_1085" headerName="GA 1085" />
                     <AgGridColumn field="DOMsInventory" headerName="DOMs Inventory"/>
                     <AgGridColumn field="DOMsNDDCInventory" headerName="DOMs NDDC Inventory" />
                     <AgGridColumn field="DOMsZOZOInventory" headerName="DOMs ZOZO Inventory" />
@@ -110,27 +87,10 @@ const CancelTable = (props) => {
                     <AgGridColumn field="DOMsNFSInventory" headerName="DOMs NFS Inventory" />
                     <AgGridColumn field="DOMsEMPInventory" headerName="DOMs EMP Inventory" />
                     <AgGridColumn field="DOMsGAInventory" headerName="DOMs GA Inventory" />
-                    <AgGridColumn field="ChannelWOS" />
-                    <AgGridColumn field="MarketPlaceWOS" />
-                    <AgGridColumn field="1085_Contracts" headerName='1085 Contracts' />
-                </AgGridColumn>
-
-                <AgGridColumn headerName="Plan">
-                    <AgGridColumn field="LastSeasonPlanned" />
-                </AgGridColumn>
-
-                <AgGridColumn headerName="Inventory">
-                    <AgGridColumn field="SizeCountOwned" />
-                    <AgGridColumn field="SizeCountTotal" />
-                    <AgGridColumn field="SizeIntegrity" />
-                </AgGridColumn>
-
-                <AgGridColumn headerName="Price">
-                    <AgGridColumn field="ContributionMargin" />
                 </AgGridColumn>
             </AgGridReact>
         </div>
     );
 }
 
-export default CancelTable;
+export default ReleaseTable;

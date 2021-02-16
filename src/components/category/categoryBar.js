@@ -3,7 +3,7 @@ import { Grid, Segment } from 'semantic-ui-react';
 import './categoryBar.css';
 import { Form, Select } from 'semantic-ui-react';
 import Skeleton from '@material-ui/lab/Skeleton';
-import { RowDetailsContext, SaveBtnContext } from '../context/rowDetailsContext';
+import { RowDetailsContext, SaveBtnContext, SelectedChannelContext } from '../context/rowDetailsContext';
 
 /* eslint-disable */
 const CategoryBar = (props) => {
@@ -44,12 +44,13 @@ const CategoryBar = (props) => {
     const { rowDetailValue } = useContext(RowDetailsContext);
     const { setCategoryBarLoading } = useContext(SaveBtnContext);
     const { saveBtnDisable } = useContext(SaveBtnContext);
+    const { setSelectedChannel } = useContext(SelectedChannelContext);
 
     const canBeSubmitted = () => {
         return retailWeekValue != '' && channelValue != '' && divisionValue != '' && genderValue != '' && categoryValue.length != 0 && tableValue != '';
     }
 
-    const isEnabled = canBeSubmitted();;
+    const isEnabled = canBeSubmitted();
 
     useEffect(() => {
 
@@ -237,6 +238,7 @@ const CategoryBar = (props) => {
                 division: divisionValue,
                 action: tableValue
             };
+            setSelectedChannel(channelValue);
             props.onCatergorySubmit(selectionFilterDataUpdated);
         }
     }
@@ -367,7 +369,7 @@ const CategoryBar = (props) => {
                                         searchInput={{ id: 'form-select-control-gender' }}
                                         onChange={handleGenderChange}
                                         error={genderError ? {
-                                            content: 'Please choose a gender',
+                                            content: 'Please choose a Gender',
                                             pointing: 'above',
                                         } : false}
                                     /> : <Skeleton variant="rect" width={130} height={40} />}
@@ -384,7 +386,7 @@ const CategoryBar = (props) => {
                                         searchInput={{ id: 'form-select-control-category' }}
                                         onChange={handleCategoryChange}
                                         error={categoryError ? {
-                                            content: 'Please choose a category',
+                                            content: 'Please choose a Category',
                                             pointing: 'above',
                                         } : false}
                                     /> : <Skeleton variant="rect" width={130} height={40} />}
@@ -414,7 +416,7 @@ const CategoryBar = (props) => {
                     <Grid.Column width={2}>
                         <Form.Button fluid primary onClick={handleSubmit} disabled={!isEnabled}>LOAD</Form.Button>
                         <Form.Button fluid primary onClick={handleSave} disabled={handleSaveDisable()}>SAVE</Form.Button>
-                        <Form.Button fluid primary onClick={handleExportToExcel} disabled={!isEnabled}>E2E</Form.Button>
+                        <Form.Button fluid primary onClick={handleExportToExcel} disabled={!isEnabled}>EXPORT</Form.Button>
                     </Grid.Column>
                 </Grid>
             </Form.Group>

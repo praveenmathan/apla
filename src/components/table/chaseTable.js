@@ -1,6 +1,8 @@
 import React from 'react';
-import { AgGridColumn, AgGridReact } from 'ag-grid-react';
+import { AgGridReact, AgGridColumn } from '@ag-grid-community/react';
 import { RowDetailsContext, SaveBtnContext } from '../context/rowDetailsContext';
+import { AllModules } from "@ag-grid-enterprise/all-modules";
+import CustomTooltip from './customTooltip.js';
 
 const ChaseTable = (props) => {
     let consolidatedRows = [];
@@ -19,17 +21,42 @@ const ChaseTable = (props) => {
     return (
         <div className="ag-theme-alpine" style={{ height: '70vh' }}>
             <AgGridReact
-                defaultColDef={{
-                    width: 175,
-                    sortable: true,
-                    resizable: true,
-                    filter: true
+                modules={AllModules}
+                sideBar={{
+                    toolPanels: [
+                        {
+                            id: 'columns',
+                            labelDefault: 'Columns',
+                            labelKey: 'columns',
+                            iconKey: 'columns',
+                            toolPanel: 'agColumnsToolPanel',
+                            toolPanelParams: {
+                                suppressRowGroups: true,
+                                suppressValues: true,
+                                suppressPivots: true,
+                                suppressPivotMode: true,
+                                suppressSideButtons: true
+                            },
+                        }]
                 }}
                 onGridReady={props.onGridReady}
                 rowData={props.rowData}
                 pagination={true}
+                enableCellTextSelection={true}
+                suppressDragLeaveHidesColumns={true}
+                tooltipShowDelay={0}
+                frameworkComponents={{ customTooltip: CustomTooltip }}
+                defaultColDef={{
+                    flex: 1,
+                    minWidth: 175,
+                    sortable: true,
+                    resizable: true,
+                    filter: true,
+                    enableRowGroup: true,
+                    enablePivot: true,
+                    tooltipComponent: 'customTooltip',
+                }}
             >
-
                 <AgGridColumn headerName="Products">
                     <AgGridColumn field="StyleColor" pinned="left" lockPinned={true} cellClass="lock-pinned" cellRenderer={function (params) {
                         return "<a target='_blank' href='http://images6.nike.com/is/image/DPILS/"
@@ -40,7 +67,7 @@ const ChaseTable = (props) => {
                         editable={true}
                         cellEditor="agLargeTextCellEditor"
                         onCellValueChanged={onCellValueChanged} />
-                    <AgGridColumn field="Description" />
+                    <AgGridColumn field="Description" menuTabs={['filterMenuTab', 'generalMenuTab', 'columnsMenuTab']} />
                     <AgGridColumn field="SlimLifecycleSeason" />
                 </AgGridColumn>
 
@@ -49,7 +76,8 @@ const ChaseTable = (props) => {
                 </AgGridColumn>
 
                 <AgGridColumn headerName="Recommendations" headerClass='custom-font-color' >
-                    <AgGridColumn field="RecommendedAction" headerClass='custom-font-color' headerName="Action" width='200' />
+                    <AgGridColumn field="RecommendedAction" headerClass='custom-font-color' headerName="Action" width='200' tooltipField="RecommendedAction" tooltipComponent="customTooltip"
+                        tooltipComponentParams={{ color: '#ececec' }} />
                     <AgGridColumn field="SelectedRecommendedActionOverride" headerClass='custom-font-color' headerName="Action Override"
                         width='225'
                         editable={true}
@@ -74,7 +102,7 @@ const ChaseTable = (props) => {
                 <AgGridColumn headerName="Inventory">
                     <AgGridColumn field="RecommendedChaseUnits" headerClass='custom-font-color' />
                     <AgGridColumn field="Contracts" />
-                    <AgGridColumn field="unassignedZerotoThirtyDaysOut" headerName='Unassigned Qty 0_30' />
+                    <AgGridColumn field="UnassignedZerotoThirtyDaysOut" headerName='Unassigned Qty 0_30' />
                     <AgGridColumn field="UnassignedThirtyonetoSixtyDaysOut" headerName='Unassigned Qty 31_60' />
                     <AgGridColumn field="UnassignedSixtyonePlusDaysOut" headerName='Unassigned Qty 61 Plus' />
                     <AgGridColumn field="1083_Contracts" headerName='1083 Contracts' />
@@ -83,6 +111,15 @@ const ChaseTable = (props) => {
                     <AgGridColumn field="GA_1083" headerName="GA 1083" />
                     <AgGridColumn field="GA_1084" headerName="GA 1084" />
                     <AgGridColumn field="GA_1085" headerName="GA 1085" />
+                    <AgGridColumn field="DOMsInventory" headerName="DOMs Inventory" />
+                    <AgGridColumn field="DOMsNDDCInventory" headerName="DOMs NDDC Inventory" />
+                    <AgGridColumn field="DOMsZOZOInventory" headerName="DOMs ZOZO Inventory" />
+                    <AgGridColumn field="DOMsNSOInventory" headerName="DOMs NSO Inventory" />
+                    <AgGridColumn field="DOMsNFSInventory" headerName="DOMs NFS Inventory" />
+                    <AgGridColumn field="DOMsEMPInventory" headerName="DOMs EMP Inventory" />
+                    <AgGridColumn field="DOMsGAInventory" headerName="DOMs GA Inventory" />
+                    <AgGridColumn field="ChannelWOS" />
+                    <AgGridColumn field="MarketPlaceWOS" />
                 </AgGridColumn>
 
                 <AgGridColumn headerName="Sales">
@@ -92,7 +129,7 @@ const ChaseTable = (props) => {
                     <AgGridColumn field="DemandUnitsFourWeekRolling" headerName="Demand Units 4W rolling" />
                 </AgGridColumn>
             </AgGridReact>
-        </div>
+        </div >
     );
 }
 

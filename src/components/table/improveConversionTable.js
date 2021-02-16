@@ -1,6 +1,7 @@
 import React from 'react';
-import { AgGridColumn, AgGridReact } from 'ag-grid-react';
+import { AgGridReact, AgGridColumn } from '@ag-grid-community/react';
 import { RowDetailsContext, SaveBtnContext } from '../context/rowDetailsContext';
+import { AllModules } from "@ag-grid-enterprise/all-modules";
 
 const ImproveConversionTable = (props) => {
     let consolidatedRows = [];
@@ -19,15 +20,38 @@ const ImproveConversionTable = (props) => {
     return (
         <div className="ag-theme-alpine" style={{ height: '70vh' }}>
             <AgGridReact
+                modules={AllModules}
                 defaultColDef={{
-                    width: 175,
+                    flex: 1,
+                    minWidth: 175,
                     sortable: true,
                     resizable: true,
-                    filter: true
+                    filter: true,
+                    enableRowGroup: true,
+                    enablePivot: true
+                }}
+                sideBar={{
+                    toolPanels: [
+                        {
+                            id: 'columns',
+                            labelDefault: 'Columns',
+                            labelKey: 'columns',
+                            iconKey: 'columns',
+                            toolPanel: 'agColumnsToolPanel',
+                            toolPanelParams: {
+                                suppressRowGroups: true,
+                                suppressValues: true,
+                                suppressPivots: true,
+                                suppressPivotMode: true,
+                                suppressSideButtons: true
+                            },
+                        }]
                 }}
                 onGridReady={props.onGridReady}
                 rowData={props.rowData}
                 pagination={true}
+                enableCellTextSelection={true}
+                suppressDragLeaveHidesColumns={true}
             >
 
                 <AgGridColumn headerName="Products">
@@ -72,6 +96,7 @@ const ImproveConversionTable = (props) => {
                 </AgGridColumn>
 
                 <AgGridColumn headerName="Web Traffic">
+                    <AgGridColumn field="WebTrafficLW" />
                     <AgGridColumn field="WebConversionPct" />
                     <AgGridColumn field="WebConversionFourWeekAvgRPT" />
                 </AgGridColumn>
@@ -79,6 +104,11 @@ const ImproveConversionTable = (props) => {
                 <AgGridColumn headerName="Sales">
                     <AgGridColumn field="FirstOrderDate" />
                     <AgGridColumn field="DaysOnSale" />
+                </AgGridColumn>
+
+                <AgGridColumn headerName="Inventory">
+                    <AgGridColumn field="ChannelWOS" />
+                    <AgGridColumn field="MarketPlaceWOS" />
                 </AgGridColumn>
             </AgGridReact>
         </div>

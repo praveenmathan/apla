@@ -1,6 +1,7 @@
 import React from 'react';
-import { AgGridColumn, AgGridReact } from 'ag-grid-react';
+import { AgGridReact, AgGridColumn } from '@ag-grid-community/react';
 import { RowDetailsContext, SaveBtnContext } from '../context/rowDetailsContext';
+import { AllModules } from "@ag-grid-enterprise/all-modules";
 
 const CloseOutTable = (props) => {
     let consolidatedRows = [];
@@ -19,15 +20,38 @@ const CloseOutTable = (props) => {
     return (
         <div className="ag-theme-alpine" style={{ height: '70vh' }}>
             <AgGridReact
+                modules={AllModules}
                 defaultColDef={{
-                    width: 175,
+                    flex: 1,
+                    minWidth: 175,
                     sortable: true,
                     resizable: true,
-                    filter: true
+                    filter: true,
+                    enableRowGroup: true,
+                    enablePivot: true
+                }}
+                sideBar={{
+                    toolPanels: [
+                        {
+                            id: 'columns',
+                            labelDefault: 'Columns',
+                            labelKey: 'columns',
+                            iconKey: 'columns',
+                            toolPanel: 'agColumnsToolPanel',
+                            toolPanelParams: {
+                                suppressRowGroups: true,
+                                suppressValues: true,
+                                suppressPivots: true,
+                                suppressPivotMode: true,
+                                suppressSideButtons: true
+                            },
+                        }]
                 }}
                 onGridReady={props.onGridReady}
                 rowData={props.rowData}
                 pagination={true}
+                enableCellTextSelection={true}
+                suppressDragLeaveHidesColumns={true}
             >
 
                 <AgGridColumn headerName="Products">
@@ -78,7 +102,7 @@ const CloseOutTable = (props) => {
 
                 <AgGridColumn headerName="Inventory">
                     <AgGridColumn field="Contracts" />
-                    <AgGridColumn field="unassignedZerotoThirtyDaysOut" headerName='Unassigned Qty 0_30' />
+                    <AgGridColumn field="UnassignedZerotoThirtyDaysOut" headerName='Unassigned Qty 0_30' />
                     <AgGridColumn field="UnassignedThirtyonetoSixtyDaysOut" headerName='Unassigned Qty 31_60' />
                     <AgGridColumn field="UnassignedSixtyonePlusDaysOut" headerName='Unassigned Qty 61 Plus' />
                     <AgGridColumn field="1083_Contracts" headerName='1083 Contracts' />
@@ -87,6 +111,8 @@ const CloseOutTable = (props) => {
                     <AgGridColumn field="SizeCountOwned" />
                     <AgGridColumn field="SizeCountTotal" />
                     <AgGridColumn field="SizeIntegrity" />
+                    <AgGridColumn field="ChannelWOS" />
+                    <AgGridColumn field="MarketPlaceWOS" />
                 </AgGridColumn>
 
                 <AgGridColumn headerName="Plan">

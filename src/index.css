@@ -45,6 +45,10 @@ Customised CSS
   background-color:  rgba(0,0,0,0.5) !important;
 }
 
+.ag-theme-alpine .ag-cell {
+  font-feature-settings: "tnum" 1 !important;
+}
+
 .ui.default.dropdown:not(.button)>.text, .ui.dropdown:not(.button)>.default.text {
   color: rgb(104, 104, 104) !important;
 }
@@ -60,4 +64,28 @@ Customised CSS
 
 .slim-login {
   width: 100%;
+}
+.custom-tooltip {
+  position: absolute;
+  width: 150px;
+  height: 70px;
+  border: 1px solid #fa8231;
+  overflow: hidden;
+  pointer-events: none;
+  transition: opacity 1s;
+  background-color: white;
+  box-sizing:unset;
+}
+
+.custom-tooltip.ag-tooltip-hiding {
+  opacity: 0;
+}
+
+.custom-tooltip p {
+  margin: 5px;
+  white-space: nowrap;
+}
+
+.custom-tooltip p:first-of-type {
+  font-weight: bold;
 }

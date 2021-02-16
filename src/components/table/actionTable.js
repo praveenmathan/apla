@@ -1,13 +1,16 @@
 import React from 'react';
 import Dialog from '@material-ui/core/Dialog';
-import { AgGridColumn, AgGridReact } from 'ag-grid-react';
-import { RowDetailsContext, SaveBtnContext } from '../context/rowDetailsContext';
+import { AgGridReact, AgGridColumn } from '@ag-grid-community/react';
+import { RowDetailsContext, SaveBtnContext, SelectedChannelContext } from '../context/rowDetailsContext';
+import { AllModules } from "@ag-grid-enterprise/all-modules";
 
 const ActionTable = (props) => {
     let consolidatedRows = [];
     const [open, setOpen] = React.useState(false);
+
     const { setRowDetailValue } = React.useContext(RowDetailsContext);
     const { setSaveBtnDisable } = React.useContext(SaveBtnContext);
+    const { selectedChannel } = React.useContext(SelectedChannelContext);
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -38,17 +41,39 @@ const ActionTable = (props) => {
             </Dialog>
             <div className="ag-theme-alpine" style={{ height: '70vh' }}>
                 <AgGridReact
+                    modules={AllModules}
                     defaultColDef={{
-                        width: 175,
+                        flex: 1,
+                        minWidth: 175,
                         sortable: true,
                         resizable: true,
-                        filter: true
+                        filter: true,
+                        enableRowGroup: true,
+                        enablePivot: true
+                    }}
+                    sideBar={{
+                        toolPanels: [
+                            {
+                                id: 'columns',
+                                labelDefault: 'Columns',
+                                labelKey: 'columns',
+                                iconKey: 'columns',
+                                toolPanel: 'agColumnsToolPanel',
+                                toolPanelParams: {
+                                    suppressRowGroups: true,
+                                    suppressValues: true,
+                                    suppressPivots: true,
+                                    suppressPivotMode: true,
+                                    suppressSideButtons: true
+                                },
+                            }]
                     }}
                     onGridReady={props.onGridReady}
                     rowData={props.rowData}
                     pagination={true}
+                    enableCellTextSelection={true}
+                    suppressDragLeaveHidesColumns={true}
                 >
-
                     <AgGridColumn headerName="Products">
                         <AgGridColumn field="StyleColor" pinned="left" lockPinned={true} cellClass="lock-pinned" cellRenderer={function (params) {
                             return "<a target='_blank' href='http://images6.nike.com/is/image/DPILS/"
@@ -111,13 +136,13 @@ const ActionTable = (props) => {
 
                     <AgGridColumn headerName="Inventory">
                         <AgGridColumn field="Contracts" />
-                        <AgGridColumn field="unassignedZerotoThirtyDaysOut" headerName='Unassigned Qty 0_30' />
+                        <AgGridColumn field="UnassignedZerotoThirtyDaysOut" headerName='Unassigned Qty 0_30' />
                         <AgGridColumn field="UnassignedThirtyonetoSixtyDaysOut" headerName='Unassigned Qty 31_60' />
                         <AgGridColumn field="UnassignedSixtyonePlusDaysOut" headerName='Unassigned Qty 61 Plus' />
                         <AgGridColumn field="1083_Contracts" headerName='1083 Contracts' />
                         <AgGridColumn field="1084_Contracts" headerName='1084 Contracts' />
                         <AgGridColumn field="1085_Contracts" headerName='1085 Contracts' />
-                        <AgGridColumn field="NSO_Contracts" />
+                        {selectedChannel === 'NDDC' ? <AgGridColumn field="NSO_Contracts" /> : selectedChannel === 'NSO' ? <AgGridColumn field="NDDC_Contracts" /> : <AgGridColumn hide={true} />}
                         <AgGridColumn field="WholesaleContract" />
                         <AgGridColumn field="StoreIOH" />
                         <AgGridColumn field="InTransit" />
@@ -125,10 +150,18 @@ const ActionTable = (props) => {
                         <AgGridColumn field="GA_1083" headerName="GA 1083" />
                         <AgGridColumn field="GA_1084" headerName="GA 1084" />
                         <AgGridColumn field="GA_1085" headerName="GA 1085" />
+                    <AgGridColumn field="DOMsInventory" headerName="DOMs Inventory"/>
+                    <AgGridColumn field="DOMsNDDCInventory" headerName="DOMs NDDC Inventory" />
+                    <AgGridColumn field="DOMsZOZOInventory" headerName="DOMs ZOZO Inventory" />
+                    <AgGridColumn field="DOMsNSOInventory" headerName="DOMs NSO Inventory" />
+                    <AgGridColumn field="DOMsNFSInventory" headerName="DOMs NFS Inventory" />
+                    <AgGridColumn field="DOMsEMPInventory" headerName="DOMs EMP Inventory" />
+                    <AgGridColumn field="DOMsGAInventory" headerName="DOMs GA Inventory" />
                         <AgGridColumn field="SizeCountOwned" />
                         <AgGridColumn field="SizeCountTotal" />
                         <AgGridColumn field="SizeIntegrity" />
-                        <AgGridColumn field="SlimWOS" />
+                        <AgGridColumn field="ChannelWOS" />
+                        <AgGridColumn field="MarketPlaceWOS" />
                         <AgGridColumn field="RecommendedChaseUnits" />
                         <AgGridColumn field="RecommendedCancelUnits" />
                     </AgGridColumn>
@@ -177,6 +210,7 @@ const ActionTable = (props) => {
                     </AgGridColumn>
 
                     <AgGridColumn headerName="Web Traffic">
+                        <AgGridColumn field='WebTrafficLW' />
                         <AgGridColumn field="WebConversionPct" />
                         <AgGridColumn field="WebConversionFourWeekAvgRPT" />
                     </AgGridColumn>

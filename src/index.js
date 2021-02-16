@@ -10,6 +10,12 @@ import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import { Security } from '@okta/okta-react';
 import { OktaAuth } from '@okta/okta-auth-js';
 
+import "@ag-grid-enterprise/all-modules/dist/styles/ag-grid.css";
+import "@ag-grid-enterprise/all-modules/dist/styles/ag-theme-alpine.css";
+
+import { LicenseManager } from "@ag-grid-enterprise/core";
+LicenseManager.setLicenseKey("Insight_Enterprises_Inc_on_behalf_of_Nike_Inc_DSM_Multiple_Applications_10_Devs__1_February_2021_[v2]_MTYxMjEzNzYwMDAwMA==9ed853045a9d2aaa33e5dbee232e31b3");
+
 const styleLink = document.createElement("link");
 styleLink.rel = "stylesheet";
 styleLink.href = "https://cdn.jsdelivr.net/npm/semantic-ui/dist/semantic.min.css";
