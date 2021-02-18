@@ -13,18 +13,18 @@ export default forwardRef((props, ref) => {
         };
     });
 
-    const getToolTipValue = () => {
-        return data.ToolTipValue;
-    }
+    const getToolTipValue = (data.ToolTipValue != null && typeof (data.ToolTipValue) != undefined) ? data.ToolTipValue.split(',').map((each, index) => {
+        return <li key={index}>{each}</li>
+    }) : null;
 
     return (
         <div
             className="custom-tooltip"
             style={{ backgroundColor: props.color || 'white' }}
         >
-            <p>
-                <span>{getToolTipValue()}</span>
-            </p>
+            <div className="custom-tooltip-box">
+                <span>{(data.ToolTipValue != null && typeof (data.ToolTipValue) != undefined) ? getToolTipValue : null}</span>
+            </div>
         </div>
     );
 });

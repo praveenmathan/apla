@@ -93,100 +93,103 @@ function App() {
   }, [authState, oktaAuth]);
 
   function getAuthorisation(userInfoOkta) {
-    console.log('userInfo', userInfoOkta);
+    if (userInfoOkta.groups === undefined) {
+      setStatus('error');
+      setMessage(`${userInfoOkta.given_name} is not authorized. Contact support : productionsupport@nike.com`);
+    } else {
+      /* Get CUP roles, Marketplace and Channel details  */
+      let requestData = {
+        query: { adGroupNames: userInfoOkta.groups.toString() },
+        accessToken: '',
+      };
+      authorisationAPI.postData(requestData).then((response) => {
+        if (response.status === 200) {
+          const { data } = response;
+          setAuthorisationApi(data);
+          getCategoryAPI();
+        }
+      }).catch((err) => {
+        setAuthorisationApi({
+          "returnCode": 0,
 
-    /* Get CUP roles, Marketplace and Channel details  */
-    let requestData = {
-      query: { adGroupNames: userInfoOkta.groups.toString() },
-      accessToken: '',
-    };
-    authorisationAPI.postData(requestData).then((response) => {
-      if (response.status === 200) {
-        const { data } = response;
-        setAuthorisationApi(data);
+          "returnMessage": "Success",
+
+          "isAuthorisedUser": true,
+
+          "userAccessDetails": [
+            {
+
+              "userAccessMode": "ReadWrite",
+
+              "marketplaceId": "1",
+
+              "marketplaceDescription": "Japan",
+
+              "channels": [
+
+                {
+
+                  "channelId": 1,
+
+                  "channelDescription": "NDDC"
+
+                },
+
+                {
+
+                  "channelId": 3,
+
+                  "channelDescription": "NSO"
+
+                },
+
+                {
+
+                  "channelId": 4,
+
+                  "channelDescription": "ZOZO TOWN"
+
+                }
+
+              ]
+
+            },
+            {
+
+              "userAccessMode": "Read",
+
+              "marketplaceId": "1",
+
+              "marketplaceDescription": "Mexico",
+
+              "channels": [
+
+                {
+
+                  "channelId": 1,
+
+                  "channelDescription": "NDDC"
+
+                },
+
+                {
+
+                  "channelId": 3,
+
+                  "channelDescription": "NSO"
+
+                }
+
+              ]
+
+            }
+          ]
+
+        });
         getCategoryAPI();
-      }
-    }).catch((err) => {
-      setAuthorisationApi({
-        "returnCode": 0,
-
-        "returnMessage": "Success",
-
-        "isAuthorisedUser": true,
-
-        "userAccessDetails": [
-          {
-
-            "userAccessMode": "ReadWrite",
-
-            "marketplaceId": "1",
-
-            "marketplaceDescription": "Japan",
-
-            "channels": [
-
-              {
-
-                "channelId": 1,
-
-                "channelDescription": "NDDC"
-
-              },
-
-              {
-
-                "channelId": 3,
-
-                "channelDescription": "NSO"
-
-              },
-
-              {
-
-                "channelId": 4,
-
-                "channelDescription": "ZOZO TOWN"
-
-              }
-
-            ]
-
-          },
-          {
-
-            "userAccessMode": "Read",
-
-            "marketplaceId": "1",
-
-            "marketplaceDescription": "Mexico",
-
-            "channels": [
-
-              {
-
-                "channelId": 1,
-
-                "channelDescription": "NDDC"
-
-              },
-
-              {
-
-                "channelId": 3,
-
-                "channelDescription": "NSO"
-
-              }
-
-            ]
-
-          }
-        ]
-
+        console.log(err);
       });
-      getCategoryAPI();
-      console.log(err);
-    });
+    }
   }
 
   function getCategoryAPI() {
@@ -749,7 +752,7 @@ function App() {
     });
   }
 
-  function stringCompare(a, b) {
+  function stringCompareTable(a, b) {
     let comparison = 0;
     if (a.tableDescription > b.tableDescription) {
       comparison = 1;
@@ -759,18 +762,73 @@ function App() {
     return comparison;
   }
 
+  function stringCompareGender(a, b) {
+    let comparison = 0;
+    if (a.genderDescription > b.genderDescription) {
+      comparison = 1;
+    } else if (a.genderDescription < b.genderDescription) {
+      comparison = -1;
+    }
+    return comparison;
+  }
+
+  function stringCompareDivision(a, b) {
+    let comparison = 0;
+    if (a.divisionDescription > b.divisionDescription) {
+      comparison = 1;
+    } else if (a.divisionDescription < b.divisionDescription) {
+      comparison = -1;
+    }
+    return comparison;
+  }
+
+  function stringCompareCategory(a, b) {
+    let comparison = 0;
+    if (a.categoryDescription > b.categoryDescription) {
+      comparison = 1;
+    } else if (a.categoryDescription < b.categoryDescription) {
+      comparison = -1;
+    }
+    return comparison;
+  }
+
   function getFormattedCategoryApi(data) {
     let formattedData = { ...data };
+
+    formatTableData(formattedData);
+
+    console.log('format data', formattedData);
+    return formattedData;
+  }
+
+  function formatTableData(formattedData) {
     let capitalisedTableData = [];
+    let capitalisedGenderData = [];
+    let capitalisedDivisionData = [];
+    let capitalisedCategoryData = [];
 
     formattedData.selectionFilters.table.map(eachTable => {
       capitalisedTableData.push({ 'tableDescription': eachTable.tableDescription.toLowerCase().capitalize() });
     });
+    formattedData.selectionFilters.gender.map(eachTable => {
+      capitalisedGenderData.push({ 'genderDescription': eachTable.genderDescription.toLowerCase().capitalize() });
+    });
+    formattedData.selectionFilters.division.map(eachTable => {
+      capitalisedDivisionData.push({ 'divisionDescription': eachTable.divisionDescription.toLowerCase().capitalize() });
+    });
+    formattedData.selectionFilters.category.map(eachTable => {
+      capitalisedCategoryData.push({ 'categoryDescription': eachTable.categoryDescription.toLowerCase().capitalize() });
+    });
 
-    let sortedCapitalisedData = capitalisedTableData.sort(stringCompare);
-    formattedData.selectionFilters['formattedTableData'] = [...sortedCapitalisedData];
+    let sortedCapitalisedTableData = capitalisedTableData.sort(stringCompareTable);
+    let sortedCapitalisedGenderData = capitalisedGenderData.sort(stringCompareGender);
+    let sortedCapitalisedDivisionData = capitalisedDivisionData.sort(stringCompareDivision);
+    let sortedCapitalisedCatergoryData = capitalisedCategoryData.sort(stringCompareCategory);
 
-    return formattedData;
+    formattedData.selectionFilters['formattedTableData'] = [...sortedCapitalisedTableData];
+    formattedData.selectionFilters['formattedGenderData'] = [...sortedCapitalisedGenderData];
+    formattedData.selectionFilters['formattedDivisionData'] = [...sortedCapitalisedDivisionData];
+    formattedData.selectionFilters['formattedCategoryData'] = [...sortedCapitalisedCatergoryData];
   }
 
   function onGridReady(params) {
@@ -964,7 +1022,7 @@ function App() {
       if (each === 'selectionFilters') {
         Object.keys(categoryApi[each]).map(eachfilters => {
           let selectionFilters = categoryApi[each];
-          if (eachfilters === 'category') {
+          if (eachfilters === 'formattedCategoryData') {
             selectionFilters[eachfilters].map(eachCategory => {
               if (newValue.category.length != 0) {
                 newValue.category.map(eachCategoryNewValue => {
@@ -989,7 +1047,7 @@ function App() {
       if (each === 'selectionFilters') {
         Object.keys(categoryApi[each]).map(eachfilters => {
           let selectionFilters = categoryApi[each];
-          if (eachfilters === 'gender') {
+          if (eachfilters === 'formattedGenderData') {
             selectionFilters[eachfilters].map(eachGender => {
               if (newValue.gender === eachGender.genderDescription) {
                 genderarray.push({
@@ -1010,7 +1068,7 @@ function App() {
       if (each === 'selectionFilters') {
         Object.keys(categoryApi[each]).map(eachfilters => {
           let selectionFilters = categoryApi[each];
-          if (eachfilters === 'division') {
+          if (eachfilters === 'formattedDivisionData') {
             selectionFilters[eachfilters].map(eachDivision => {
               if (newValue.division === eachDivision.divisionDescription) {
                 divisionarray.push({
@@ -1125,7 +1183,7 @@ function App() {
           setMessage('All Action data are loaded');
         } else {
           setStatus('error');
-          setMessage('All Action is empty, Please contact the support');
+          setMessage('There are no Action recommendations for the selected filters.  Please choose another table');
         }
       }
     }).catch((err) => {
@@ -1147,7 +1205,7 @@ function App() {
           setMessage('Cancel data are loaded');
         } else {
           setStatus('error');
-          setMessage('Cancel table is empty, Please contact the support');
+          setMessage('There are no Cancel recommendations for the selected filters.  Please choose another table');
         }
       }
     }).catch((err) => {
@@ -1169,7 +1227,7 @@ function App() {
           setMessage('Close Out data are loaded');
         } else {
           setStatus('error');
-          setMessage('Close Out is empty, Please contact the support');
+          setMessage('There are no Close Out recommendations for the selected filters.  Please choose another table');
         }
       }
     }).catch((err) => {
@@ -1191,7 +1249,7 @@ function App() {
           setMessage('CM Review data are loaded');
         } else {
           setStatus('error');
-          setMessage('CM Review table is empty, Please contact the support');
+          setMessage('There are no CM Review recommendations for the selected filters.  Please choose another table');
         }
       }
     }).catch((err) => {
@@ -1213,7 +1271,7 @@ function App() {
           setMessage('Chase data are loaded');
         } else {
           setStatus('error');
-          setMessage('Chase table is empty, Please contact the support');
+          setMessage('There are no Chase recommendations for the selected filters. Please choose another table');
         }
       }
     }).catch((err) => {
@@ -1326,7 +1384,7 @@ function App() {
           "PriceElasticityConfidence": null,
           "RecommendedMarkPCTElasticity": null,
           "RecommendedMarkPRCElasticity": null,
-          "ToolTipValue": 'ths is the best, this is cool',
+          "ToolTipValue": 'ths is the best this is huge and huge, this is cool',
           "TotalDiscountAfterMarkElasticity": null,
           "RecommendedMarkPCTInterval": null,
           "RecommendedMarkPRCInterval": null,
@@ -1439,7 +1497,7 @@ function App() {
           "PriceElasticityConfidence": null,
           "RecommendedMarkPCTElasticity": null,
           "RecommendedMarkPRCElasticity": null,
-          "ToolTipValue": 'ths is the best, this is cool',
+          "ToolTipValue": 'ths is the best, this is cool just fo checking',
           "TotalDiscountAfterMarkElasticity": null,
           "RecommendedMarkPCTInterval": null,
           "RecommendedMarkPRCInterval": null,
@@ -1552,7 +1610,7 @@ function App() {
           "PriceElasticityConfidence": null,
           "RecommendedMarkPCTElasticity": null,
           "RecommendedMarkPRCElasticity": null,
-          "ToolTipValue": 'ths is the best, this is cool',
+          "ToolTipValue": 'ths is the best, this is cool, this is alos cool but little longer',
           "TotalDiscountAfterMarkElasticity": null,
           "RecommendedMarkPCTInterval": null,
           "RecommendedMarkPRCInterval": null,
@@ -1910,7 +1968,7 @@ function App() {
           setMessage('Exception data are loaded');
         } else {
           setStatus('error');
-          setMessage('Exception table is empty, Please contact the support');
+          setMessage('There are no Exception recommendations for the selected filters. Please choose another table');
         }
       }
     }).catch((err) => {
@@ -1932,7 +1990,7 @@ function App() {
           setMessage('Exclude data are loaded');
         } else {
           setStatus('error');
-          setMessage('Exclude table is empty, Please contact the support');
+          setMessage('There are no Exclude recommendations for the selected filters. Please choose another table');
         }
       }
     }).catch((err) => {
@@ -1954,7 +2012,7 @@ function App() {
           setMessage('Markdown data are loaded');
         } else {
           setStatus('error');
-          setMessage('Markdown table is empty, Please contact the support');
+          setMessage('There are no Markdown recommendations for the selected filters.  Please choose another table');
         }
       }
     }).catch((err) => {
@@ -1976,7 +2034,7 @@ function App() {
           setMessage('Release data are loaded');
         } else {
           setStatus('error');
-          setMessage('Release table is empty, Please contact the support');
+          setMessage('There are no Release recommendations for the selected filters.  Please choose another table');
         }
       }
     }).catch((err) => {
@@ -1998,7 +2056,7 @@ function App() {
           setMessage('Table data are loaded');
         } else {
           setStatus('error');
-          setMessage('Table is empty, Please contact the support');
+          setMessage('There are no recommendations for the selected filters.  Please choose another table');
         }
       }
     }).catch((err) => {
@@ -2020,7 +2078,7 @@ function App() {
           setMessage('X-channel data are loaded');
         } else {
           setStatus('error');
-          setMessage('X-channel table is empty, Please contact the support');
+          setMessage('There are no X-channel recommendations for the selected filters.  Please choose another table');
         }
       }
     }).catch((err) => {
@@ -2054,6 +2112,7 @@ function App() {
         "DemandUnitsSTD": 85.0,
         "DemandAURLW": 17121.4,
         "LastSeasonPlanned": "HO2020",
+        "ToolTipValue": "this is also the best",
         "LastSeasonPlannedEndDate": "2021-01-02"
       }, {
         "StyleColor": "DJ1388-010",
@@ -26494,7 +26553,7 @@ function App() {
           setMessage('Table data are loaded');
         } else {
           setStatus('error');
-          setMessage('Table is empty, Please contact the support');
+          setMessage('There are no recommendations for the selected filters.  Please choose another table');
         }
       }
     }).catch((err) => {

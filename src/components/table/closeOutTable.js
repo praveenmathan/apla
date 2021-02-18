@@ -2,6 +2,7 @@ import React from 'react';
 import { AgGridReact, AgGridColumn } from '@ag-grid-community/react';
 import { RowDetailsContext, SaveBtnContext } from '../context/rowDetailsContext';
 import { AllModules } from "@ag-grid-enterprise/all-modules";
+import CustomTooltip from './customTooltip.jsx';
 
 const CloseOutTable = (props) => {
     let consolidatedRows = [];
@@ -28,7 +29,8 @@ const CloseOutTable = (props) => {
                     resizable: true,
                     filter: true,
                     enableRowGroup: true,
-                    enablePivot: true
+                    enablePivot: true,
+                    tooltipComponent: 'customTooltip',
                 }}
                 sideBar={{
                     toolPanels: [
@@ -52,6 +54,8 @@ const CloseOutTable = (props) => {
                 pagination={true}
                 enableCellTextSelection={true}
                 suppressDragLeaveHidesColumns={true}
+                tooltipShowDelay={0}
+                frameworkComponents={{ customTooltip: CustomTooltip }}
             >
 
                 <AgGridColumn headerName="Products">
@@ -69,7 +73,8 @@ const CloseOutTable = (props) => {
                 </AgGridColumn>
 
                 <AgGridColumn headerName="Recommendations" headerClass='custom-font-color' >
-                    <AgGridColumn field="RecommendedAction" headerClass='custom-font-color' headerName="Action" width='200' />
+                    <AgGridColumn field="RecommendedAction" headerClass='custom-font-color' headerName="Action" width='200' tooltipField="RecommendedAction" tooltipComponent="customTooltip"
+                        tooltipComponentParams={{ color: '#ececec' }} />
                     <AgGridColumn field="SelectedRecommendedActionOverride" headerClass='custom-font-color' headerName="Action Override"
                         width='225'
                         editable={true}
@@ -78,6 +83,7 @@ const CloseOutTable = (props) => {
                             let givenValue = params.data.RecommendedActionOverride;
                             if (givenValue != null) {
                                 let actionOveride = givenValue.split(',');
+                                actionOveride.push(null);
                                 return {
                                     values: actionOveride
                                 }

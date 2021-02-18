@@ -67,8 +67,8 @@ Customised CSS
 }
 .custom-tooltip {
   position: absolute;
-  width: 150px;
-  height: 70px;
+  width: 170px;
+  height:100px;
   border: 1px solid #fa8231;
   overflow: hidden;
   pointer-events: none;
@@ -77,15 +77,24 @@ Customised CSS
   box-sizing:unset;
 }
 
+.custom-tooltip-box {
+  position: absolute;
+  left: 0;
+  right: 0;
+}
+
 .custom-tooltip.ag-tooltip-hiding {
   opacity: 0;
 }
 
-.custom-tooltip p {
-  margin: 5px;
-  white-space: nowrap;
+.custom-tooltip div {
+  padding: 5px;
 }
 
 .custom-tooltip p:first-of-type {
   font-weight: bold;
+}
+
+.ag-numeric-cell {
+  text-align: right;
 }

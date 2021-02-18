@@ -1,5 +1,6 @@
 import { AgGridReact, AgGridColumn } from '@ag-grid-community/react';
 import { AllModules } from "@ag-grid-enterprise/all-modules";
+import CustomTooltip from './customTooltip.jsx';
 
 const ExcludeTable = (props) => {
 
@@ -14,7 +15,8 @@ const ExcludeTable = (props) => {
                     resizable: true,
                     filter: true,
                     enableRowGroup: true,
-                    enablePivot: true
+                    enablePivot: true,
+                    tooltipComponent: 'customTooltip',
                 }}
                 sideBar={{
                     toolPanels: [
@@ -38,6 +40,8 @@ const ExcludeTable = (props) => {
                 pagination={true}
                 enableCellTextSelection={true}
                 suppressDragLeaveHidesColumns={true}
+                tooltipShowDelay={0}
+                frameworkComponents={{ customTooltip: CustomTooltip }}
             >
 
                 <AgGridColumn headerName="Products">

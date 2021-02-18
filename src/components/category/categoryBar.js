@@ -79,7 +79,7 @@ const CategoryBar = (props) => {
         /* To initialise catergory options */
         let categoryOptions = [];
         if (isLoading) {
-            props.data.selectionFilters.category.map(eachitem => categoryOptions.push({
+            props.data.selectionFilters.formattedCategoryData.map(eachitem => categoryOptions.push({
                 key: eachitem.categoryDescription,
                 value: eachitem.categoryDescription,
                 text: eachitem.categoryDescription
@@ -90,7 +90,7 @@ const CategoryBar = (props) => {
         /* To initialise gender options */
         let genderOptions = [];
         if (isLoading) {
-            props.data.selectionFilters.gender.map(eachitem => genderOptions.push({
+            props.data.selectionFilters.formattedGenderData.map(eachitem => genderOptions.push({
                 key: eachitem.genderDescription,
                 value: eachitem.genderDescription,
                 text: eachitem.genderDescription
@@ -101,7 +101,7 @@ const CategoryBar = (props) => {
         /* To initialise division options */
         let divisionOptions = [];
         if (isLoading) {
-            props.data.selectionFilters.division.map(eachitem => divisionOptions.push({
+            props.data.selectionFilters.formattedDivisionData.map(eachitem => divisionOptions.push({
                 key: eachitem.divisionDescription,
                 value: eachitem.divisionDescription,
                 text: eachitem.divisionDescription
@@ -123,7 +123,6 @@ const CategoryBar = (props) => {
 
     /* To handle marketplace change */
     const handleMarketPlaceChange = (e, { value }) => {
-        console.log('on change - gets triggered');
         if (value != '') {
             setMarketPlaceError(false);
             setMarketPlaceValue(value);

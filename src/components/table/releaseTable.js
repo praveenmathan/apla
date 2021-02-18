@@ -2,6 +2,7 @@ import React from 'react';
 import { AgGridColumn, AgGridReact } from '@ag-grid-community/react';
 import { SelectedChannelContext } from '../context/rowDetailsContext';
 import { AllModules } from "@ag-grid-enterprise/all-modules";
+import CustomTooltip from './customTooltip.jsx';
 
 const ReleaseTable = (props) => {
 
@@ -18,7 +19,8 @@ const ReleaseTable = (props) => {
                     resizable: true,
                     filter: true,
                     enableRowGroup: true,
-                    enablePivot: true
+                    enablePivot: true,
+                    tooltipComponent: 'customTooltip',
                 }}
                 sideBar={{
                     toolPanels: [
@@ -42,6 +44,8 @@ const ReleaseTable = (props) => {
                 pagination={true}
                 enableCellTextSelection={true}
                 suppressDragLeaveHidesColumns={true}
+                tooltipShowDelay={0}
+                frameworkComponents={{ customTooltip: CustomTooltip }}
             >
 
                 <AgGridColumn headerName="Products">
@@ -80,7 +84,7 @@ const ReleaseTable = (props) => {
                     <AgGridColumn field="GA_1083" headerName="GA 1083" />
                     <AgGridColumn field="GA_1084" headerName="GA 1084" />
                     <AgGridColumn field="GA_1085" headerName="GA 1085" />
-                    <AgGridColumn field="DOMsInventory" headerName="DOMs Inventory"/>
+                    <AgGridColumn field="DOMsInventory" headerName="DOMs Inventory" />
                     <AgGridColumn field="DOMsNDDCInventory" headerName="DOMs NDDC Inventory" />
                     <AgGridColumn field="DOMsZOZOInventory" headerName="DOMs ZOZO Inventory" />
                     <AgGridColumn field="DOMsNSOInventory" headerName="DOMs NSO Inventory" />

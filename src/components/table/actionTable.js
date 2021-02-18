@@ -3,6 +3,7 @@ import Dialog from '@material-ui/core/Dialog';
 import { AgGridReact, AgGridColumn } from '@ag-grid-community/react';
 import { RowDetailsContext, SaveBtnContext, SelectedChannelContext } from '../context/rowDetailsContext';
 import { AllModules } from "@ag-grid-enterprise/all-modules";
+import CustomTooltip from './customTooltip.jsx';
 
 const ActionTable = (props) => {
     let consolidatedRows = [];
@@ -42,6 +43,9 @@ const ActionTable = (props) => {
             <div className="ag-theme-alpine" style={{ height: '70vh' }}>
                 <AgGridReact
                     modules={AllModules}
+                    cellClass={(params) => {
+                        return params.colDef.type === 'numericColumn' ? 'ag-numeric-cell' : '';
+                    }}
                     defaultColDef={{
                         flex: 1,
                         minWidth: 175,
@@ -49,7 +53,8 @@ const ActionTable = (props) => {
                         resizable: true,
                         filter: true,
                         enableRowGroup: true,
-                        enablePivot: true
+                        enablePivot: true,
+                        tooltipComponent: 'customTooltip',
                     }}
                     sideBar={{
                         toolPanels: [
@@ -73,6 +78,8 @@ const ActionTable = (props) => {
                     pagination={true}
                     enableCellTextSelection={true}
                     suppressDragLeaveHidesColumns={true}
+                    tooltipShowDelay={0}
+                    frameworkComponents={{ customTooltip: CustomTooltip }}
                 >
                     <AgGridColumn headerName="Products">
                         <AgGridColumn field="StyleColor" pinned="left" lockPinned={true} cellClass="lock-pinned" cellRenderer={function (params) {
@@ -89,7 +96,8 @@ const ActionTable = (props) => {
                     </AgGridColumn>
 
                     <AgGridColumn headerName="Recommendations" headerClass='custom-font-color' >
-                        <AgGridColumn field="RecommendedAction" headerClass='custom-font-color' headerName="Action" width='200' />
+                        <AgGridColumn field="RecommendedAction" headerClass='custom-font-color' headerName="Action" width='200' tooltipField="RecommendedAction" tooltipComponent="customTooltip"
+                            tooltipComponentParams={{ color: '#ececec' }} />
                         <AgGridColumn field="SelectedRecommendedActionOverride" headerClass='custom-font-color' headerName="Action Override"
                             width='225'
                             editable={true}
@@ -98,6 +106,7 @@ const ActionTable = (props) => {
                                 let givenValue = params.data.RecommendedActionOverride;
                                 if (givenValue != null) {
                                     let actionOveride = givenValue.split(',');
+                                    actionOveride.push(null);
                                     return {
                                         values: actionOveride
                                     }
@@ -150,13 +159,13 @@ const ActionTable = (props) => {
                         <AgGridColumn field="GA_1083" headerName="GA 1083" />
                         <AgGridColumn field="GA_1084" headerName="GA 1084" />
                         <AgGridColumn field="GA_1085" headerName="GA 1085" />
-                    <AgGridColumn field="DOMsInventory" headerName="DOMs Inventory"/>
-                    <AgGridColumn field="DOMsNDDCInventory" headerName="DOMs NDDC Inventory" />
-                    <AgGridColumn field="DOMsZOZOInventory" headerName="DOMs ZOZO Inventory" />
-                    <AgGridColumn field="DOMsNSOInventory" headerName="DOMs NSO Inventory" />
-                    <AgGridColumn field="DOMsNFSInventory" headerName="DOMs NFS Inventory" />
-                    <AgGridColumn field="DOMsEMPInventory" headerName="DOMs EMP Inventory" />
-                    <AgGridColumn field="DOMsGAInventory" headerName="DOMs GA Inventory" />
+                        <AgGridColumn field="DOMsInventory" headerName="DOMs Inventory" />
+                        <AgGridColumn field="DOMsNDDCInventory" headerName="DOMs NDDC Inventory" />
+                        <AgGridColumn field="DOMsZOZOInventory" headerName="DOMs ZOZO Inventory" />
+                        <AgGridColumn field="DOMsNSOInventory" headerName="DOMs NSO Inventory" />
+                        <AgGridColumn field="DOMsNFSInventory" headerName="DOMs NFS Inventory" />
+                        <AgGridColumn field="DOMsEMPInventory" headerName="DOMs EMP Inventory" />
+                        <AgGridColumn field="DOMsGAInventory" headerName="DOMs GA Inventory" />
                         <AgGridColumn field="SizeCountOwned" />
                         <AgGridColumn field="SizeCountTotal" />
                         <AgGridColumn field="SizeIntegrity" />

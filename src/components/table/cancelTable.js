@@ -2,6 +2,7 @@ import React from 'react';
 import { AgGridReact, AgGridColumn } from '@ag-grid-community/react';
 import { RowDetailsContext, SaveBtnContext } from '../context/rowDetailsContext';
 import { AllModules } from "@ag-grid-enterprise/all-modules";
+import CustomTooltip from './customTooltip.jsx';
 
 const CancelTable = (props) => {
     let consolidatedRows = [];
@@ -28,7 +29,8 @@ const CancelTable = (props) => {
                     resizable: true,
                     filter: true,
                     enableRowGroup: true,
-                    enablePivot: true
+                    enablePivot: true,
+                    tooltipComponent: 'customTooltip',
                 }}
                 sideBar={{
                     toolPanels: [
@@ -52,6 +54,8 @@ const CancelTable = (props) => {
                 pagination={true}
                 enableCellTextSelection={true}
                 suppressDragLeaveHidesColumns={true}
+                tooltipShowDelay={0}
+                frameworkComponents={{ customTooltip: CustomTooltip }}
             >
 
                 <AgGridColumn headerName="Products">
@@ -69,7 +73,8 @@ const CancelTable = (props) => {
                 </AgGridColumn>
 
                 <AgGridColumn headerName="Recommendations" headerClass='custom-font-color' >
-                    <AgGridColumn field="RecommendedAction" headerClass='custom-font-color' headerName="Action" width='200' />
+                    <AgGridColumn field="RecommendedAction" headerClass='custom-font-color' headerName="Action" width='200' tooltipField="RecommendedAction" tooltipComponent="customTooltip"
+                        tooltipComponentParams={{ color: '#ececec' }} />
                     <AgGridColumn field="SelectedRecommendedActionOverride" headerClass='custom-font-color' headerName="Action Override"
                         width='225'
                         editable={true}
@@ -78,6 +83,7 @@ const CancelTable = (props) => {
                             let givenValue = params.data.RecommendedActionOverride;
                             if (givenValue != null) {
                                 let actionOveride = givenValue.split(',');
+                                actionOveride.push(null);
                                 return {
                                     values: actionOveride
                                 }
@@ -103,7 +109,7 @@ const CancelTable = (props) => {
                     <AgGridColumn field="UnassignedSixtyonePlusDaysOut" headerName='Unassigned Qty 61 Plus' />
                     <AgGridColumn field="1083_Contracts" headerName='1083 Contracts' />
                     <AgGridColumn field="1084_Contracts" headerName='1084 Contracts' />
-                    <AgGridColumn field="DOMsInventory" headerName="DOMs Inventory"/>
+                    <AgGridColumn field="DOMsInventory" headerName="DOMs Inventory" />
                     <AgGridColumn field="DOMsNDDCInventory" headerName="DOMs NDDC Inventory" />
                     <AgGridColumn field="DOMsZOZOInventory" headerName="DOMs ZOZO Inventory" />
                     <AgGridColumn field="DOMsNSOInventory" headerName="DOMs NSO Inventory" />

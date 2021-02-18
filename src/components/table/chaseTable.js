@@ -2,7 +2,7 @@ import React from 'react';
 import { AgGridReact, AgGridColumn } from '@ag-grid-community/react';
 import { RowDetailsContext, SaveBtnContext } from '../context/rowDetailsContext';
 import { AllModules } from "@ag-grid-enterprise/all-modules";
-import CustomTooltip from './customTooltip.js';
+import CustomTooltip from './customTooltip.jsx';
 
 const ChaseTable = (props) => {
     let consolidatedRows = [];
@@ -66,7 +66,8 @@ const ChaseTable = (props) => {
                     <AgGridColumn field="Comment"
                         editable={true}
                         cellEditor="agLargeTextCellEditor"
-                        onCellValueChanged={onCellValueChanged} />
+                        onCellValueChanged={onCellValueChanged}
+                    />
                     <AgGridColumn field="Description" menuTabs={['filterMenuTab', 'generalMenuTab', 'columnsMenuTab']} />
                     <AgGridColumn field="SlimLifecycleSeason" />
                 </AgGridColumn>
@@ -86,6 +87,7 @@ const ChaseTable = (props) => {
                             let givenValue = params.data.RecommendedActionOverride;
                             if (givenValue != null) {
                                 let actionOveride = givenValue.split(',');
+                                actionOveride.push(null);
                                 return {
                                     values: actionOveride
                                 }
