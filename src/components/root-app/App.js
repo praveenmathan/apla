@@ -105,11 +105,16 @@ function App() {
       authorisationAPI.postData(requestData).then((response) => {
         if (response.status === 200) {
           const { data } = response;
-          setAuthorisationApi(data);
-          getCategoryAPI();
+          if (data.isAuthorisedUser) {
+            setAuthorisationApi(data);
+            getCategoryAPI();
+          } else {
+            setStatus('error');
+            setMessage(`${userInfoOkta.given_name} is not authorized. Contact support : productionsupport@nike.com`);
+          }
         }
       }).catch((err) => {
-        setAuthorisationApi({
+        let data = {
           "returnCode": 0,
 
           "returnMessage": "Success",
@@ -185,8 +190,14 @@ function App() {
             }
           ]
 
-        });
-        getCategoryAPI();
+        };
+        if (data.isAuthorisedUser) {
+          setAuthorisationApi(data);
+          getCategoryAPI();
+        } else {
+          setStatus('error');
+          setMessage(`${userInfoOkta.given_name} is not authorized. Contact support : productionsupport@nike.com`);
+        }
         console.log(err);
       });
     }
@@ -872,7 +883,7 @@ function App() {
         "RecommendedAction": eachRow.RecommendedAction,
         "SelectedRecommendedActionOverride": eachRow.SelectedRecommendedActionOverride,
         "RecommendedActionOverride": eachRow.RecommendedActionOverride,
-        "RPT": eachRow.RPT
+        "CGD": eachRow.CGD
       }
       inventorySaveDetails.push(inventoryDetails);
     });
@@ -1292,7 +1303,7 @@ function App() {
           "SubCategory": "MENS CORE RUNNING",
           "Division": "Footwear",
           "Gender": "Mens",
-          "RPT": "Running-Mens-Footwear",
+          "CGD": "Running-Mens-Footwear",
           "Franchise": "ZOOM GRAVITY",
           "NikeLABIND": "N",
           "NRGIND": "N",
@@ -1362,7 +1373,7 @@ function App() {
           "FirstOrderDate": "2020-00-09",
           "DaysOnSale": 184,
           "WebConversionPct": null,
-          "WebConversionFourWeekAvgRPT": 1.7,
+          "WebConversionFourWeekAvgCGD": 1.7,
           "LastSeasonPlanned": "FA2020",
           "LastSeasonPlannedEndDate": "2020-00-03",
           "InLastFPPlannedSeason": "NO",
@@ -1380,7 +1391,7 @@ function App() {
           "MDCount": 1,
           "ContributionMargin": null,
           "PriceElasticitySC": null,
-          "PriceElasticityRPT": null,
+          "PriceElasticityCGD": null,
           "PriceElasticityConfidence": null,
           "RecommendedMarkPCTElasticity": null,
           "RecommendedMarkPRCElasticity": null,
@@ -1405,7 +1416,7 @@ function App() {
           "SubCategory": "MENS TECH RUNNING",
           "Division": "Footwear",
           "Gender": "Mens",
-          "RPT": "Running-Mens-Footwear",
+          "CGD": "Running-Mens-Footwear",
           "Franchise": "PEGASUS",
           "NikeLABIND": "N",
           "NRGIND": "N",
@@ -1475,7 +1486,7 @@ function App() {
           "FirstOrderDate": "0001-00-01",
           "DaysOnSale": null,
           "WebConversionPct": null,
-          "WebConversionFourWeekAvgRPT": null,
+          "WebConversionFourWeekAvgCGD": null,
           "LastSeasonPlanned": "SU2021",
           "LastSeasonPlannedEndDate": "2021-00-03",
           "InLastFPPlannedSeason": "NO",
@@ -1493,7 +1504,7 @@ function App() {
           "MDCount": null,
           "ContributionMargin": null,
           "PriceElasticitySC": null,
-          "PriceElasticityRPT": null,
+          "PriceElasticityCGD": null,
           "PriceElasticityConfidence": null,
           "RecommendedMarkPCTElasticity": null,
           "RecommendedMarkPRCElasticity": null,
@@ -1518,7 +1529,7 @@ function App() {
           "SubCategory": "MENS TECH RUNNING",
           "Division": "Footwear",
           "Gender": "Mens",
-          "RPT": "Running-Mens-Footwear",
+          "CGD": "Running-Mens-Footwear",
           "Franchise": "PEGASUS",
           "NikeLABIND": "N",
           "NRGIND": "N",
@@ -1588,7 +1599,7 @@ function App() {
           "FirstOrderDate": "2020-00-09",
           "DaysOnSale": 184,
           "WebConversionPct": 0.4,
-          "WebConversionFourWeekAvgRPT": 1.7,
+          "WebConversionFourWeekAvgCGD": 1.7,
           "LastSeasonPlanned": "FA2020",
           "LastSeasonPlannedEndDate": "2020-00-03",
           "InLastFPPlannedSeason": "NO",
@@ -1606,7 +1617,7 @@ function App() {
           "MDCount": 1,
           "ContributionMargin": 0.5,
           "PriceElasticitySC": null,
-          "PriceElasticityRPT": null,
+          "PriceElasticityCGD": null,
           "PriceElasticityConfidence": null,
           "RecommendedMarkPCTElasticity": null,
           "RecommendedMarkPRCElasticity": null,
@@ -1631,7 +1642,7 @@ function App() {
           "SubCategory": "MENS TECH RUNNING",
           "Division": "Footwear",
           "Gender": "Mens",
-          "RPT": "Running-Mens-Footwear",
+          "CGD": "Running-Mens-Footwear",
           "Franchise": "PEGASUS",
           "NikeLABIND": "N",
           "NRGIND": "N",
@@ -1699,7 +1710,7 @@ function App() {
           "FirstOrderDate": "2020-00-18",
           "DaysOnSale": 113,
           "WebConversionPct": 0.8,
-          "WebConversionFourWeekAvgRPT": 1.7,
+          "WebConversionFourWeekAvgCGD": 1.7,
           "LastSeasonPlanned": "HO2020",
           "LastSeasonPlannedEndDate": "2021-00-02",
           "InLastFPPlannedSeason": "NO",
@@ -1717,7 +1728,7 @@ function App() {
           "MDCount": null,
           "ContributionMargin": 0.5,
           "PriceElasticitySC": null,
-          "PriceElasticityRPT": null,
+          "PriceElasticityCGD": null,
           "PriceElasticityConfidence": null,
           "RecommendedMarkPCTElasticity": null,
           "RecommendedMarkPRCElasticity": null,
@@ -1742,7 +1753,7 @@ function App() {
           "SubCategory": "MENS TECH RUNNING",
           "Division": "Footwear",
           "Gender": "Mens",
-          "RPT": "Running-Mens-Footwear",
+          "CGD": "Running-Mens-Footwear",
           "Franchise": "INFINITY RUN",
           "NikeLABIND": null,
           "NRGIND": "N",
@@ -1810,7 +1821,7 @@ function App() {
           "FirstOrderDate": "0001-00-01",
           "DaysOnSale": null,
           "WebConversionPct": null,
-          "WebConversionFourWeekAvgRPT": null,
+          "WebConversionFourWeekAvgCGD": null,
           "LastSeasonPlanned": "HO2020",
           "LastSeasonPlannedEndDate": "2021-00-02",
           "InLastFPPlannedSeason": "NO",
@@ -1828,7 +1839,7 @@ function App() {
           "MDCount": null,
           "ContributionMargin": null,
           "PriceElasticitySC": null,
-          "PriceElasticityRPT": null,
+          "PriceElasticityCGD": null,
           "PriceElasticityConfidence": null,
           "RecommendedMarkPCTElasticity": null,
           "RecommendedMarkPRCElasticity": null,
@@ -1853,7 +1864,7 @@ function App() {
           "SubCategory": "MENS TECH RUNNING",
           "Division": "Footwear",
           "Gender": "Mens",
-          "RPT": "Running-Mens-Footwear",
+          "CGD": "Running-Mens-Footwear",
           "Franchise": "INFINITY RUN",
           "NikeLABIND": "N",
           "NRGIND": "N",
@@ -1923,7 +1934,7 @@ function App() {
           "FirstOrderDate": "2020-00-05",
           "DaysOnSale": 157,
           "WebConversionPct": 0.8,
-          "WebConversionFourWeekAvgRPT": 1.7,
+          "WebConversionFourWeekAvgCGD": 1.7,
           "LastSeasonPlanned": "FA2020",
           "LastSeasonPlannedEndDate": "2020-00-03",
           "InLastFPPlannedSeason": "NO",
@@ -1941,7 +1952,7 @@ function App() {
           "MDCount": 1,
           "ContributionMargin": 0.5,
           "PriceElasticitySC": null,
-          "PriceElasticityRPT": null,
+          "PriceElasticityCGD": null,
           "PriceElasticityConfidence": null,
           "RecommendedMarkPCTElasticity": null,
           "RecommendedMarkPRCElasticity": null,

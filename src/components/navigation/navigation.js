@@ -8,6 +8,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import logo from '../../assets/images/nike-logo.png';
+import slimlogin from '../../assets/images/slim-apla-logo-login.png';
 import { useOktaAuth } from '@okta/okta-react';
 import { Link } from 'react-router-dom';
 
@@ -25,7 +26,8 @@ const useStyles = makeStyles((theme) => ({
     },
     title: {
         flexGrow: 1,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        textAlign: 'center'
     },
 }));
 
@@ -47,7 +49,7 @@ export default function MenuAppBar(props) {
                 <Toolbar>
                     <img src={logo} className="App-logo" alt="logo" />
                     <Typography variant="h6" className={classes.title}>
-                        APLA - Strategic Lifecycle Inventory Management
+                        <img src={slimlogin} alt='' className="slim-logo-navigation" />
                     </Typography>
                     {auth && (
                         <div>

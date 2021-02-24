@@ -62,9 +62,13 @@ const CrossChannelTable = (props) => {
 
                 <AgGridColumn headerName="Products">
                     <AgGridColumn field="StyleColor" pinned="left" lockPinned={true} cellClass="lock-pinned" cellRenderer={function (params) {
-                        return "<a target='_blank' href='http://images6.nike.com/is/image/DPILS/"
-                            + params.value
-                            + "-PV'>" + params.value + "</a>";
+                        if (params.value !== undefined) {
+                            return "<a target='_blank' href='http://images6.nike.com/is/image/DPILS/"
+                                + params.value
+                                + "-PV'>" + params.value + "</a>";
+                        } else {
+                            return null
+                        }
                     }} />
                     <AgGridColumn field="Comment"
                         editable={true}

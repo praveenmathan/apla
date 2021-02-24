@@ -5,7 +5,8 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Slide from "@material-ui/core/Slide";
-import slimlogin from '../../assets/images/slim-login.png';
+import slimlogin from '../../assets/images/slim-apla-logo-login.png';
+import nikelogo from '../../assets/images/nike-logo.png';
 import { Form } from 'semantic-ui-react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useOktaAuth } from '@okta/okta-react';
@@ -65,7 +66,7 @@ export default function LoginModal(props) {
                     </DialogContentText>
                 </DialogContent>
                 <DialogTitle id="alert-dialog-slide-title" className={classes.title}>
-                    {"SLIM - Strategic Lifecycle Inventory Management"}
+                    <img src={nikelogo} alt='' className="nike-logo-login" />
                 </DialogTitle>
                 <DialogActions className={classes.root}>
                     {!authState.isPending && !authState.isAuthenticated && (

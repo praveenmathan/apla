@@ -65,6 +65,11 @@ Customised CSS
 .slim-login {
   width: 100%;
 }
+
+.nike-logo-login {
+  width: 40%;
+}
+
 .custom-tooltip {
   position: absolute;
   width: 170px;
@@ -97,4 +102,12 @@ Customised CSS
 
 .ag-numeric-cell {
   text-align: right;
+}
+
+.MuiBackdrop-root {
+  background-color: rgba(0, 0, 0, 0.8) !important;
+}
+
+.slim-logo-navigation {
+  width: 10%;
 }

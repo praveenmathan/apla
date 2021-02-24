@@ -60,9 +60,13 @@ const ImproveConversionTable = (props) => {
 
                 <AgGridColumn headerName="Products">
                     <AgGridColumn field="StyleColor" pinned="left" lockPinned={true} cellClass="lock-pinned" cellRenderer={function (params) {
-                        return "<a target='_blank' href='http://images6.nike.com/is/image/DPILS/"
-                            + params.value
-                            + "-PV'>" + params.value + "</a>";
+                        if (params.value !== undefined) {
+                            return "<a target='_blank' href='http://images6.nike.com/is/image/DPILS/"
+                                + params.value
+                                + "-PV'>" + params.value + "</a>";
+                        } else {
+                            return null
+                        }
                     }} />
                     <AgGridColumn field="Comment"
                         editable={true}
@@ -73,7 +77,7 @@ const ImproveConversionTable = (props) => {
                 </AgGridColumn>
 
                 <AgGridColumn headerName="Product Attribution">
-                    <AgGridColumn field="RPT" />
+                    <AgGridColumn field="CGD" />
                 </AgGridColumn>
 
                 <AgGridColumn headerName="Recommendations" headerClass='custom-font-color' >
@@ -104,7 +108,7 @@ const ImproveConversionTable = (props) => {
                 <AgGridColumn headerName="Web Traffic">
                     <AgGridColumn field="WebTrafficLW" />
                     <AgGridColumn field="WebConversionPct" />
-                    <AgGridColumn field="WebConversionFourWeekAvgRPT" />
+                    <AgGridColumn field="WebConversionFourWeekAvgCGD" />
                 </AgGridColumn>
 
                 <AgGridColumn headerName="Sales">

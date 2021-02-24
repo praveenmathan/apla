@@ -82,11 +82,16 @@ const ActionTable = (props) => {
                     frameworkComponents={{ customTooltip: CustomTooltip }}
                 >
                     <AgGridColumn headerName="Products">
-                        <AgGridColumn field="StyleColor" pinned="left" lockPinned={true} cellClass="lock-pinned" cellRenderer={function (params) {
-                            return "<a target='_blank' href='http://images6.nike.com/is/image/DPILS/"
-                                + params.value
-                                + "-PV'>" + params.value + "</a>";
-                        }} />
+                        <AgGridColumn field="StyleColor" pinned="left" lockPinned={true} cellClass="lock-pinned"
+                            cellRenderer={function (params) {
+                                if (params.value !== undefined) {
+                                    return "<a target='_blank' href='http://images6.nike.com/is/image/DPILS/"
+                                        + params.value
+                                        + "-PV'>" + params.value + "</a>";
+                                } else {
+                                    return null
+                                }
+                            }} />
                         <AgGridColumn field="Comment"
                             editable={true}
                             cellEditor="agLargeTextCellEditor"
@@ -131,10 +136,11 @@ const ActionTable = (props) => {
                         <AgGridColumn field="SubCategory" />
                         <AgGridColumn field="Division" />
                         <AgGridColumn field="Gender" />
-                        <AgGridColumn field="RPT" />
+                        <AgGridColumn field="CGD" />
                         <AgGridColumn field="Franchise" />
                         <AgGridColumn field="NikeLABIND" />
                         <AgGridColumn field="NRGIND" />
+                        <AgGridColumn field="License" />
                         <AgGridColumn field="League" />
                         <AgGridColumn field="Team" />
                         <AgGridColumn field="AthleteName" />
@@ -221,7 +227,7 @@ const ActionTable = (props) => {
                     <AgGridColumn headerName="Web Traffic">
                         <AgGridColumn field='WebTrafficLW' />
                         <AgGridColumn field="WebConversionPct" />
-                        <AgGridColumn field="WebConversionFourWeekAvgRPT" />
+                        <AgGridColumn field="WebConversionFourWeekAvgCGD" />
                     </AgGridColumn>
 
                     <AgGridColumn headerName="Plan">
@@ -245,7 +251,6 @@ const ActionTable = (props) => {
                         <AgGridColumn field="MDCount" />
                         <AgGridColumn field="ContributionMargin" />
                         <AgGridColumn field="PriceElasticitySC" />
-                        <AgGridColumn field="PriceElasticityRPT" />
                         <AgGridColumn field="PriceElasticityConfidence" />
                         <AgGridColumn field="RecommendedMarkPCTElasticity" />
                         <AgGridColumn field="RecommendedMarkPRCElasticity" />
