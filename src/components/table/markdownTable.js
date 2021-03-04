@@ -19,6 +19,12 @@ const MarkdownTable = (props) => {
         }
     }
 
+    function numberParser(params) {
+        if (params.value === null || params.value === 0 || params.value === undefined) {
+            return '-'
+        }
+    }
+
     return (
         <div className="ag-theme-alpine" style={{ height: '70vh' }}>
             <AgGridReact
@@ -32,6 +38,7 @@ const MarkdownTable = (props) => {
                     enableRowGroup: true,
                     enablePivot: true,
                     tooltipComponent: 'customTooltip',
+                    valueFormatter: numberParser
                 }}
                 sideBar={{
                     toolPanels: [

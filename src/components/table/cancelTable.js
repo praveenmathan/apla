@@ -18,6 +18,12 @@ const CancelTable = (props) => {
         }
     }
 
+    function numberParser(params) {
+        if (params.value === null || params.value === 0 || params.value === undefined) {
+            return '-'
+        }
+    }
+
     return (
         <div className="ag-theme-alpine" style={{ height: '70vh' }}>
             <AgGridReact
@@ -31,6 +37,7 @@ const CancelTable = (props) => {
                     enableRowGroup: true,
                     enablePivot: true,
                     tooltipComponent: 'customTooltip',
+                    valueFormatter: numberParser
                 }}
                 sideBar={{
                     toolPanels: [
@@ -77,6 +84,10 @@ const CancelTable = (props) => {
                     <AgGridColumn field="SlimLifecycleSeason" />
                 </AgGridColumn>
 
+                <AgGridColumn headerName="Product Attribution">
+                    <AgGridColumn field="CGD" />
+                </AgGridColumn>
+
                 <AgGridColumn headerName="Recommendations" headerClass='custom-font-color' >
                     <AgGridColumn field="RecommendedAction" headerClass='custom-font-color' headerName="Action" width='200' tooltipField="RecommendedAction" tooltipComponent="customTooltip"
                         tooltipComponentParams={{ color: '#ececec' }} />
@@ -100,10 +111,6 @@ const CancelTable = (props) => {
                         }}
                         onCellValueChanged={onCellValueChanged}
                     />
-                </AgGridColumn>
-
-                <AgGridColumn headerName="Product Attribution">
-                    <AgGridColumn field="CGD" />
                 </AgGridColumn>
 
                 <AgGridColumn headerName="Inventory">

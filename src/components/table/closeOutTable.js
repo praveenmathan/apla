@@ -18,6 +18,12 @@ const CloseOutTable = (props) => {
         }
     }
 
+    function numberParser(params) {
+        if (params.value === null || params.value === 0 || params.value === undefined) {
+            return '-'
+        }
+    }
+
     return (
         <div className="ag-theme-alpine" style={{ height: '70vh' }}>
             <AgGridReact
@@ -31,6 +37,7 @@ const CloseOutTable = (props) => {
                     enableRowGroup: true,
                     enablePivot: true,
                     tooltipComponent: 'customTooltip',
+                    valueFormatter: numberParser
                 }}
                 sideBar={{
                     toolPanels: [
@@ -99,11 +106,6 @@ const CloseOutTable = (props) => {
                         }}
                         onCellValueChanged={onCellValueChanged}
                     />
-                </AgGridColumn>
-
-                <AgGridColumn headerName="Calendar">
-                    <AgGridColumn field="RetailWeek" />
-                    <AgGridColumn field="CurrentSeason" />
                 </AgGridColumn>
 
                 <AgGridColumn headerName="Product Attribution">

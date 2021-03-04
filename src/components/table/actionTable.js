@@ -22,11 +22,18 @@ const ActionTable = (props) => {
     };
 
     const onCellValueChanged = (params) => {
-        if (!(params.oldValue === null && params.newValue === undefined)) {
+        console.log('params change', params);
+        if (!(params.oldValue === null && (params.newValue === undefined || params.newValue === ''))) {
             params.node.data['changed'] = true;
             consolidatedRows.push(params.data);
             setRowDetailValue(consolidatedRows);
             setSaveBtnDisable(false);
+        }
+    }
+
+    function numberParser(params) {
+        if (params.value === null || params.value === 0 || params.value === undefined) {
+            return '-'
         }
     }
 
@@ -55,6 +62,7 @@ const ActionTable = (props) => {
                         enableRowGroup: true,
                         enablePivot: true,
                         tooltipComponent: 'customTooltip',
+                        valueFormatter: numberParser
                     }}
                     sideBar={{
                         toolPanels: [
@@ -111,7 +119,7 @@ const ActionTable = (props) => {
                                 let givenValue = params.data.RecommendedActionOverride;
                                 if (givenValue != null) {
                                     let actionOveride = givenValue.split(',');
-                                    actionOveride.push(null);
+                                    actionOveride.push('');
                                     return {
                                         values: actionOveride
                                     }

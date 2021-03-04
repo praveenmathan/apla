@@ -72,20 +72,28 @@ Customised CSS
 
 .custom-tooltip {
   position: absolute;
-  width: 170px;
-  height:100px;
+  min-width: 250px;
+  min-height: 150px;
+  display: table;
+  height: auto;
   border: 1px solid #fa8231;
   overflow: hidden;
-  pointer-events: none;
   transition: opacity 1s;
   background-color: white;
-  box-sizing:unset;
+  box-sizing: unset;
+  pointer-events: painted;
 }
 
 .custom-tooltip-box {
-  position: absolute;
-  left: 0;
-  right: 0;
+  padding: 0px;
+}
+
+.custom-tooltip-box ul {
+  margin: 0;
+  padding: 0;
+}
+
+.custom-tooltip-box ul li {
 }
 
 .custom-tooltip.ag-tooltip-hiding {

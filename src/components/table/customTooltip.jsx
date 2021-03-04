@@ -18,13 +18,9 @@ export default forwardRef((props, ref) => {
     }) : null;
 
     return (
-        <div
-            className="custom-tooltip"
-            style={{ backgroundColor: props.color || 'white' }}
-        >
-            <div className="custom-tooltip-box">
-                <span>{(data.ToolTipValue != null && typeof (data.ToolTipValue) != undefined) ? getToolTipValue : null}</span>
-            </div>
+        <div className="custom-tooltip">
+            <h4 className=''>{data.RecommendedAction}</h4>
+            <ul>{(data.ToolTipValue != null && typeof (data.ToolTipValue) != undefined) ? getToolTipValue : null}</ul>
         </div>
     );
 });
