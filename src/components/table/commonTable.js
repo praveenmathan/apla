@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import { AgGridColumn, AgGridReact } from "ag-grid-react";
 
 const colDefs = [
-    { field: "StyleColor", headerName: "Products", pinned: "left", lockPinned: true, cellClass: "lock-pinned" },
-    { field: "Comment", headerName: "Products", subHeaderName: "Comments" },
-    { field: "Description", headerName: "Products" },
-    { field: "SlimLifecycleSeason", headerName: "Products" },
-    { field: "RecommendedAction", headerName: "Recommendations", subHeaderName: "Action" },
-    { field: "RecommendedActionOverride", headerName: "Recommendations", subHeaderName: "Action Override" },
+    { field: "StyleColor", headerName: "Product", pinned: "left", lockPinned: true, cellClass: "lock-pinned" },
+    { field: "Comment", headerName: "Product", subHeaderName: "Comments" },
+    { field: "Description", headerName: "Product" },
+    { field: "SlimLifecycleSeason", headerName: "Product" },
+    { field: "RecommendedAction", headerName: "Recommendation", subHeaderName: "Action" },
+    { field: "RecommendedActionOverride", headerName: "Recommendation", subHeaderName: "Action Override" },
     { field: "RetailWeek", headerName: "Calendar" },
     { field: "CurrentSeason", headerName: "Calendar" },
     { field: "Style", headerName: "Product Attribution" },

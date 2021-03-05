@@ -942,7 +942,7 @@ function App() {
         const { data } = response;
         if (data.returnCode === 0) {
           const anchor = document.createElement("a");
-          anchor.setAttribute("href", 'excel/SampleData.xlsx');
+          anchor.setAttribute("href", `excel/${data.excelName}`);
           anchor.setAttribute("download", 'InventoryDetailsExcel.xlsx');
           anchor.click();
           setCategoryBarLoading(false);
@@ -957,7 +957,7 @@ function App() {
     }).catch((err) => {
       setCategoryBarLoading(false);
       setStatus('error');
-      setMessage('Error while saving the data, Contact support');
+      setMessage('Error while downloading the data, Contact support');
       console.log(err);
     });
   }

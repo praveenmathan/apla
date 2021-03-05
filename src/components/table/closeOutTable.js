@@ -65,7 +65,7 @@ const CloseOutTable = (props) => {
                 frameworkComponents={{ customTooltip: CustomTooltip }}
             >
 
-                <AgGridColumn headerName="Products">
+                <AgGridColumn headerName="Product">
                     <AgGridColumn field="StyleColor" pinned="left" lockPinned={true} cellClass="lock-pinned" cellRenderer={function (params) {
                         if (params.value !== undefined) {
                             return "<a target='_blank' href='http://images6.nike.com/is/image/DPILS/"
@@ -83,7 +83,7 @@ const CloseOutTable = (props) => {
                     <AgGridColumn field="SlimLifecycleSeason" />
                 </AgGridColumn>
 
-                <AgGridColumn headerName="Recommendations" headerClass='custom-font-color' >
+                <AgGridColumn headerName="Recommendation" headerClass='custom-font-color' >
                     <AgGridColumn field="RecommendedAction" headerClass='custom-font-color' headerName="Action" width='200' tooltipField="RecommendedAction" tooltipComponent="customTooltip"
                         tooltipComponentParams={{ color: '#ececec' }} />
                     <AgGridColumn field="SelectedRecommendedActionOverride" headerClass='custom-font-color' headerName="Action Override"
