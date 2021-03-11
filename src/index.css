@@ -80,8 +80,7 @@ Customised CSS
   overflow: hidden;
   transition: opacity 1s;
   background-color: white;
-  box-sizing: unset;
-  pointer-events: painted;
+  word-wrap: break-word;
 }
 
 .custom-tooltip-box {

@@ -77,6 +77,7 @@ function App() {
   const [saveBtnDisable, setSaveBtnDisable] = React.useState(true);
   const [selectionFilterForSave, setSelectionFilterForSave] = React.useState(null);
   const [selectedChannel, setSelectedChannel] = React.useState(null);
+  const [isActionTableLoading, setIsActionTableLoading] = useState(false);
 
   useEffect(() => {
     if (!authState.isAuthenticated) {
@@ -1199,6 +1200,7 @@ function App() {
       }
     }).catch((err) => {
       setIsTableLoading(false);
+      setIsActionTableLoading(true);
       setRowData([{
         "StyleColor": "415445-102",
         "Comment": null,
@@ -3516,7 +3518,7 @@ function App() {
                       <div className={classes.root}>
                         <CircularProgress color="secondary" />
                       </div> :
-                      <ActionTable rowData={rowData} onGridReady={onGridReady} />}
+                      <ActionTable rowData={rowData} onGridReady={onGridReady} gridColumnApi={gridColumnApi} tableLoading={isActionTableLoading} />}
                   </Route>
                   <Route exact path="/allaction">
                     {isTableLoading ?
