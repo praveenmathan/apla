@@ -1152,7 +1152,7 @@ function App() {
     if (actionText === 'cancel') {
       cancelTableApiService(requestDataForTable);
     }
-    if (actionText === 'closeout') {
+    if (actionText === 'closeout+cancel') {
       closeOutTableApiService(requestDataForTable);
     }
     if (actionText === 'cmreview') {
@@ -3532,7 +3532,7 @@ function App() {
                       <CircularProgress color="secondary" />
                     </div> :
                     <CancelTable rowData={rowData} onGridReady={onGridReady} />}</Route>
-                  <Route exact path="/closeout">{isTableLoading ?
+                  <Route exact path="/closeout+cancel">{isTableLoading ?
                     <div className={classes.root}>
                       <CircularProgress color="secondary" />
                     </div> :
