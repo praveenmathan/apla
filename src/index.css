@@ -118,3 +118,11 @@ Customised CSS
 .slim-logo-navigation {
   width: 10%;
 }
+
+.custom-columns {
+  padding: 10px 0 10px 10px;
+}
+
+.custom-columns-format {
+  font-size: 11px !important;
+}

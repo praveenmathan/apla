@@ -39,23 +39,18 @@ const ActionTable = (props) => {
     }
 
     useEffect(() => {
-        console.log('table loading : ', tableLoading);
-        if (props.gridColumnApi != null) {
+        let savedColumns = JSON.parse(localStorage.getItem("savedColumns"));
+        if (props.gridColumnApi != null && savedColumns != null) {
             let allColumns = props.gridColumnApi.getColumnState();
-            let savedColumns = JSON.parse(localStorage.getItem("savedColumns"));
+
 
             let distinctColumn = [];
             allColumns.map((eachColumn) => {
                 distinctColumn.push(eachColumn.colId);
             });
 
-            let filteredKeywords = distinctColumn.filter((word) => !savedColumns.includes(word));
-
-            console.log('action table is ready', props.gridColumnApi);
-            console.log('all columns :', props.gridColumnApi.getColumnState());
-            console.log('saved columns', savedColumns);
-            console.log('distinct columns', distinctColumn);
-            console.log('uniq', filteredKeywords);
+            let filteredKeywords = distinctColumn.filter((eachColumn) => !savedColumns.includes(eachColumn));
+            console.log('table loading : ', filteredKeywords);
             props.gridColumnApi.setColumnsVisible([...filteredKeywords], false);
         }
     }, [tableLoading, props.gridColumnApi]);
@@ -87,6 +82,10 @@ const ActionTable = (props) => {
                         tooltipComponent: 'customTooltip',
                         valueFormatter: numberParser
                     }}
+                    icons={{
+                        'custom-stats':
+                            '<span className="ag-icon ag-icon-custom-stats"></span>',
+                    }}
                     sideBar={{
                         toolPanels: [
                             {
@@ -96,11 +95,11 @@ const ActionTable = (props) => {
                                 iconKey: 'columns',
                                 toolPanel: 'agColumnsToolPanel',
                                 toolPanelParams: {
-                                    // suppressRowGroups: true,
-                                    // suppressValues: true,
-                                    // suppressPivots: true,
-                                    // suppressPivotMode: true,
-                                    // suppressSideButtons: true
+                                    suppressRowGroups: true,
+                                    suppressValues: true,
+                                    suppressPivots: true,
+                                    suppressPivotMode: true,
+                                    suppressSideButtons: true
                                 },
                             },
                             {

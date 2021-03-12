@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Checkbox } from 'semantic-ui-react'
+import { Checkbox, Button } from 'semantic-ui-react';
+import CustomSnackbar from '../utilities/customSnackBar';
 
 const totalStyle = { display: 'block' };
 
@@ -7,6 +8,10 @@ export default (props) => {
     let onChangeCheckedColumns = [];
     const [displayColumn, setDisplayColumn] = useState([]);
     const [columnLoading, setColumnLoading] = useState(false);
+    const [status, setStatusBase] = useState("");
+    const [message, setMessageBase] = useState("");
+    const setStatus = msg => setStatusBase({ msg, date: new Date() });
+    const setMessage = msg => setMessageBase(msg);
 
     const updateTotals = () => {
         let getColumn = props.columnApi.getAllColumns();
@@ -26,22 +31,22 @@ export default (props) => {
             content.push(
                 <Checkbox
                     key={item.colId}
-                    label={<label>{item.colId}</label>}
+                    label={<label className='custom-columns-format'>{props.columnApi.getDisplayNameForColumn(item)}</label>}
                     style={totalStyle}
                     onChange={getCheckedColumns}
+                    name={item.colId}
                 ></Checkbox>);
         }
         return content;
     }
 
-    const getCheckedColumns = (e) => {
-        onChangeCheckedColumns.push(e.target.innerText);
+    const getCheckedColumns = (e, data) => {
+        onChangeCheckedColumns.push(data.name);
     }
 
     const saveViews = () => {
-        console.log('saved columns :', onChangeCheckedColumns);
         localStorage.removeItem('savedColumns');
-        let hiddenColumns = [];
+        //let hiddenColumns = [];
         // displayColumn.map(eachColumn => {
         //     onChangeCheckedColumns.map(eachname => {
         //         if (eachColumn.colId !== eachname) {
@@ -51,18 +56,25 @@ export default (props) => {
         // });
         let cacheStringified = JSON.stringify(onChangeCheckedColumns);
         localStorage.setItem("savedColumns", cacheStringified);
+        setStatus('success');
+        setMessage('Successfully saved column layout. Load again to see the changes');
     }
 
     return (
         <div>
+            {status ? <CustomSnackbar key={status.date} status={status.msg} msg={message} /> : null}
             <span>
                 <h2 style={{ textAlign: 'center' }}>
-                    <i className="fa fa-calculator"></i> Save Views
+                    <i className="fa fa-calculator"></i> Custom Views
                 </h2>
-                {columnLoading ? <div>
-                    {getColumns()}
-                </div> : 'its not loading'}
-                <button onClick={saveViews}>Save View</button>
+                {columnLoading ?
+                    <div>
+                        <div className='custom-columns'>
+                            {getColumns()}
+                        </div>
+                        <Button onClick={saveViews}>Save View</Button>
+                    </div>
+                    : 'No Data'}
             </span>
         </div>
     );
