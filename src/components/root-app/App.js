@@ -3525,7 +3525,7 @@ function App() {
                       <div className={classes.root}>
                         <CircularProgress color="secondary" />
                       </div> :
-                      <ActionTable rowData={rowData} onGridReady={onGridReady} />}
+                      <ActionTable rowData={rowData} onGridReady={onGridReady} gridColumnApi={gridColumnApi} tableLoading={isActionTableLoading} />}
                   </Route>
                   <Route exact path="/cancel">{isTableLoading ?
                     <div className={classes.root}>

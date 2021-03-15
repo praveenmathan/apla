@@ -39,8 +39,10 @@ const ActionTable = (props) => {
     }
 
     useEffect(() => {
+
         let savedColumns = JSON.parse(localStorage.getItem("savedColumns"));
         if (props.gridColumnApi != null && savedColumns != null) {
+            console.log('grid column api : ', props.gridColumnApi.getColumnState());
             let allColumns = props.gridColumnApi.getColumnState();
 
 
