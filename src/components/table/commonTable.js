@@ -42,7 +42,7 @@ const colDefs = [
     { field: "SizeCountOwned", headerName: "Inventory" },
     { field: "SizeCountTotal", headerName: "Inventory" },
     { field: "SizeIntegrity", headerName: "Inventory" },
-    { field: "SlimWOS", headerName: "Inventory" },
+    { field: "SlimWOH", headerName: "Inventory" },
     { field: "RecommendedChaseUnits", headerName: "Inventory" },
     { field: "RecommendedCancelUnits", headerName: "Inventory" },
     { field: "NetUnitsLastWeek", headerName: "Sales" },
@@ -132,7 +132,7 @@ const CommonTable = (props) => {
                 <div className="test-header">
                     <div
                         style={{
-                            height: '70vh',
+                            height: '80vh',
                             width: "100%"
                         }}
                         className="ag-theme-alpine test-grid"

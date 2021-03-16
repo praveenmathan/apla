@@ -19,13 +19,18 @@ const CmReviewTable = (props) => {
     }
 
     function numberParser(params) {
+        if (typeof (params.value) === 'number' && params.value != 0) {
+            var sansDec = params.value.toFixed(0);
+            var formatted = sansDec.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+            return `${formatted}`;
+        }
         if (params.value === null || params.value === 0 || params.value === undefined) {
             return '-'
         }
     }
 
     return (
-        <div className="ag-theme-alpine" style={{ height: '70vh' }}>
+        <div className="ag-theme-alpine" style={{ height: '80vh' }}>
             <AgGridReact
                 modules={AllModules}
                 defaultColDef={{

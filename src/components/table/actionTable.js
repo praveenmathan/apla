@@ -32,6 +32,11 @@ const ActionTable = (props) => {
     }
 
     function numberParser(params) {
+        if (typeof (params.value) === 'number' && params.value != 0) {
+            var sansDec = params.value.toFixed(0);
+            var formatted = sansDec.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+            return `${formatted}`;
+        }
         if (params.value === null || params.value === 0 || params.value === undefined) {
             return '-'
         }
@@ -47,7 +52,7 @@ const ActionTable = (props) => {
             >
                 <img src="" />
             </Dialog>
-            <div className="ag-theme-alpine" style={{ height: '70vh' }}>
+            <div className="ag-theme-alpine" style={{ height: '80vh' }}>
                 <AgGridReact
                     modules={AllModules}
                     cellClass={(params) => {
@@ -183,8 +188,8 @@ const ActionTable = (props) => {
                         <AgGridColumn field="SizeCountOwned" />
                         <AgGridColumn field="SizeCountTotal" />
                         <AgGridColumn field="SizeIntegrity" />
-                        <AgGridColumn field="ChannelWOS" />
-                        <AgGridColumn field="MarketPlaceWOS" />
+                        <AgGridColumn field="ChannelWOH" />
+                        <AgGridColumn field="MarketPlaceWOH" />
                         <AgGridColumn field="RecommendedChaseUnits" />
                         <AgGridColumn field="RecommendedCancelUnits" />
                     </AgGridColumn>
@@ -193,6 +198,7 @@ const ActionTable = (props) => {
                         <AgGridColumn field="NetUnitsLastWeek" />
                         <AgGridColumn field="NetUnitsFourWkAvg" headerName="Net Units 4W Avg" />
                         <AgGridColumn field="NetUnitsFourWkRolling" headerName="Net Units 4W rolling" />
+                        <AgGridColumn field="NetUnitsThirteenWkAvg" headerName="Net Units 13W Avg" />
                         <AgGridColumn field="NetUnitsMTD" />
                         <AgGridColumn field="NetUnitsSTD" />
                         <AgGridColumn field="NetSalesLW" />
@@ -212,6 +218,7 @@ const ActionTable = (props) => {
                         <AgGridColumn field="DemandUnitsLW" />
                         <AgGridColumn field="DemandUnitsFourWeekRolling" headerName="Demand Units 4W rolling" />
                         <AgGridColumn field="DemandUnitsFourWeekAvg" headerName="Demand Units 4W avg" />
+                        <AgGridColumn field="DemandUnitsThirteenWeekAvg" headerName="Demand Units 13W avg" />
                         <AgGridColumn field="DemandUnitsMTD" />
                         <AgGridColumn field="DemandUnitsSTD" />
                         <AgGridColumn field="DemandSalesLW" />

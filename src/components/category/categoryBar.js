@@ -27,7 +27,7 @@ const CategoryBar = (props) => {
     const [categoryError, setCategoryError] = useState(false);
 
     const [genderOptions, setGenderOptions] = useState([]);
-    const [genderValue, setGenderValue] = useState('');
+    const [genderValue, setGenderValue] = useState([]);
     const [genderError, setGenderError] = useState(false);
 
     const [divisionOptions, setDivisionOptions] = useState([]);
@@ -192,7 +192,7 @@ const CategoryBar = (props) => {
 
     /* To handle gender change */
     const handleGenderChange = (e, { value }) => {
-        if (value != '') {
+        if (value.length != 0) {
             setGenderError(false);
             setGenderValue(value);
         } else {
@@ -364,7 +364,9 @@ const CategoryBar = (props) => {
                                         options={genderOptions}
                                         placeholder='Gender'
                                         clearable
-                                        search
+                                        multiple
+                                        fluid
+                                        selection
                                         searchInput={{ id: 'form-select-control-gender' }}
                                         onChange={handleGenderChange}
                                         error={genderError ? {

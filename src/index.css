@@ -119,3 +119,11 @@ Customised CSS
 .slim-logo-navigation {
   width: 10%;
 }
+
+.ui.form {
+  width: 100%;
+}
+
+.accordion-pad0 {
+  padding: 0 !important;
+}
