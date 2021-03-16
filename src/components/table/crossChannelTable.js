@@ -21,7 +21,7 @@ const CrossChannelTable = (props) => {
     }
 
     function numberParser(params) {
-        if (typeof (params.value) === 'number' && params.value != 0) {
+        if (typeof (params.value) === 'number' && params.value !== 0) {
             var sansDec = params.value.toFixed(0);
             var formatted = sansDec.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
             return `${formatted}`;
@@ -139,6 +139,7 @@ const CrossChannelTable = (props) => {
                     {selectedChannel === 'NSO' ? <AgGridColumn field="NetUnitsFourWkAvg" headerName="Net Units 4W Avg" /> : <AgGridColumn hide={true}></AgGridColumn>}
                     {selectedChannel === 'NSO' ? <AgGridColumn field="NDDC_DEMAND_UNITS_4WK_AVG" /> : <AgGridColumn hide={true}></AgGridColumn>}
                     {selectedChannel === 'NSO' ? <AgGridColumn field="NetUnitsThirteenWkAvg" headerName="Net Units 13W Avg" /> : <AgGridColumn hide={true}></AgGridColumn>}
+                    {selectedChannel === 'NSO' ? <AgGridColumn field="NDDC_DEMAND_UNITS_13WK_AVG" /> : <AgGridColumn hide={true}></AgGridColumn>}
                     {selectedChannel === 'NSO' ? <AgGridColumn field="NetUnitsSTD" /> : <AgGridColumn hide={true}></AgGridColumn>}
                     {selectedChannel === 'NSO' ? <AgGridColumn field="NDDC_DEMAND_UNITS_STD" /> : <AgGridColumn hide={true}></AgGridColumn>}
                     {selectedChannel === 'NSO' ? <AgGridColumn field="NetAURLW" headerName="Net AUR LW" /> : <AgGridColumn hide={true}></AgGridColumn>}
@@ -149,6 +150,7 @@ const CrossChannelTable = (props) => {
                     {selectedChannel === 'NDDC' ? <AgGridColumn field="DemandUnitsFourWeekAvg" headerName="Demand Units 4W avg" /> : <AgGridColumn hide={true}></AgGridColumn>}
                     {selectedChannel === 'NDDC' ? <AgGridColumn field="NSO_NET_UNITS_4WK_AVG" /> : <AgGridColumn hide={true}></AgGridColumn>}
                     {selectedChannel === 'NDDC' ? <AgGridColumn field="DemandUnitsThirteenWeekAvg" headerName="Demand Units 13W avg" /> : <AgGridColumn hide={true}></AgGridColumn>}
+                    {selectedChannel === 'NDDC' ? <AgGridColumn field="NSO_NET_UNITS_13WK_AVG" /> : <AgGridColumn hide={true}></AgGridColumn>}
                     {selectedChannel === 'NDDC' ? <AgGridColumn field="DemandUnitsSTD" /> : <AgGridColumn hide={true}></AgGridColumn>}
                     {selectedChannel === 'NDDC' ? <AgGridColumn field="NSO_NET_UNITS_STD" /> : <AgGridColumn hide={true}></AgGridColumn>}
                     {selectedChannel === 'NDDC' ? <AgGridColumn field="DemandAURLW" headerName="Demand AUR LW" /> : <AgGridColumn hide={true}></AgGridColumn>}

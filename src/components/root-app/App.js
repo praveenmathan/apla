@@ -257,6 +257,14 @@ function App() {
 
               "weekId": 0,
 
+              "weekDescription": "FA20 WK12"
+
+            },
+
+            {
+
+              "weekId": 0,
+
               "weekDescription": "FA20 WK13"
 
             },
@@ -839,6 +847,7 @@ function App() {
     let capitalisedGenderData = [];
     let capitalisedDivisionData = [];
     let capitalisedCategoryData = [];
+    let uniqueRetailWeekData = [];
 
     formattedData.selectionFilters.table.map(eachTable => {
       capitalisedTableData.push({ 'tableDescription': eachTable.tableDescription.toLowerCase().capitalize() });
@@ -853,6 +862,13 @@ function App() {
       capitalisedCategoryData.push({ 'categoryDescription': eachTable.categoryDescription.toLowerCase().capitalize() });
     });
 
+    uniqueRetailWeekData = formattedData.selectionFilters.retailWeek.filter((thing, index) => {
+      const _thing = JSON.stringify(thing);
+      return index === formattedData.selectionFilters.retailWeek.findIndex(obj => {
+        return JSON.stringify(obj) === _thing;
+      });
+    });
+
     let sortedCapitalisedTableData = capitalisedTableData.sort(stringCompareTable);
     let sortedCapitalisedGenderData = capitalisedGenderData.sort(stringCompareGender);
     let sortedCapitalisedDivisionData = capitalisedDivisionData.sort(stringCompareDivision);
@@ -862,6 +878,7 @@ function App() {
     formattedData.selectionFilters['formattedGenderData'] = [...sortedCapitalisedGenderData];
     formattedData.selectionFilters['formattedDivisionData'] = [...sortedCapitalisedDivisionData];
     formattedData.selectionFilters['formattedCategoryData'] = [...sortedCapitalisedCatergoryData];
+    formattedData.selectionFilters['formattedRetailWeekData'] = [...uniqueRetailWeekData];
   }
 
   function onGridReady(params) {

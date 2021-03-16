@@ -68,7 +68,7 @@ const CategoryBar = (props) => {
         /* To initialise retailweek options */
         let retailWeekOptions = [];
         if (isLoading) {
-            props.data.selectionFilters.retailWeek.map(eachitem => retailWeekOptions.push({
+            props.data.selectionFilters.formattedRetailWeekData.map(eachitem => retailWeekOptions.push({
                 key: eachitem.weekDescription,
                 value: eachitem.weekDescription,
                 text: eachitem.weekDescription

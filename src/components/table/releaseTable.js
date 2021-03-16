@@ -9,7 +9,7 @@ const ReleaseTable = (props) => {
     const { selectedChannel } = React.useContext(SelectedChannelContext);
 
     function numberParser(params) {
-        if (typeof (params.value) === 'number' && params.value != 0) {
+        if (typeof (params.value) === 'number' && params.value !== 0) {
             var sansDec = params.value.toFixed(0);
             var formatted = sansDec.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
             return `${formatted}`;
