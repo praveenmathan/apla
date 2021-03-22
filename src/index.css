@@ -127,3 +127,7 @@ Customised CSS
 .accordion-pad0 {
   padding: 0 !important;
 }
+
+.accordionSummary {
+  min-height: 50px !important;
+}

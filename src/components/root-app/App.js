@@ -45,7 +45,6 @@ import Accordion from '@material-ui/core/Accordion';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import Typography from '@material-ui/core/Typography';
 
 /* eslint-disable */
 const useStyles = makeStyles((theme) => ({
@@ -1051,7 +1050,7 @@ function App() {
       if (each === 'selectionFilters') {
         Object.keys(categoryApi[each]).map(eachfilters => {
           let selectionFilters = categoryApi[each];
-          if (eachfilters === 'retailWeek') {
+          if (eachfilters === 'formattedRetailWeekData') {
             selectionFilters[eachfilters].map(eachweek => {
               if (newValue.retailWeek === eachweek.weekDescription) {
                 retailWeekarray.push({
@@ -3539,11 +3538,12 @@ function App() {
               <div className="category-bar-wrapper">
                 <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')} elevation={0} className={classes.backgroudTransperancy}>
                   <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
+                    expandIcon={<ExpandMoreIcon style={{ color: '#fa8231' }} />}
                     aria-controls="panel1bh-content"
                     id="panel1bh-header"
+                    className='accordionSummary'
                   >
-                    <Typography className={classes.heading}>Selection Filters</Typography>
+
                   </AccordionSummary>
                   <AccordionDetails className='accordion-pad0'>
                     <CategoryBar
