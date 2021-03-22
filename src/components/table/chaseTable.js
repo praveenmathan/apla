@@ -19,13 +19,18 @@ const ChaseTable = (props) => {
     }
 
     function numberParser(params) {
+        if (typeof (params.value) === 'number' && params.value !== 0) {
+            var sansDec = params.value.toFixed(0);
+            var formatted = sansDec.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+            return `${formatted}`;
+        }
         if (params.value === null || params.value === 0 || params.value === undefined) {
             return '-'
         }
     }
 
     return (
-        <div className="ag-theme-alpine" style={{ height: '70vh' }}>
+        <div className="ag-theme-alpine" style={{ height: '80vh' }}>
             <AgGridReact
                 modules={AllModules}
                 sideBar={{
@@ -133,13 +138,14 @@ const ChaseTable = (props) => {
                     <AgGridColumn field="DOMsNFSInventory" headerName="DOMs NFS Inventory" />
                     <AgGridColumn field="DOMsEMPInventory" headerName="DOMs EMP Inventory" />
                     <AgGridColumn field="DOMsGAInventory" headerName="DOMs GA Inventory" />
-                    <AgGridColumn field="ChannelWOS" />
-                    <AgGridColumn field="MarketPlaceWOS" />
+                    <AgGridColumn field="ChannelWOH" />
+                    <AgGridColumn field="MarketPlaceWOH" />
                 </AgGridColumn>
 
                 <AgGridColumn headerName="Sales">
                     <AgGridColumn field="NetSalesLW" />
                     <AgGridColumn field="NetSalesFourWkAvg" headerName="Net Sales 4w avg" />
+                    <AgGridColumn field="NetUnitsThirteenWkAvg" headerName="Net Units 13W Avg" />
                     <AgGridColumn field="DemandUnitsLW" />
                     <AgGridColumn field="DemandUnitsFourWeekRolling" headerName="Demand Units 4W rolling" />
                 </AgGridColumn>

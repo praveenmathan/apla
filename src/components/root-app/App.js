@@ -41,6 +41,11 @@ import releaseTableService from '../services/releaseTableService';
 import CrossChannelTable from '../table/crossChannelTable';
 import crossChannelTableService from '../services/crossChannelTableService';
 
+import Accordion from '@material-ui/core/Accordion';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+
 /* eslint-disable */
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -50,6 +55,17 @@ const useStyles = makeStyles((theme) => ({
       marginLeft: theme.spacing(2),
     },
   },
+  heading: {
+    fontSize: theme.typography.pxToRem(15),
+    flexShrink: 0,
+  },
+  secondaryHeading: {
+    fontSize: theme.typography.pxToRem(15),
+    color: theme.palette.text.secondary,
+  },
+  backgroudTransperancy: {
+    background: 'transparent'
+  }
 }));
 
 /**
@@ -78,6 +94,7 @@ function App() {
   const [selectionFilterForSave, setSelectionFilterForSave] = React.useState(null);
   const [selectedChannel, setSelectedChannel] = React.useState(null);
   const [isActionTableLoading, setIsActionTableLoading] = useState(false);
+  const [expanded, setExpanded] = React.useState('panel1');
 
   useEffect(() => {
     if (!authState.isAuthenticated) {
@@ -92,6 +109,10 @@ function App() {
       });
     }
   }, [authState, oktaAuth]);
+
+  const handleChange = (panel) => (event, isExpanded) => {
+    setExpanded(isExpanded ? panel : false);
+  };
 
   function getAuthorisation(userInfoOkta) {
     if (userInfoOkta.groups === undefined) {
@@ -223,6 +244,14 @@ function App() {
           "marketplace": null,
 
           "retailWeek": [
+
+            {
+
+              "weekId": 0,
+
+              "weekDescription": "FA20 WK12"
+
+            },
 
             {
 
@@ -818,6 +847,7 @@ function App() {
     let capitalisedGenderData = [];
     let capitalisedDivisionData = [];
     let capitalisedCategoryData = [];
+    let uniqueRetailWeekData = [];
 
     formattedData.selectionFilters.table.map(eachTable => {
       capitalisedTableData.push({ 'tableDescription': eachTable.tableDescription.toLowerCase().capitalize() });
@@ -832,6 +862,13 @@ function App() {
       capitalisedCategoryData.push({ 'categoryDescription': eachTable.categoryDescription.toLowerCase().capitalize() });
     });
 
+    uniqueRetailWeekData = formattedData.selectionFilters.retailWeek.filter((thing, index) => {
+      const _thing = JSON.stringify(thing);
+      return index === formattedData.selectionFilters.retailWeek.findIndex(obj => {
+        return JSON.stringify(obj) === _thing;
+      });
+    });
+
     let sortedCapitalisedTableData = capitalisedTableData.sort(stringCompareTable);
     let sortedCapitalisedGenderData = capitalisedGenderData.sort(stringCompareGender);
     let sortedCapitalisedDivisionData = capitalisedDivisionData.sort(stringCompareDivision);
@@ -841,6 +878,7 @@ function App() {
     formattedData.selectionFilters['formattedGenderData'] = [...sortedCapitalisedGenderData];
     formattedData.selectionFilters['formattedDivisionData'] = [...sortedCapitalisedDivisionData];
     formattedData.selectionFilters['formattedCategoryData'] = [...sortedCapitalisedCatergoryData];
+    formattedData.selectionFilters['formattedRetailWeekData'] = [...uniqueRetailWeekData];
   }
 
   function onGridReady(params) {
@@ -1013,7 +1051,7 @@ function App() {
       if (each === 'selectionFilters') {
         Object.keys(categoryApi[each]).map(eachfilters => {
           let selectionFilters = categoryApi[each];
-          if (eachfilters === 'retailWeek') {
+          if (eachfilters === 'formattedRetailWeekData') {
             selectionFilters[eachfilters].map(eachweek => {
               if (newValue.retailWeek === eachweek.weekDescription) {
                 retailWeekarray.push({
@@ -1061,10 +1099,14 @@ function App() {
           let selectionFilters = categoryApi[each];
           if (eachfilters === 'formattedGenderData') {
             selectionFilters[eachfilters].map(eachGender => {
-              if (newValue.gender === eachGender.genderDescription) {
-                genderarray.push({
-                  "genderDescription": eachGender.genderDescription
-                })
+              if (newValue.gender.length != 0) {
+                newValue.gender.map(eachGenderNewValue => {
+                  if (eachGenderNewValue === eachGender.genderDescription) {
+                    genderarray.push({
+                      "genderDescription": eachGender.genderDescription
+                    });
+                  }
+                });
               }
             });
           }
@@ -1250,8 +1292,8 @@ function App() {
         "SizeCountOwned": 3.0,
         "SizeCountTotal": 14.0,
         "SizeIntegrity": 21.4,
-        "ChannelWOS": 0.7,
-        "MarketPlaceWOS": 1.5,
+        "ChannelWOH": 0.7,
+        "MarketPlaceWOH": 1.5,
         "RecommendedChaseUnits": null,
         "RecommendedCancelUnits": null,
         "NetUnitsLastWeek": 1.0,
@@ -1369,8 +1411,8 @@ function App() {
         "SizeCountOwned": 1.0,
         "SizeCountTotal": 13.0,
         "SizeIntegrity": 7.7,
-        "ChannelWOS": 0.1,
-        "MarketPlaceWOS": 0.1,
+        "ChannelWOH": 0.1,
+        "MarketPlaceWOH": 0.1,
         "RecommendedChaseUnits": null,
         "RecommendedCancelUnits": null,
         "NetUnitsLastWeek": 20.0,
@@ -1488,8 +1530,8 @@ function App() {
         "SizeCountOwned": 9.0,
         "SizeCountTotal": 12.0,
         "SizeIntegrity": 75.0,
-        "ChannelWOS": 17.5,
-        "MarketPlaceWOS": 18.2,
+        "ChannelWOH": 17.5,
+        "MarketPlaceWOH": 18.2,
         "RecommendedChaseUnits": null,
         "RecommendedCancelUnits": null,
         "NetUnitsLastWeek": 61.0,
@@ -1607,8 +1649,8 @@ function App() {
         "SizeCountOwned": 9.0,
         "SizeCountTotal": 12.0,
         "SizeIntegrity": 75.0,
-        "ChannelWOS": 24.6,
-        "MarketPlaceWOS": 24.9,
+        "ChannelWOH": 24.6,
+        "MarketPlaceWOH": 24.9,
         "RecommendedChaseUnits": null,
         "RecommendedCancelUnits": null,
         "NetUnitsLastWeek": 92.0,
@@ -1728,8 +1770,8 @@ function App() {
         "SizeCountOwned": 1.0,
         "SizeCountTotal": 13.0,
         "SizeIntegrity": 7.7,
-        "ChannelWOS": 0.3,
-        "MarketPlaceWOS": 20.4,
+        "ChannelWOH": 0.3,
+        "MarketPlaceWOH": 20.4,
         "RecommendedChaseUnits": null,
         "RecommendedCancelUnits": null,
         "NetUnitsLastWeek": 13.0,
@@ -1847,8 +1889,8 @@ function App() {
         "SizeCountOwned": 12.0,
         "SizeCountTotal": 12.0,
         "SizeIntegrity": 100.0,
-        "ChannelWOS": 26.0,
-        "MarketPlaceWOS": 421.3,
+        "ChannelWOH": 26.0,
+        "MarketPlaceWOH": 421.3,
         "RecommendedChaseUnits": null,
         "RecommendedCancelUnits": null,
         "NetUnitsLastWeek": 0.0,
@@ -1966,8 +2008,8 @@ function App() {
         "SizeCountOwned": 3.0,
         "SizeCountTotal": 3.0,
         "SizeIntegrity": 100.0,
-        "ChannelWOS": 0.0,
-        "MarketPlaceWOS": null,
+        "ChannelWOH": 0.0,
+        "MarketPlaceWOH": null,
         "RecommendedChaseUnits": null,
         "RecommendedCancelUnits": null,
         "NetUnitsLastWeek": null,
@@ -2087,8 +2129,8 @@ function App() {
         "SizeCountOwned": 16.0,
         "SizeCountTotal": 16.0,
         "SizeIntegrity": 100.0,
-        "ChannelWOS": 82.5,
-        "MarketPlaceWOS": 58.7,
+        "ChannelWOH": 82.5,
+        "MarketPlaceWOH": 58.7,
         "RecommendedChaseUnits": null,
         "RecommendedCancelUnits": null,
         "NetUnitsLastWeek": 6.0,
@@ -2208,8 +2250,8 @@ function App() {
         "SizeCountOwned": 16.0,
         "SizeCountTotal": 16.0,
         "SizeIntegrity": 100.0,
-        "ChannelWOS": 128.6,
-        "MarketPlaceWOS": 57.0,
+        "ChannelWOH": 128.6,
+        "MarketPlaceWOH": 57.0,
         "RecommendedChaseUnits": null,
         "RecommendedCancelUnits": null,
         "NetUnitsLastWeek": 14.0,
@@ -2327,8 +2369,8 @@ function App() {
         "SizeCountOwned": 12.0,
         "SizeCountTotal": 12.0,
         "SizeIntegrity": 100.0,
-        "ChannelWOS": 0.0,
-        "MarketPlaceWOS": null,
+        "ChannelWOH": 0.0,
+        "MarketPlaceWOH": null,
         "RecommendedChaseUnits": null,
         "RecommendedCancelUnits": null,
         "NetUnitsLastWeek": null,
@@ -2448,8 +2490,8 @@ function App() {
         "SizeCountOwned": 16.0,
         "SizeCountTotal": 16.0,
         "SizeIntegrity": 100.0,
-        "ChannelWOS": 18.2,
-        "MarketPlaceWOS": 16.6,
+        "ChannelWOH": 18.2,
+        "MarketPlaceWOH": 16.6,
         "RecommendedChaseUnits": null,
         "RecommendedCancelUnits": null,
         "NetUnitsLastWeek": 33.0,
@@ -2567,8 +2609,8 @@ function App() {
         "SizeCountOwned": 7.0,
         "SizeCountTotal": 7.0,
         "SizeIntegrity": 100.0,
-        "ChannelWOS": 0.0,
-        "MarketPlaceWOS": null,
+        "ChannelWOH": 0.0,
+        "MarketPlaceWOH": null,
         "RecommendedChaseUnits": null,
         "RecommendedCancelUnits": null,
         "NetUnitsLastWeek": null,
@@ -2686,8 +2728,8 @@ function App() {
         "SizeCountOwned": 14.0,
         "SizeCountTotal": 14.0,
         "SizeIntegrity": 100.0,
-        "ChannelWOS": 0.0,
-        "MarketPlaceWOS": null,
+        "ChannelWOH": 0.0,
+        "MarketPlaceWOH": null,
         "RecommendedChaseUnits": null,
         "RecommendedCancelUnits": null,
         "NetUnitsLastWeek": null,
@@ -2805,8 +2847,8 @@ function App() {
         "SizeCountOwned": 14.0,
         "SizeCountTotal": 14.0,
         "SizeIntegrity": 100.0,
-        "ChannelWOS": 0.0,
-        "MarketPlaceWOS": null,
+        "ChannelWOH": 0.0,
+        "MarketPlaceWOH": null,
         "RecommendedChaseUnits": null,
         "RecommendedCancelUnits": null,
         "NetUnitsLastWeek": null,
@@ -2924,8 +2966,8 @@ function App() {
         "SizeCountOwned": 12.0,
         "SizeCountTotal": 12.0,
         "SizeIntegrity": 100.0,
-        "ChannelWOS": 0.0,
-        "MarketPlaceWOS": null,
+        "ChannelWOH": 0.0,
+        "MarketPlaceWOH": null,
         "RecommendedChaseUnits": null,
         "RecommendedCancelUnits": null,
         "NetUnitsLastWeek": null,
@@ -3043,8 +3085,8 @@ function App() {
         "SizeCountOwned": 12.0,
         "SizeCountTotal": 12.0,
         "SizeIntegrity": 100.0,
-        "ChannelWOS": 0.0,
-        "MarketPlaceWOS": null,
+        "ChannelWOH": 0.0,
+        "MarketPlaceWOH": null,
         "RecommendedChaseUnits": null,
         "RecommendedCancelUnits": null,
         "NetUnitsLastWeek": null,
@@ -3162,8 +3204,8 @@ function App() {
         "SizeCountOwned": 14.0,
         "SizeCountTotal": 14.0,
         "SizeIntegrity": 100.0,
-        "ChannelWOS": 0.0,
-        "MarketPlaceWOS": null,
+        "ChannelWOH": 0.0,
+        "MarketPlaceWOH": null,
         "RecommendedChaseUnits": null,
         "RecommendedCancelUnits": null,
         "NetUnitsLastWeek": null,
@@ -3497,14 +3539,26 @@ function App() {
           <SelectedChannelContext.Provider value={{ selectedChannel, setSelectedChannel }}>
             <section>
               <div className="category-bar-wrapper">
-                <CategoryBar
-                  auth={authorisationApi}
-                  data={categoryApi}
-                  isLoading={loading}
-                  onCatergorySubmit={onCatergorySubmit}
-                  OnTableRowSave={onTableRowSave}
-                  onExportToExcel={onExportToExcel}
-                />
+                <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')} elevation={0} className={classes.backgroudTransperancy}>
+                  <AccordionSummary
+                    expandIcon={<ExpandMoreIcon style={{ color: '#fa8231' }} />}
+                    aria-controls="panel1bh-content"
+                    id="panel1bh-header"
+                    className='accordionSummary'
+                  >
+
+                  </AccordionSummary>
+                  <AccordionDetails className='accordion-pad0'>
+                    <CategoryBar
+                      auth={authorisationApi}
+                      data={categoryApi}
+                      isLoading={loading}
+                      onCatergorySubmit={onCatergorySubmit}
+                      OnTableRowSave={onTableRowSave}
+                      onExportToExcel={onExportToExcel}
+                    />
+                  </AccordionDetails>
+                </Accordion>
               </div>
               {categoryBarLoading ? <LinearProgress color="secondary" /> : null}
             </section>

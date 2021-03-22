@@ -126,3 +126,15 @@ Customised CSS
 .custom-columns-format {
   font-size: 11px !important;
 }
+
+.ui.form {
+  width: 100%;
+}
+
+.accordion-pad0 {
+  padding: 0 !important;
+}
+
+.accordionSummary {
+  min-height: 50px !important;
+}
