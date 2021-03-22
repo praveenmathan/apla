@@ -97,7 +97,7 @@ const colDefs = [
     { field: "LaunchTier", headerName: "Plan" },
     { field: "MSRP", headerName: "Price" },
     { field: "WholesalePriceLocal", headerName: "Price" },
-    { field: "CurrentSellingPrice", headerName: "Price" },
+    { field: "CurrentLCSellingPrice", headerName: "Price" },
     { field: "TotalDiscount", headerName: "Price" },
     { field: "LastMDDate", headerName: "Price" },
     { field: "MDCount", headerName: "Price" },

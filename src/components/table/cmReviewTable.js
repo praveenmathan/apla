@@ -129,7 +129,7 @@ const CmReviewTable = (props) => {
                 <AgGridColumn headerName="Price">
                     <AgGridColumn field="MSRP" />
                     <AgGridColumn field="WholesalePriceLocal" />
-                    <AgGridColumn field="CurrentSellingPrice" />
+                    <AgGridColumn field="CurrentLCSellingPrice" />
                     <AgGridColumn field="TotalDiscount" />
                 </AgGridColumn>
             </AgGridReact>

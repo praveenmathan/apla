@@ -117,7 +117,7 @@ const CrossChannelTable = (props) => {
                 </AgGridColumn>
 
                 <AgGridColumn headerName="Price">
-                    <AgGridColumn field="CurrentSellingPrice" />
+                    <AgGridColumn field="CurrentLCSellingPrice" />
                     {selectedChannel === 'NDDC' ? <AgGridColumn field="NSO_CURRENT_SELLING_PRICE" /> : selectedChannel === 'NSO' ? <AgGridColumn field="NDDC_CURRENT_SELLING_PRICE" /> : <AgGridColumn></AgGridColumn>}
                     <AgGridColumn field="RecommendedMarkPRCElasticity" />
                     {selectedChannel === 'NDDC' ? <AgGridColumn field="NSO_RECOMMENDED_MARK_PRC_ELASTICITY" /> : selectedChannel === 'NSO' ? <AgGridColumn field="NDDC_RECOMMENDED_MARK_PRC_ELASTICITY" /> : <AgGridColumn></AgGridColumn>}
