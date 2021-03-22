@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Dialog from '@material-ui/core/Dialog';
 import { AgGridReact, AgGridColumn } from '@ag-grid-community/react';
 import { RowDetailsContext, SaveBtnContext, SelectedChannelContext } from '../context/rowDetailsContext';
 import { AllModules } from "@ag-grid-enterprise/all-modules";
 import CustomTooltip from './customTooltip.jsx';
+import CustomStatsToolPanel from './customToolPanel.jsx'
 
 const ActionTable = (props) => {
     let consolidatedRows = [];
+    let tableLoading = props.tableLoading;
     const [open, setOpen] = React.useState(false);
 
     const { setRowDetailValue } = React.useContext(RowDetailsContext);
@@ -22,7 +24,6 @@ const ActionTable = (props) => {
     };
 
     const onCellValueChanged = (params) => {
-        console.log('params change', params);
         if (!(params.oldValue === null && (params.newValue === undefined || params.newValue === ''))) {
             params.node.data['changed'] = true;
             consolidatedRows.push(params.data);
@@ -41,6 +42,21 @@ const ActionTable = (props) => {
             return '-'
         }
     }
+
+    useEffect(() => {
+        let savedColumns = JSON.parse(localStorage.getItem("savedColumns"));
+        if (props.gridColumnApi != null && savedColumns != null && props.gridColumnApi.columnController != undefined) {
+            let allColumns = props.gridColumnApi.getColumnState();
+
+            let distinctColumn = [];
+            allColumns.map((eachColumn) => {
+                distinctColumn.push(eachColumn.colId);
+            });
+
+            let filteredKeywords = distinctColumn.filter((eachColumn) => !savedColumns.includes(eachColumn));
+            props.gridColumnApi.setColumnsVisible([...filteredKeywords], false);
+        }
+    }, [tableLoading, props.gridColumnApi]);
 
     return (
         <React.Fragment>
@@ -69,6 +85,10 @@ const ActionTable = (props) => {
                         tooltipComponent: 'customTooltip',
                         valueFormatter: numberParser
                     }}
+                    icons={{
+                        'custom-stats':
+                            '<span className="ag-icon ag-icon-custom-stats"></span>',
+                    }}
                     sideBar={{
                         toolPanels: [
                             {
@@ -84,7 +104,15 @@ const ActionTable = (props) => {
                                     suppressPivotMode: true,
                                     suppressSideButtons: true
                                 },
-                            }]
+                            },
+                            {
+                                id: 'customStats',
+                                labelDefault: 'Custom View',
+                                labelKey: 'customStats',
+                                iconKey: 'custom-stats',
+                                toolPanel: 'customStatsToolPanel',
+                            },
+                        ]
                     }}
                     onGridReady={props.onGridReady}
                     rowData={props.rowData}
@@ -92,7 +120,7 @@ const ActionTable = (props) => {
                     enableCellTextSelection={true}
                     suppressDragLeaveHidesColumns={true}
                     tooltipShowDelay={0}
-                    frameworkComponents={{ customTooltip: CustomTooltip }}
+                    frameworkComponents={{ customTooltip: CustomTooltip, customStatsToolPanel: CustomStatsToolPanel }}
                 >
                     <AgGridColumn headerName="Product">
                         <AgGridColumn field="StyleColor" pinned="left" lockPinned={true} cellClass="lock-pinned"
@@ -113,7 +141,7 @@ const ActionTable = (props) => {
                         <AgGridColumn field="SlimLifecycleSeason" />
                     </AgGridColumn>
 
-                    <AgGridColumn headerName="Recommendation" headerClass='custom-font-color' >
+                    <AgGridColumn headerName="Recommendation" headerClass='custom-font-color'>
                         <AgGridColumn field="RecommendedAction" headerClass='custom-font-color' headerName="Action" width='200' tooltipField="RecommendedAction" tooltipComponent="customTooltip"
                             tooltipComponentParams={{ color: '#ececec' }} />
                         <AgGridColumn field="SelectedRecommendedActionOverride" headerClass='custom-font-color' headerName="Action Override"

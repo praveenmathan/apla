@@ -93,6 +93,7 @@ function App() {
   const [saveBtnDisable, setSaveBtnDisable] = React.useState(true);
   const [selectionFilterForSave, setSelectionFilterForSave] = React.useState(null);
   const [selectedChannel, setSelectedChannel] = React.useState(null);
+  const [isActionTableLoading, setIsActionTableLoading] = useState(false);
   const [expanded, setExpanded] = React.useState('panel1');
 
   useEffect(() => {
@@ -1232,6 +1233,7 @@ function App() {
         const { data } = response;
         if (data.InventoryDetails.length != 0) {
           setRowData(data.InventoryDetails);
+          setIsActionTableLoading(true);
           setStatus('success');
           setMessage('All Action data are loaded');
         } else {
@@ -1241,6 +1243,7 @@ function App() {
       }
     }).catch((err) => {
       setIsTableLoading(false);
+      setIsActionTableLoading(true);
       setRowData([{
         "StyleColor": "415445-102",
         "Comment": null,
@@ -3570,14 +3573,14 @@ function App() {
                       <div className={classes.root}>
                         <CircularProgress color="secondary" />
                       </div> :
-                      <ActionTable rowData={rowData} onGridReady={onGridReady} />}
+                      <ActionTable rowData={rowData} onGridReady={onGridReady} gridColumnApi={gridColumnApi} tableLoading={isActionTableLoading} />}
                   </Route>
                   <Route exact path="/allaction">
                     {isTableLoading ?
                       <div className={classes.root}>
                         <CircularProgress color="secondary" />
                       </div> :
-                      <ActionTable rowData={rowData} onGridReady={onGridReady} />}
+                      <ActionTable rowData={rowData} onGridReady={onGridReady} gridColumnApi={gridColumnApi} tableLoading={isActionTableLoading} />}
                   </Route>
                   <Route exact path="/cancel">{isTableLoading ?
                     <div className={classes.root}>
