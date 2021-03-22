@@ -45,19 +45,16 @@ export default (props) => {
     }
 
     const saveViews = () => {
-        localStorage.removeItem('savedColumns');
-        //let hiddenColumns = [];
-        // displayColumn.map(eachColumn => {
-        //     onChangeCheckedColumns.map(eachname => {
-        //         if (eachColumn.colId !== eachname) {
-        //             hiddenColumns.push(eachColumn.colId);
-        //         }
-        //     });
-        // });
-        let cacheStringified = JSON.stringify(onChangeCheckedColumns);
-        localStorage.setItem("savedColumns", cacheStringified);
-        setStatus('success');
-        setMessage('Successfully saved column layout. Load again to see the changes');
+        if (onChangeCheckedColumns.length === 0) {
+            setStatus('error');
+            setMessage('Select columns to save your custom layout');
+        } else {
+            localStorage.removeItem('savedColumns');
+            let cacheStringified = JSON.stringify(onChangeCheckedColumns);
+            localStorage.setItem("savedColumns", cacheStringified);
+            setStatus('success');
+            setMessage('Successfully saved column layout. Load again to see the changes');
+        }
     }
 
     return (
