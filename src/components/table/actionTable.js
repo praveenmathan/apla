@@ -39,12 +39,9 @@ const ActionTable = (props) => {
     }
 
     useEffect(() => {
-
         let savedColumns = JSON.parse(localStorage.getItem("savedColumns"));
-        if (props.gridColumnApi != null && savedColumns != null) {
-            console.log('grid column api : ', props.gridColumnApi.getColumnState());
+        if (props.gridColumnApi != null && savedColumns != null && props.gridColumnApi.columnController != undefined) {
             let allColumns = props.gridColumnApi.getColumnState();
-
 
             let distinctColumn = [];
             allColumns.map((eachColumn) => {
@@ -52,7 +49,6 @@ const ActionTable = (props) => {
             });
 
             let filteredKeywords = distinctColumn.filter((eachColumn) => !savedColumns.includes(eachColumn));
-            console.log('table loading : ', filteredKeywords);
             props.gridColumnApi.setColumnsVisible([...filteredKeywords], false);
         }
     }, [tableLoading, props.gridColumnApi]);

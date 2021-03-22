@@ -1191,6 +1191,7 @@ function App() {
         const { data } = response;
         if (data.InventoryDetails.length != 0) {
           setRowData(data.InventoryDetails);
+          setIsActionTableLoading(true);
           setStatus('success');
           setMessage('All Action data are loaded');
         } else {
