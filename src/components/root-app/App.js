@@ -93,6 +93,7 @@ function App() {
   const [saveBtnDisable, setSaveBtnDisable] = React.useState(true);
   const [selectionFilterForSave, setSelectionFilterForSave] = React.useState(null);
   const [selectedChannel, setSelectedChannel] = React.useState(null);
+  const [selectedMarketPlace, setSelectedMarketPlace] = React.useState(null);
   const [isActionTableLoading, setIsActionTableLoading] = useState(false);
   const [expanded, setExpanded] = React.useState('panel1');
 
@@ -3536,7 +3537,7 @@ function App() {
       </section>
       <RowDetailsContext.Provider value={{ rowDetailValue, setRowDetailValue }}>
         <SaveBtnContext.Provider value={{ categoryBarLoading, setCategoryBarLoading, saveBtnDisable, setSaveBtnDisable }} >
-          <SelectedChannelContext.Provider value={{ selectedChannel, setSelectedChannel }}>
+          <SelectedChannelContext.Provider value={{ selectedChannel, setSelectedChannel, selectedMarketPlace, setSelectedMarketPlace }}>
             <section>
               <div className="category-bar-wrapper">
                 <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')} elevation={0} className={classes.backgroudTransperancy}>
@@ -3573,14 +3574,14 @@ function App() {
                       <div className={classes.root}>
                         <CircularProgress color="secondary" />
                       </div> :
-                      <ActionTable rowData={rowData} onGridReady={onGridReady} gridColumnApi={gridColumnApi} tableLoading={isActionTableLoading} />}
+                      <ActionTable rowData={rowData} onGridReady={onGridReady} gridColumnApi={gridColumnApi} tableLoading={isActionTableLoading} gridApi={gridApi} />}
                   </Route>
                   <Route exact path="/allaction">
                     {isTableLoading ?
                       <div className={classes.root}>
                         <CircularProgress color="secondary" />
                       </div> :
-                      <ActionTable rowData={rowData} onGridReady={onGridReady} gridColumnApi={gridColumnApi} tableLoading={isActionTableLoading} />}
+                      <ActionTable rowData={rowData} onGridReady={onGridReady} gridColumnApi={gridColumnApi} tableLoading={isActionTableLoading} gridApi={gridApi} />}
                   </Route>
                   <Route exact path="/cancel">{isTableLoading ?
                     <div className={classes.root}>

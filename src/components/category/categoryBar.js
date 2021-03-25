@@ -44,7 +44,7 @@ const CategoryBar = (props) => {
     const { rowDetailValue } = useContext(RowDetailsContext);
     const { setCategoryBarLoading } = useContext(SaveBtnContext);
     const { saveBtnDisable } = useContext(SaveBtnContext);
-    const { setSelectedChannel } = useContext(SelectedChannelContext);
+    const { setSelectedChannel, setSelectedMarketPlace } = useContext(SelectedChannelContext);
 
     const canBeSubmitted = () => {
         return retailWeekValue != '' && channelValue != '' && divisionValue != '' && genderValue != '' && categoryValue.length != 0 && tableValue != '';
@@ -238,6 +238,7 @@ const CategoryBar = (props) => {
                 action: tableValue
             };
             setSelectedChannel(channelValue);
+            setSelectedMarketPlace(marketPlaceValue);
             props.onCatergorySubmit(selectionFilterDataUpdated);
         }
     }

@@ -1,27 +1,78 @@
 import React, { useEffect } from 'react';
-import Dialog from '@material-ui/core/Dialog';
 import { AgGridReact, AgGridColumn } from '@ag-grid-community/react';
 import { RowDetailsContext, SaveBtnContext, SelectedChannelContext } from '../context/rowDetailsContext';
 import { AllModules } from "@ag-grid-enterprise/all-modules";
 import CustomTooltip from './customTooltip.jsx';
-import CustomStatsToolPanel from './customToolPanel.jsx'
+import CustomStatsToolPanel from './customToolPanel.jsx';
 
 const ActionTable = (props) => {
     let consolidatedRows = [];
     let tableLoading = props.tableLoading;
-    const [open, setOpen] = React.useState(false);
+
+    const [inventory, setInventory] = React.useState([]);
 
     const { setRowDetailValue } = React.useContext(RowDetailsContext);
     const { setSaveBtnDisable } = React.useContext(SaveBtnContext);
-    const { selectedChannel } = React.useContext(SelectedChannelContext);
+    const { selectedChannel, selectedMarketPlace } = React.useContext(SelectedChannelContext);
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
 
-    const handleClose = () => {
-        setOpen(false);
-    };
+    const inventoryColumnJapan = [
+        { field: 'Contracts' },
+        { field: 'UnassignedZerotoThirtyDaysOut' },
+        { field: 'UnassignedThirtyonetoSixtyDaysOut' },
+        { field: 'UnassignedSixtyonePlusDaysOut' },
+        { field: '1083_Contracts' },
+        { field: '1084_Contracts' },
+        { field: '1085_Contracts' },
+        { field: selectedChannel === 'NDDC' ? 'NSO_Contracts' : selectedChannel === 'NSO' ? 'NDDC_Contracts' : null },
+        { field: 'WholesaleContract' },
+        { field: 'StoreIOH' },
+        { field: 'InTransit' },
+        { field: 'OnOrder' },
+        { field: 'GA_1083' },
+        { field: 'GA_1084' },
+        { field: 'GA_1085' },
+        { field: 'DOMsInventory' },
+        { field: 'DOMsNDDCInventory' },
+        { field: 'DOMsZOZOInventory' },
+        { field: 'DOMsNSOInventory' },
+        { field: 'DOMsNFSInventory' },
+        { field: 'DOMsEMPInventory' },
+        { field: 'DOMsGAInventory' },
+        { field: 'SizeCountOwned' },
+        { field: 'SizeCountTotal' },
+        { field: 'SizeIntegrity' },
+        { field: 'ChannelWOH' },
+        { field: 'MarketPlaceWOH' },
+        { field: 'RecommendedChaseUnits' },
+        { field: 'RecommendedCancelUnits' }
+    ];
+
+    const inventoryColumnMexico = [
+        { field: 'Contracts' },
+        { field: 'UnassignedZerotoThirtyDaysOut' },
+        { field: 'UnassignedThirtyonetoSixtyDaysOut' },
+        { field: 'UnassignedSixtyonePlusDaysOut' },
+        { field: '1098_Contracts' },
+        { field: selectedChannel === 'NDDC' ? 'NSO_Contracts' : null },
+        { field: 'WholesaleContract' },
+        { field: 'StoreIOH' },
+        { field: 'InTransit' },
+        { field: 'OnOrder' },
+        { field: 'GA_1098' },
+        { field: 'DOMsInventory' },
+        { field: 'DOMsNDDCInventory' },
+        { field: 'DOMsNSOInventory' },
+        { field: 'DOMsEMPInventory' },
+        { field: 'DOMsGAInventory' },
+        { field: 'SizeCountOwned' },
+        { field: 'SizeCountTotal' },
+        { field: 'SizeIntegrity' },
+        { field: 'ChannelWOH' },
+        { field: 'MarketPlaceWOH' },
+        { field: 'RecommendedChaseUnits' },
+        { field: 'RecommendedCancelUnits' }
+    ];
 
     const onCellValueChanged = (params) => {
         if (!(params.oldValue === null && (params.newValue === undefined || params.newValue === ''))) {
@@ -33,41 +84,49 @@ const ActionTable = (props) => {
     }
 
     function numberParser(params) {
-        if (typeof (params.value) === 'number' && params.value !== 0) {
-            var sansDec = params.value.toFixed(0);
-            var formatted = sansDec.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-            return `${formatted}`;
-        }
+        // if (typeof (params.value) === 'number' && params.value !== 0) {
+        //     if (params.value % 1 != 0) {
+        //         var sansDec = params.value.toFixed(0);
+        //         var formatted = sansDec.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        //         return `${formatted}`;
+        //     }
+        // }
         if (params.value === null || params.value === 0 || params.value === undefined) {
             return '-'
         }
     }
 
     useEffect(() => {
+        /* If Mexico, Mexico related columns for Inventory */
+        if (selectedMarketPlace === 'Mexico') {
+            let filteredColumn = inventoryColumnMexico.filter(each => each.field != null);
+            setInventory(filteredColumn);
+        }
+
+        /* If Japan, Japan related columns for Inventory */
+        if (selectedMarketPlace === 'Japan') {
+            let filteredColumn = inventoryColumnJapan.filter(each => each.field != null);
+            setInventory(filteredColumn);
+        }
+
         let savedColumns = JSON.parse(localStorage.getItem("savedColumns"));
-        if (props.gridColumnApi != null && savedColumns != null && props.gridColumnApi.columnController != undefined) {
+        if (props.gridColumnApi !== null && savedColumns !== null && props.gridColumnApi.columnController !== undefined) {
             let allColumns = props.gridColumnApi.getColumnState();
 
             let distinctColumn = [];
             allColumns.map((eachColumn) => {
                 distinctColumn.push(eachColumn.colId);
             });
-
             let filteredKeywords = distinctColumn.filter((eachColumn) => !savedColumns.includes(eachColumn));
             props.gridColumnApi.setColumnsVisible([...filteredKeywords], false);
+
+            console.log('filtered columns', filteredKeywords);
+            console.log('column state', props.gridColumnApi.getColumnState());
         }
     }, [tableLoading, props.gridColumnApi]);
 
     return (
         <React.Fragment>
-            <Dialog
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-            >
-                <img src="" />
-            </Dialog>
             <div className="ag-theme-alpine" style={{ height: '80vh' }}>
                 <AgGridReact
                     modules={AllModules}
@@ -190,27 +249,36 @@ const ActionTable = (props) => {
                         <AgGridColumn field="Silhouette" />
                     </AgGridColumn>
 
+
                     <AgGridColumn headerName="Inventory">
+                        {inventory.map(column => (
+                            <AgGridColumn {...column} key={column.field} />
+                        ))}
+                    </AgGridColumn>
+
+                    {/* <AgGridColumn headerName="Inventory">
                         <AgGridColumn field="Contracts" />
                         <AgGridColumn field="UnassignedZerotoThirtyDaysOut" headerName='Unassigned Qty 0_30' />
                         <AgGridColumn field="UnassignedThirtyonetoSixtyDaysOut" headerName='Unassigned Qty 31_60' />
                         <AgGridColumn field="UnassignedSixtyonePlusDaysOut" headerName='Unassigned Qty 61 Plus' />
-                        <AgGridColumn field="1083_Contracts" headerName='1083 Contracts' />
-                        <AgGridColumn field="1084_Contracts" headerName='1084 Contracts' />
-                        <AgGridColumn field="1085_Contracts" headerName='1085 Contracts' />
-                        {selectedChannel === 'NDDC' ? <AgGridColumn field="NSO_Contracts" /> : selectedChannel === 'NSO' ? <AgGridColumn field="NDDC_Contracts" /> : <AgGridColumn hide={true} />}
+                        {selectedMarketPlace === 'Japan' ? <AgGridColumn field="1083_Contracts" headerName='1083 Contracts' /> : <AgGridColumn hide={hideColumn} />}
+                        {selectedMarketPlace === 'Japan' ? <AgGridColumn field="1084_Contracts" headerName='1084 Contracts' /> : <AgGridColumn hide={hideColumn} />}
+                        {selectedMarketPlace === 'Japan' ? <AgGridColumn field="1085_Contracts" headerName='1085 Contracts' /> : <AgGridColumn hide={hideColumn} />}
+                        {selectedMarketPlace === 'Mexico' ? <AgGridColumn field="1098_Contracts" headerName='1098 Contracts' /> : <AgGridColumn hide={hideColumn} />}
+                        {selectedChannel === 'NDDC' ? <AgGridColumn field="NSO_Contracts" /> : selectedChannel === 'NSO' ? <AgGridColumn field="NDDC_Contracts" /> : <AgGridColumn hide={hideColumn} />}
                         <AgGridColumn field="WholesaleContract" />
                         <AgGridColumn field="StoreIOH" />
                         <AgGridColumn field="InTransit" />
                         <AgGridColumn field="OnOrder" />
-                        <AgGridColumn field="GA_1083" headerName="GA 1083" />
-                        <AgGridColumn field="GA_1084" headerName="GA 1084" />
-                        <AgGridColumn field="GA_1085" headerName="GA 1085" />
+                        {selectedMarketPlace === 'Japan' ? <AgGridColumn field="GA_1083" headerName="GA 1083" /> : <AgGridColumn hide={hideColumn} />}
+                        {selectedMarketPlace === 'Japan' ? <AgGridColumn field="GA_1084" headerName="GA 1084" /> : <AgGridColumn hide={hideColumn} />}
+                        {selectedMarketPlace === 'Japan' ? <AgGridColumn field="GA_1085" headerName="GA 1085" /> : <AgGridColumn hide={hideColumn} />}
+                        {selectedMarketPlace === 'Mexico' ? <AgGridColumn field="GA_1098" headerName="GA 1098" /> : <AgGridColumn hide={hideColumn} />}
                         <AgGridColumn field="DOMsInventory" headerName="DOMs Inventory" />
                         <AgGridColumn field="DOMsNDDCInventory" headerName="DOMs NDDC Inventory" />
-                        <AgGridColumn field="DOMsZOZOInventory" headerName="DOMs ZOZO Inventory" />
+                        {selectedMarketPlace === 'Japan' ? <AgGridColumn field="DOMsZOZOInventory" headerName="DOMs ZOZO Inventory" /> : <AgGridColumn hide={hideColumn} />}
                         <AgGridColumn field="DOMsNSOInventory" headerName="DOMs NSO Inventory" />
-                        <AgGridColumn field="DOMsNFSInventory" headerName="DOMs NFS Inventory" />
+                        {selectedMarketPlace === 'Japan' ? <AgGridColumn field="DOMsNFSInventory" headerName="DOMs NFS Inventory" /> : <AgGridColumn hide={hideColumn} />}
                         <AgGridColumn field="DOMsEMPInventory" headerName="DOMs EMP Inventory" />
                         <AgGridColumn field="DOMsGAInventory" headerName="DOMs GA Inventory" />
                         <AgGridColumn field="SizeCountOwned" />
@@ -220,7 +288,7 @@ const ActionTable = (props) => {
                         <AgGridColumn field="MarketPlaceWOH" />
                         <AgGridColumn field="RecommendedChaseUnits" />
                         <AgGridColumn field="RecommendedCancelUnits" />
-                    </AgGridColumn>
+                    </AgGridColumn> */}
 
                     <AgGridColumn headerName="Sales">
                         <AgGridColumn field="NetUnitsLastWeek" />
