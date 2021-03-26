@@ -15,30 +15,29 @@ const ActionTable = (props) => {
     const { setSaveBtnDisable } = React.useContext(SaveBtnContext);
     const { selectedChannel, selectedMarketPlace } = React.useContext(SelectedChannelContext);
 
-
-    const inventoryColumnJapan = [
+    const actionInventoryColumnJapan = [
         { field: 'Contracts' },
-        { field: 'UnassignedZerotoThirtyDaysOut' },
-        { field: 'UnassignedThirtyonetoSixtyDaysOut' },
-        { field: 'UnassignedSixtyonePlusDaysOut' },
-        { field: '1083_Contracts' },
-        { field: '1084_Contracts' },
-        { field: '1085_Contracts' },
+        { field: 'UnassignedZerotoThirtyDaysOut', headerName: 'Unassigned Qty 0_30' },
+        { field: 'UnassignedThirtyonetoSixtyDaysOut', headerName: 'Unassigned Qty 31_60' },
+        { field: 'UnassignedSixtyonePlusDaysOut', headerName: 'Unassigned Qty 61 Plus' },
+        { field: '1083_Contracts', headerName: '1083 Contracts' },
+        { field: '1084_Contracts', headerName: '1084 Contracts' },
+        { field: '1085_Contracts', headerName: '1085 Contracts' },
         { field: selectedChannel === 'NDDC' ? 'NSO_Contracts' : selectedChannel === 'NSO' ? 'NDDC_Contracts' : null },
         { field: 'WholesaleContract' },
         { field: 'StoreIOH' },
         { field: 'InTransit' },
         { field: 'OnOrder' },
-        { field: 'GA_1083' },
-        { field: 'GA_1084' },
-        { field: 'GA_1085' },
-        { field: 'DOMsInventory' },
-        { field: 'DOMsNDDCInventory' },
-        { field: 'DOMsZOZOInventory' },
-        { field: 'DOMsNSOInventory' },
-        { field: 'DOMsNFSInventory' },
-        { field: 'DOMsEMPInventory' },
-        { field: 'DOMsGAInventory' },
+        { field: 'GA_1083', headerName: "GA 1083" },
+        { field: 'GA_1084', headerName: "GA 1084" },
+        { field: 'GA_1085', headerName: "GA 1085" },
+        { field: 'DOMsInventory', headerName: "DOMs Inventory" },
+        { field: 'DOMsNDDCInventory', headerName: "DOMs NDDC Inventory" },
+        { field: 'DOMsZOZOInventory', headerName: "DOMs ZOZO Inventory" },
+        { field: 'DOMsNSOInventory', headerName: "DOMs NSO Inventory" },
+        { field: 'DOMsNFSInventory', headerName: "DOMs NFS Inventory" },
+        { field: 'DOMsEMPInventory', headerName: "DOMs EMP Inventory" },
+        { field: 'DOMsGAInventory', headerName: "DOMs GA Inventory" },
         { field: 'SizeCountOwned' },
         { field: 'SizeCountTotal' },
         { field: 'SizeIntegrity' },
@@ -48,23 +47,23 @@ const ActionTable = (props) => {
         { field: 'RecommendedCancelUnits' }
     ];
 
-    const inventoryColumnMexico = [
+    const actionInventoryColumnMexico = [
         { field: 'Contracts' },
-        { field: 'UnassignedZerotoThirtyDaysOut' },
-        { field: 'UnassignedThirtyonetoSixtyDaysOut' },
-        { field: 'UnassignedSixtyonePlusDaysOut' },
-        { field: '1098_Contracts' },
+        { field: 'UnassignedZerotoThirtyDaysOut', headerName: 'Unassigned Qty 0_30' },
+        { field: 'UnassignedThirtyonetoSixtyDaysOut', headerName: 'Unassigned Qty 31_60' },
+        { field: 'UnassignedSixtyonePlusDaysOut', headerName: 'Unassigned Qty 61 Plus' },
+        { field: '1098_Contracts', headerName: '1098 Contracts' },
         { field: selectedChannel === 'NDDC' ? 'NSO_Contracts' : null },
         { field: 'WholesaleContract' },
         { field: 'StoreIOH' },
         { field: 'InTransit' },
         { field: 'OnOrder' },
-        { field: 'GA_1098' },
-        { field: 'DOMsInventory' },
-        { field: 'DOMsNDDCInventory' },
-        { field: 'DOMsNSOInventory' },
-        { field: 'DOMsEMPInventory' },
-        { field: 'DOMsGAInventory' },
+        { field: 'GA_1098', headerName: "GA 1098" },
+        { field: 'DOMsInventory', headerName: "DOMs Inventory" },
+        { field: 'DOMsNDDCInventory', headerName: "DOMs NDDC Inventory" },
+        { field: 'DOMsNSOInventory', headerName: "DOMs NSO Inventory" },
+        { field: 'DOMsEMPInventory', headerName: "DOMs EMP Inventory" },
+        { field: 'DOMsGAInventory', headerName: "DOMs GA Inventory" },
         { field: 'SizeCountOwned' },
         { field: 'SizeCountTotal' },
         { field: 'SizeIntegrity' },
@@ -99,16 +98,20 @@ const ActionTable = (props) => {
     useEffect(() => {
         /* If Mexico, Mexico related columns for Inventory */
         if (selectedMarketPlace === 'Mexico') {
-            let filteredColumn = inventoryColumnMexico.filter(each => each.field != null);
+            let filteredColumn = actionInventoryColumnMexico.filter(each => each.field != null);
             setInventory(filteredColumn);
         }
 
         /* If Japan, Japan related columns for Inventory */
         if (selectedMarketPlace === 'Japan') {
-            let filteredColumn = inventoryColumnJapan.filter(each => each.field != null);
+            let filteredColumn = actionInventoryColumnJapan.filter(each => each.field != null);
             setInventory(filteredColumn);
         }
 
+        actionTableSaveView(props);
+    }, [tableLoading, props.gridColumnApi]);
+
+    function actionTableSaveView(props) {
         let savedColumns = JSON.parse(localStorage.getItem("savedColumns"));
         if (props.gridColumnApi !== null && savedColumns !== null && props.gridColumnApi.columnController !== undefined) {
             let allColumns = props.gridColumnApi.getColumnState();
@@ -123,7 +126,7 @@ const ActionTable = (props) => {
             console.log('filtered columns', filteredKeywords);
             console.log('column state', props.gridColumnApi.getColumnState());
         }
-    }, [tableLoading, props.gridColumnApi]);
+    }
 
     return (
         <React.Fragment>
@@ -248,7 +251,6 @@ const ActionTable = (props) => {
                         <AgGridColumn field="NikeIDIND" />
                         <AgGridColumn field="Silhouette" />
                     </AgGridColumn>
-
 
                     <AgGridColumn headerName="Inventory">
                         {inventory.map(column => (

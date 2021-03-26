@@ -57,6 +57,12 @@ export default (props) => {
         }
     }
 
+    const removeSaveViews = () => {
+        localStorage.removeItem('savedColumns');
+        setStatus('success');
+        setMessage('Removed column layout. Load again to see the changes');
+    }
+
     return (
         <div>
             {status ? <CustomSnackbar key={status.date} status={status.msg} msg={message} /> : null}
@@ -70,6 +76,7 @@ export default (props) => {
                             {getColumns()}
                         </div>
                         <Button onClick={saveViews}>Save View</Button>
+                        <Button onClick={removeSaveViews}>Remove</Button>
                     </div>
                     : 'No Data'}
             </span>
