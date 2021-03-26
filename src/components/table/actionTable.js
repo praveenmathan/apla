@@ -108,7 +108,9 @@ const ActionTable = (props) => {
             setInventory(filteredColumn);
         }
 
-        actionTableSaveView(props);
+        setTimeout(() => { actionTableSaveView(props); }, 2000);
+
+
     }, [tableLoading, props.gridColumnApi]);
 
     function actionTableSaveView(props) {
@@ -136,6 +138,7 @@ const ActionTable = (props) => {
                     cellClass={(params) => {
                         return params.colDef.type === 'numericColumn' ? 'ag-numeric-cell' : '';
                     }}
+                    applyColumnDefOrder={true}
                     defaultColDef={{
                         flex: 1,
                         minWidth: 175,
@@ -145,7 +148,7 @@ const ActionTable = (props) => {
                         enableRowGroup: true,
                         enablePivot: true,
                         tooltipComponent: 'customTooltip',
-                        valueFormatter: numberParser
+                        valueFormatter: numberParser,
                     }}
                     icons={{
                         'custom-stats':

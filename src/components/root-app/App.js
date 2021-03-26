@@ -29,7 +29,7 @@ import ReleaseTable from '../table/releaseTable';
 import ImproveConversionTable from '../table/improveConversionTable';
 import ImproveTrafficTable from '../table/improveTrafficTable';
 import MarkdownTable from '../table/markdownTable';
-import { RowDetailsContext, SaveBtnContext, SelectedChannelContext } from '../context/rowDetailsContext';
+import { RowDetailsContext, SaveBtnContext, SelectedChannelContext, SelectionFiltersRequestData } from '../context/rowDetailsContext';
 import saveTableRowService from '../services/saveTableRowService';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import exportToExcelService from '../services/exportToExcelService';
@@ -88,12 +88,15 @@ function App() {
   const [openLogin, setOpenLogin] = useState(false);
   const { authState, oktaAuth } = useOktaAuth();
   const [userInfo, setUserInfo] = useState(null);
+
   const [rowDetailValue, setRowDetailValue] = React.useState([]);
   const [categoryBarLoading, setCategoryBarLoading] = React.useState(false);
   const [saveBtnDisable, setSaveBtnDisable] = React.useState(true);
   const [selectionFilterForSave, setSelectionFilterForSave] = React.useState(null);
   const [selectedChannel, setSelectedChannel] = React.useState(null);
   const [selectedMarketPlace, setSelectedMarketPlace] = React.useState(null);
+  const [selectionFiltersReqData, setSelectionFiltersReqData] = React.useState({});
+
   const [isActionTableLoading, setIsActionTableLoading] = useState(false);
   const [expanded, setExpanded] = React.useState('panel1');
 
@@ -11670,111 +11673,113 @@ function App() {
       <RowDetailsContext.Provider value={{ rowDetailValue, setRowDetailValue }}>
         <SaveBtnContext.Provider value={{ categoryBarLoading, setCategoryBarLoading, saveBtnDisable, setSaveBtnDisable }} >
           <SelectedChannelContext.Provider value={{ selectedChannel, setSelectedChannel, selectedMarketPlace, setSelectedMarketPlace }}>
-            <section>
-              <div className="category-bar-wrapper">
-                <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')} elevation={0} className={classes.backgroudTransperancy}>
-                  <AccordionSummary
-                    expandIcon={<ExpandMoreIcon style={{ color: '#fa8231' }} />}
-                    aria-controls="panel1bh-content"
-                    id="panel1bh-header"
-                    className='accordionSummary'
-                  >
+            <SelectionFiltersRequestData.Provider value={{ selectionFiltersReqData, setSelectionFiltersReqData }}>
+              <section>
+                <div className="category-bar-wrapper">
+                  <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')} elevation={0} className={classes.backgroudTransperancy}>
+                    <AccordionSummary
+                      expandIcon={<ExpandMoreIcon style={{ color: '#fa8231' }} />}
+                      aria-controls="panel1bh-content"
+                      id="panel1bh-header"
+                      className='accordionSummary'
+                    >
 
-                  </AccordionSummary>
-                  <AccordionDetails className='accordion-pad0'>
-                    <CategoryBar
-                      auth={authorisationApi}
-                      data={categoryApi}
-                      isLoading={loading}
-                      onCatergorySubmit={onCatergorySubmit}
-                      OnTableRowSave={onTableRowSave}
-                      onExportToExcel={onExportToExcel}
-                    />
-                  </AccordionDetails>
-                </Accordion>
-              </div>
-              {categoryBarLoading ? <LinearProgress color="secondary" /> : null}
-            </section>
+                    </AccordionSummary>
+                    <AccordionDetails className='accordion-pad0'>
+                      <CategoryBar
+                        auth={authorisationApi}
+                        data={categoryApi}
+                        isLoading={loading}
+                        onCatergorySubmit={onCatergorySubmit}
+                        OnTableRowSave={onTableRowSave}
+                        onExportToExcel={onExportToExcel}
+                      />
+                    </AccordionDetails>
+                  </Accordion>
+                </div>
+                {categoryBarLoading ? <LinearProgress color="secondary" /> : null}
+              </section>
 
-            <main className="container-fluid">
-              <div className="table-wrapper">
-                <Switch>
-                  <Route exact path="/"></Route>
-                  <Route path="/login/callback" component={LoginCallback} />
-                  <Route exact path="/action">
-                    {isTableLoading ?
+              <main className="container-fluid">
+                <div className="table-wrapper">
+                  <Switch>
+                    <Route exact path="/"></Route>
+                    <Route path="/login/callback" component={LoginCallback} />
+                    <Route exact path="/action">
+                      {isTableLoading ?
+                        <div className={classes.root}>
+                          <CircularProgress color="secondary" />
+                        </div> :
+                        <ActionTable rowData={rowData} onGridReady={onGridReady} gridColumnApi={gridColumnApi} tableLoading={isActionTableLoading} gridApi={gridApi} />}
+                    </Route>
+                    <Route exact path="/allaction">
+                      {isTableLoading ?
+                        <div className={classes.root}>
+                          <CircularProgress color="secondary" />
+                        </div> :
+                        <ActionTable rowData={rowData} onGridReady={onGridReady} gridColumnApi={gridColumnApi} tableLoading={isActionTableLoading} gridApi={gridApi} />}
+                    </Route>
+                    <Route exact path="/cancel">{isTableLoading ?
                       <div className={classes.root}>
                         <CircularProgress color="secondary" />
                       </div> :
-                      <ActionTable rowData={rowData} onGridReady={onGridReady} gridColumnApi={gridColumnApi} tableLoading={isActionTableLoading} gridApi={gridApi} />}
-                  </Route>
-                  <Route exact path="/allaction">
-                    {isTableLoading ?
+                      <CancelTable rowData={rowData} onGridReady={onGridReady} />}</Route>
+                    <Route exact path="/closeout+cancel">{isTableLoading ?
                       <div className={classes.root}>
                         <CircularProgress color="secondary" />
                       </div> :
-                      <ActionTable rowData={rowData} onGridReady={onGridReady} gridColumnApi={gridColumnApi} tableLoading={isActionTableLoading} gridApi={gridApi} />}
-                  </Route>
-                  <Route exact path="/cancel">{isTableLoading ?
-                    <div className={classes.root}>
-                      <CircularProgress color="secondary" />
-                    </div> :
-                    <CancelTable rowData={rowData} onGridReady={onGridReady} />}</Route>
-                  <Route exact path="/closeout+cancel">{isTableLoading ?
-                    <div className={classes.root}>
-                      <CircularProgress color="secondary" />
-                    </div> :
-                    <CloseOutTable rowData={rowData} onGridReady={onGridReady} />}</Route>
-                  <Route exact path="/cmreview">{isTableLoading ?
-                    <div className={classes.root}>
-                      <CircularProgress color="secondary" />
-                    </div> :
-                    <CmReviewTable rowData={rowData} onGridReady={onGridReady} />}</Route>
-                  <Route exact path="/chase">{isTableLoading ?
-                    <div className={classes.root}>
-                      <CircularProgress color="secondary" />
-                    </div> :
-                    <ChaseTable rowData={rowData} onGridReady={onGridReady} />}</Route>
-                  <Route exact path="/improveconversion">{isTableLoading ?
-                    <div className={classes.root}>
-                      <CircularProgress color="secondary" />
-                    </div> :
-                    <ImproveConversionTable rowData={rowData} onGridReady={onGridReady} />}</Route>
-                  <Route exact path="/improvetraffic">{isTableLoading ?
-                    <div className={classes.root}>
-                      <CircularProgress color="secondary" />
-                    </div> :
-                    <ImproveTrafficTable rowData={rowData} onGridReady={onGridReady} />}</Route>
-                  <Route exact path="/exclude">{isTableLoading ?
-                    <div className={classes.root}>
-                      <CircularProgress color="secondary" />
-                    </div> :
-                    <ExcludeTable rowData={rowData} onGridReady={onGridReady} />}</Route>
-                  <Route exact path="/markdown">{isTableLoading ?
-                    <div className={classes.root}>
-                      <CircularProgress color="secondary" />
-                    </div> :
-                    <MarkdownTable rowData={rowData} onGridReady={onGridReady} />}</Route>
-                  <Route exact path="/exception">{isTableLoading ?
-                    <div className={classes.root}>
-                      <CircularProgress color="secondary" />
-                    </div> :
-                    <ExceptionTable rowData={rowData} onGridReady={onGridReady} gridApi={gridApi} />}</Route>
-                  <Route exact path="/release">{isTableLoading ?
-                    <div className={classes.root}>
-                      <CircularProgress color="secondary" />
-                    </div> :
-                    <ReleaseTable rowData={rowData} onGridReady={onGridReady} gridApi={gridApi} />}</Route>
-                  <Route exact path="/x-channel">{isTableLoading ?
-                    <div className={classes.root}>
-                      <CircularProgress color="secondary" />
-                    </div> :
-                    <CrossChannelTable rowData={rowData} onGridReady={onGridReady} gridApi={gridApi} />}</Route>
-                  <SecureRoute exact path="/profile" component={Profile} />
-                  <Route exact path="*" component={NotFound} />
-                </Switch>
-              </div>
-            </main>
+                      <CloseOutTable rowData={rowData} onGridReady={onGridReady} />}</Route>
+                    <Route exact path="/cmreview">{isTableLoading ?
+                      <div className={classes.root}>
+                        <CircularProgress color="secondary" />
+                      </div> :
+                      <CmReviewTable rowData={rowData} onGridReady={onGridReady} />}</Route>
+                    <Route exact path="/chase">{isTableLoading ?
+                      <div className={classes.root}>
+                        <CircularProgress color="secondary" />
+                      </div> :
+                      <ChaseTable rowData={rowData} onGridReady={onGridReady} />}</Route>
+                    <Route exact path="/improveconversion">{isTableLoading ?
+                      <div className={classes.root}>
+                        <CircularProgress color="secondary" />
+                      </div> :
+                      <ImproveConversionTable rowData={rowData} onGridReady={onGridReady} />}</Route>
+                    <Route exact path="/improvetraffic">{isTableLoading ?
+                      <div className={classes.root}>
+                        <CircularProgress color="secondary" />
+                      </div> :
+                      <ImproveTrafficTable rowData={rowData} onGridReady={onGridReady} />}</Route>
+                    <Route exact path="/exclude">{isTableLoading ?
+                      <div className={classes.root}>
+                        <CircularProgress color="secondary" />
+                      </div> :
+                      <ExcludeTable rowData={rowData} onGridReady={onGridReady} />}</Route>
+                    <Route exact path="/markdown">{isTableLoading ?
+                      <div className={classes.root}>
+                        <CircularProgress color="secondary" />
+                      </div> :
+                      <MarkdownTable rowData={rowData} onGridReady={onGridReady} />}</Route>
+                    <Route exact path="/exception">{isTableLoading ?
+                      <div className={classes.root}>
+                        <CircularProgress color="secondary" />
+                      </div> :
+                      <ExceptionTable rowData={rowData} onGridReady={onGridReady} gridApi={gridApi} />}</Route>
+                    <Route exact path="/release">{isTableLoading ?
+                      <div className={classes.root}>
+                        <CircularProgress color="secondary" />
+                      </div> :
+                      <ReleaseTable rowData={rowData} onGridReady={onGridReady} gridApi={gridApi} />}</Route>
+                    <Route exact path="/x-channel">{isTableLoading ?
+                      <div className={classes.root}>
+                        <CircularProgress color="secondary" />
+                      </div> :
+                      <CrossChannelTable rowData={rowData} onGridReady={onGridReady} gridApi={gridApi} />}</Route>
+                    <SecureRoute exact path="/profile" component={Profile} />
+                    <Route exact path="*" component={NotFound} />
+                  </Switch>
+                </div>
+              </main>
+            </SelectionFiltersRequestData.Provider>
           </SelectedChannelContext.Provider >
         </SaveBtnContext.Provider >
       </RowDetailsContext.Provider >

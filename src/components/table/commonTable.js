@@ -140,6 +140,7 @@ const CommonTable = (props) => {
                         <AgGridReact
                             rowData={props.rowData}
                             onGridReady={props.onGridReady}
+                            applyColumnDefOrder={true}
                             defaultColDef={{
                                 initialWidth: 150,
                                 sortable: true,

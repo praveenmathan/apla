@@ -20,6 +20,7 @@ export default (props) => {
     };
 
     useEffect(() => {
+        console.log('from custom tool panel', props);
         props.api.addEventListener('modelUpdated', updateTotals);
         return () => props.api.removeEventListener('modelUpdated', updateTotals);
     }, []);

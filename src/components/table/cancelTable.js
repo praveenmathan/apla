@@ -81,6 +81,7 @@ const CancelTable = (props) => {
         <div className="ag-theme-alpine" style={{ height: '80vh' }}>
             <AgGridReact
                 modules={AllModules}
+                applyColumnDefOrder={true}
                 defaultColDef={{
                     flex: 1,
                     minWidth: 175,

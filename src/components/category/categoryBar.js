@@ -3,7 +3,7 @@ import { Grid, Segment } from 'semantic-ui-react';
 import './categoryBar.css';
 import { Form, Select } from 'semantic-ui-react';
 import Skeleton from '@material-ui/lab/Skeleton';
-import { RowDetailsContext, SaveBtnContext, SelectedChannelContext } from '../context/rowDetailsContext';
+import { RowDetailsContext, SaveBtnContext, SelectedChannelContext, SelectionFiltersRequestData } from '../context/rowDetailsContext';
 
 /* eslint-disable */
 const CategoryBar = (props) => {
@@ -45,6 +45,7 @@ const CategoryBar = (props) => {
     const { setCategoryBarLoading } = useContext(SaveBtnContext);
     const { saveBtnDisable } = useContext(SaveBtnContext);
     const { setSelectedChannel, setSelectedMarketPlace } = useContext(SelectedChannelContext);
+    const { setSelectionFiltersReqData } = useContext(SelectionFiltersRequestData);
 
     const canBeSubmitted = () => {
         return retailWeekValue != '' && channelValue != '' && divisionValue != '' && genderValue != '' && categoryValue.length != 0 && tableValue != '';
@@ -239,6 +240,8 @@ const CategoryBar = (props) => {
             };
             setSelectedChannel(channelValue);
             setSelectedMarketPlace(marketPlaceValue);
+            setSelectionFiltersReqData(selectionFilterDataUpdated);
+            console.log('selction filters req data', selectionFilterDataUpdated);
             props.onCatergorySubmit(selectionFilterDataUpdated);
         }
     }

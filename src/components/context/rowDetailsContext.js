@@ -7,3 +7,5 @@ export const SaveBtnContext = createContext(null);
 export const SelectedChannelContext = createContext(null);
 
 export const SelectedMarketPlaceContext = createContext(null);
+
+export const SelectionFiltersRequestData = createContext(null);

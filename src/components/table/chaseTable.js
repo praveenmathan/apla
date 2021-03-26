@@ -110,6 +110,7 @@ const ChaseTable = (props) => {
                 suppressDragLeaveHidesColumns={true}
                 tooltipShowDelay={0}
                 frameworkComponents={{ customTooltip: CustomTooltip }}
+                applyColumnDefOrder={true}
                 defaultColDef={{
                     flex: 1,
                     minWidth: 175,
