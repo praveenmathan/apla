@@ -27,8 +27,14 @@ export default (props) => {
 
     const getColumns = () => {
         let content = [];
+        let savedColumnsInLs = JSON.parse(localStorage.getItem('savedColumns'));
+        if (savedColumnsInLs) {
+            onChangeCheckedColumns.push(...savedColumnsInLs);
+            console.log('just testing');
+        };
         for (let idx in displayColumn) {
             const item = displayColumn[idx];
+            // if (item.originalParent.colGroupDef.headerName === 'Product') {
             content.push(
                 <Checkbox
                     key={item.colId}
@@ -36,6 +42,7 @@ export default (props) => {
                     style={totalStyle}
                     onChange={getCheckedColumns}
                     name={item.colId}
+                    defaultChecked={savedColumnsInLs != null ? savedColumnsInLs.includes(item.colId) : false}
                 ></Checkbox>);
         }
         return content;
@@ -46,12 +53,19 @@ export default (props) => {
     }
 
     const saveViews = () => {
-        if (onChangeCheckedColumns.length === 0) {
+        let uniqueChars = [];
+        onChangeCheckedColumns.forEach((c) => {
+            if (!uniqueChars.includes(c)) {
+                uniqueChars.push(c);
+            }
+        });
+
+        if (uniqueChars.length === 0) {
             setStatus('error');
             setMessage('Select columns to save your custom layout');
         } else {
             localStorage.removeItem('savedColumns');
-            let cacheStringified = JSON.stringify(onChangeCheckedColumns);
+            let cacheStringified = JSON.stringify(uniqueChars);
             localStorage.setItem("savedColumns", cacheStringified);
             setStatus('success');
             setMessage('Successfully saved column layout. Load again to see the changes');
@@ -76,7 +90,7 @@ export default (props) => {
                         <div className='custom-columns'>
                             {getColumns()}
                         </div>
-                        <Button onClick={saveViews}>Save View</Button>
+                        <Button primary onClick={saveViews}>Save View</Button>
                         <Button onClick={removeSaveViews}>Remove</Button>
                     </div>
                     : 'No Data'}

@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { AgGridReact, AgGridColumn } from '@ag-grid-community/react';
-import { RowDetailsContext, SaveBtnContext } from '../context/rowDetailsContext';
+import { RowDetailsContext, SaveBtnContext, SelectedChannelContext } from '../context/rowDetailsContext';
 import { AllModules } from "@ag-grid-enterprise/all-modules";
 import CustomTooltip from './customTooltip.jsx';
 
 const CloseOutTable = (props) => {
     let consolidatedRows = [];
+    const [inventory, setInventory] = React.useState([]);
+
     const { setRowDetailValue } = React.useContext(RowDetailsContext);
     const { setSaveBtnDisable } = React.useContext(SaveBtnContext);
+    const { selectedMarketPlace } = React.useContext(SelectedChannelContext);
 
     const onCellValueChanged = (params) => {
         if (!(params.oldValue === null && params.newValue === undefined)) {
@@ -18,12 +21,53 @@ const CloseOutTable = (props) => {
         }
     }
 
-    function numberParser(params) {
+    const closeoutCancelInventoryColumnJapan = [
+        { field: 'Contracts' },
+        { field: 'UnassignedZerotoThirtyDaysOut', headerName: 'Unassigned Qty 0_30' },
+        { field: 'UnassignedThirtyonetoSixtyDaysOut', headerName: 'Unassigned Qty 31_60' },
+        { field: 'UnassignedSixtyonePlusDaysOut', headerName: 'Unassigned Qty 61 Plus' },
+        { field: '1083_Contracts', headerName: '1083 Contracts' },
+        { field: '1084_Contracts', headerName: '1084 Contracts' },
+        { field: '1085_Contracts', headerName: '1085 Contracts' },
+        { field: 'SizeCountOwned' },
+        { field: 'SizeCountTotal' },
+        { field: 'SizeIntegrity' },
+        { field: 'ChannelWOH' },
+        { field: 'MarketPlaceWOH' }
+    ];
 
+    const closeoutCancelInventoryColumnMexico = [
+        { field: 'Contracts' },
+        { field: 'UnassignedZerotoThirtyDaysOut', headerName: 'Unassigned Qty 0_30' },
+        { field: 'UnassignedThirtyonetoSixtyDaysOut', headerName: 'Unassigned Qty 31_60' },
+        { field: 'UnassignedSixtyonePlusDaysOut', headerName: 'Unassigned Qty 61 Plus' },
+        { field: '1098_Contracts', headerName: '1098 Contracts' },
+        { field: 'SizeCountOwned' },
+        { field: 'SizeCountTotal' },
+        { field: 'SizeIntegrity' },
+        { field: 'ChannelWOH' },
+        { field: 'MarketPlaceWOH' }
+    ];
+
+    function numberParser(params) {
         if (params.value === null || params.value === 0 || params.value === undefined) {
             return '-'
         }
     }
+
+    useEffect(() => {
+        /* If Mexico, Mexico related columns for Inventory */
+        if (selectedMarketPlace === 'Mexico') {
+            let filteredColumn = closeoutCancelInventoryColumnMexico.filter(each => each.field != null);
+            setInventory(filteredColumn);
+        }
+
+        /* If Japan, Japan related columns for Inventory */
+        if (selectedMarketPlace === 'Japan') {
+            let filteredColumn = closeoutCancelInventoryColumnJapan.filter(each => each.field != null);
+            setInventory(filteredColumn);
+        }
+    }, []);
 
     return (
         <div className="ag-theme-alpine" style={{ height: '80vh' }}>
@@ -114,7 +158,7 @@ const CloseOutTable = (props) => {
                     <AgGridColumn field="CGD" />
                 </AgGridColumn>
 
-                <AgGridColumn headerName="Inventory">
+                {/* <AgGridColumn headerName="Inventory">
                     <AgGridColumn field="Contracts" />
                     <AgGridColumn field="UnassignedZerotoThirtyDaysOut" headerName='Unassigned Qty 0_30' />
                     <AgGridColumn field="UnassignedThirtyonetoSixtyDaysOut" headerName='Unassigned Qty 31_60' />
@@ -127,6 +171,12 @@ const CloseOutTable = (props) => {
                     <AgGridColumn field="SizeIntegrity" />
                     <AgGridColumn field="ChannelWOH" />
                     <AgGridColumn field="MarketPlaceWOH" />
+                </AgGridColumn> */}
+
+                <AgGridColumn headerName="Inventory">
+                    {inventory.map(column => (
+                        <AgGridColumn {...column} key={column.field} />
+                    ))}
                 </AgGridColumn>
 
                 <AgGridColumn headerName="Plan">
