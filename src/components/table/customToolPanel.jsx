@@ -7,6 +7,7 @@ const totalStyle = { display: 'block' };
 export default (props) => {
     let onChangeCheckedColumns = [];
     const [displayColumn, setDisplayColumn] = useState([]);
+    const [displayColumnDefs, setDisplayColumnDefs] = useState([]);
     const [columnLoading, setColumnLoading] = useState(false);
     const [status, setStatusBase] = useState("");
     const [message, setMessageBase] = useState("");
@@ -15,12 +16,14 @@ export default (props) => {
 
     const updateTotals = () => {
         let getColumn = props.columnApi.getAllColumns();
+        let getColumnDefs = props.api.getColumnDefs();
+
+        setDisplayColumnDefs(getColumnDefs);
         setDisplayColumn(getColumn);
         setColumnLoading(true);
     };
 
     useEffect(() => {
-        console.log('from custom tool panel', props);
         props.api.addEventListener('modelUpdated', updateTotals);
         return () => props.api.removeEventListener('modelUpdated', updateTotals);
     }, []);
@@ -30,20 +33,22 @@ export default (props) => {
         let savedColumnsInLs = JSON.parse(localStorage.getItem('savedColumns'));
         if (savedColumnsInLs) {
             onChangeCheckedColumns.push(...savedColumnsInLs);
-            console.log('just testing');
         };
+
         for (let idx in displayColumn) {
             const item = displayColumn[idx];
-            // if (item.originalParent.colGroupDef.headerName === 'Product') {
+            console.log('each column :', item);
             content.push(
-                <Checkbox
-                    key={item.colId}
-                    label={<label className='custom-columns-format'>{props.columnApi.getDisplayNameForColumn(item)}</label>}
-                    style={totalStyle}
-                    onChange={getCheckedColumns}
-                    name={item.colId}
-                    defaultChecked={savedColumnsInLs != null ? savedColumnsInLs.includes(item.colId) : false}
-                ></Checkbox>);
+                <React.Fragment>
+                    <Checkbox
+                        key={item.colId}
+                        label={<label className='custom-columns-format'>{props.columnApi.getDisplayNameForColumn(item)}</label>}
+                        style={totalStyle}
+                        onChange={getCheckedColumns}
+                        name={item.colId}
+                        defaultChecked={savedColumnsInLs != null ? savedColumnsInLs.includes(item.colId) : false}
+                    ></Checkbox>
+                </React.Fragment>);
         }
         return content;
     }

@@ -784,6 +784,13 @@ function App() {
 
               "tableDescription": "X-Channel"
 
+            },
+            {
+
+              "tableId": 12,
+
+              "tableDescription": "Full Cancel"
+
             }
 
           ]
@@ -839,10 +846,7 @@ function App() {
 
   function getFormattedCategoryApi(data) {
     let formattedData = { ...data };
-
     formatTableData(formattedData);
-
-    console.log('format data', formattedData);
     return formattedData;
   }
 
@@ -1222,7 +1226,7 @@ function App() {
     if (actionText === 'markdown') {
       markdownTableApiService(requestDataForTable);
     }
-    if (actionText === 'release') {
+    if (actionText === 'fullcancel') {
       releaseTableApiService(requestDataForTable);
     }
     if (actionText === 'x-channel') {
@@ -11764,7 +11768,7 @@ function App() {
                         <CircularProgress color="secondary" />
                       </div> :
                       <ExceptionTable rowData={rowData} onGridReady={onGridReady} gridApi={gridApi} />}</Route>
-                    <Route exact path="/release">{isTableLoading ?
+                    <Route exact path="/fullcancel">{isTableLoading ?
                       <div className={classes.root}>
                         <CircularProgress color="secondary" />
                       </div> :
