@@ -209,6 +209,11 @@ const ChaseTable = (props) => {
                     <AgGridColumn field="DemandUnitsLW" />
                     <AgGridColumn field="DemandUnitsFourWeekRolling" headerName="Demand Units 4W rolling" />
                 </AgGridColumn>
+
+                <AgGridColumn headerName="Plan">
+                    <AgGridColumn field="EPOD" />
+                </AgGridColumn>
+
             </AgGridReact>
         </div >
     );

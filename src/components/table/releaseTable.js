@@ -135,6 +135,7 @@ const ReleaseTable = (props) => {
 
                 <AgGridColumn headerName="Plan">
                     <AgGridColumn field="Status" />
+                    <AgGridColumn field="EPOD" />
                 </AgGridColumn>
 
                 <AgGridColumn headerName="Inventory">

@@ -159,6 +159,7 @@ const CrossChannelTable = (props) => {
                     <AgGridColumn field="LastSeasonPlannedEndDate" />
                     {selectedChannel === 'NDDC' ? <AgGridColumn field="NSO_LAST_SESN_PLND" /> : selectedChannel === 'NSO' ? <AgGridColumn field="NDDC_LAST_SESN_PLND" /> : <AgGridColumn></AgGridColumn>}
                     {selectedChannel === 'NDDC' ? <AgGridColumn field="NSO_LAST_SESN_PLND_END_DT" /> : selectedChannel === 'NSO' ? <AgGridColumn field="NDDC_LAST_SESN_PLND_END_DT" /> : <AgGridColumn></AgGridColumn>}
+                    <AgGridColumn field="EPOD" />
                 </AgGridColumn>
 
             </AgGridReact>

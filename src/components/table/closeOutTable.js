@@ -181,6 +181,7 @@ const CloseOutTable = (props) => {
 
                 <AgGridColumn headerName="Plan">
                     <AgGridColumn field="LastSeasonPlanned" />
+                    <AgGridColumn field="EPOD" />
                 </AgGridColumn>
 
                 <AgGridColumn headerName="Price">

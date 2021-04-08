@@ -37,7 +37,6 @@ export default (props) => {
 
         for (let idx in displayColumn) {
             const item = displayColumn[idx];
-            console.log('each column :', item);
             content.push(
                 <React.Fragment>
                     <Checkbox

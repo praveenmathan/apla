@@ -112,6 +112,11 @@ const ExcludeTable = (props) => {
                         onCellValueChanged={onCellValueChanged}
                     />
                 </AgGridColumn>
+
+                <AgGridColumn headerName="Plan">
+                    <AgGridColumn field="EPOD" />
+                </AgGridColumn>
+
             </AgGridReact>
         </div>
     );

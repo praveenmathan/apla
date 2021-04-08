@@ -75,6 +75,11 @@ const ExcludeTable = (props) => {
                 <AgGridColumn headerName="Recommendation" headerClass='custom-font-color' >
                     <AgGridColumn field="RecommendedAction" headerClass='custom-font-color' headerName="Action" />
                 </AgGridColumn>
+
+                <AgGridColumn headerName="Plan">
+                    <AgGridColumn field="EPOD" />
+                </AgGridColumn>
+
             </AgGridReact>
         </div>
     );

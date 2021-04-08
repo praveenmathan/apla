@@ -283,6 +283,11 @@ const MarkdownTable = (props) => {
                     <AgGridColumn field="RecommendedMarkPRCInterval" />
                     <AgGridColumn field="TotalDiscountAfterMarkInterval" />
                 </AgGridColumn>
+
+                <AgGridColumn headerName="Plan">
+                    <AgGridColumn field="EPOD" />
+                </AgGridColumn>
+
             </AgGridReact>
         </div>
     );

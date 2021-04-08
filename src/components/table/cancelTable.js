@@ -195,6 +195,7 @@ const CancelTable = (props) => {
 
                 <AgGridColumn headerName="Plan">
                     <AgGridColumn field="LastSeasonPlanned" />
+                    <AgGridColumn field="EPOD" />
                 </AgGridColumn>
 
                 <AgGridColumn headerName="Inventory">

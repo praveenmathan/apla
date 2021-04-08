@@ -129,6 +129,11 @@ const ImproveConversionTable = (props) => {
                     <AgGridColumn field="ChannelWOH" />
                     <AgGridColumn field="MarketPlaceWOH" />
                 </AgGridColumn>
+
+                <AgGridColumn headerName="Plan">
+                    <AgGridColumn field="EPOD" />
+                </AgGridColumn>
+
             </AgGridReact>
         </div>
     );
