@@ -92,9 +92,6 @@ Customised CSS
   padding: 0;
 }
 
-.custom-tooltip-box ul li {
-}
-
 .custom-tooltip.ag-tooltip-hiding {
   opacity: 0;
 }
@@ -137,4 +134,8 @@ Customised CSS
 
 .accordionSummary {
   min-height: 50px !important;
+}
+
+.headerincustomview {
+  margin-bottom: 10px;
 }

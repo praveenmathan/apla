@@ -28,27 +28,28 @@ export default (props) => {
         return () => props.api.removeEventListener('modelUpdated', updateTotals);
     }, []);
 
-    const getColumns = () => {
+    const getColumns = (eachColumnGroup) => {
         let content = [];
+
         let savedColumnsInLs = JSON.parse(localStorage.getItem('savedColumns'));
         if (savedColumnsInLs) {
             onChangeCheckedColumns.push(...savedColumnsInLs);
         };
 
-        for (let idx in displayColumn) {
-            const item = displayColumn[idx];
+        eachColumnGroup.children.map((each) => {
+            let column = props.columnApi.getColumn(each.colId);
             content.push(
-                <React.Fragment>
-                    <Checkbox
-                        key={item.colId}
-                        label={<label className='custom-columns-format'>{props.columnApi.getDisplayNameForColumn(item)}</label>}
-                        style={totalStyle}
-                        onChange={getCheckedColumns}
-                        name={item.colId}
-                        defaultChecked={savedColumnsInLs != null ? savedColumnsInLs.includes(item.colId) : false}
-                    ></Checkbox>
-                </React.Fragment>);
-        }
+                <Checkbox
+                    key={each.colId}
+                    label={<label className='custom-columns-format'>{props.columnApi.getDisplayNameForColumn(column)}</label>}
+                    style={totalStyle}
+                    onChange={getCheckedColumns}
+                    name={each.colId}
+                    defaultChecked={savedColumnsInLs != null ? savedColumnsInLs.includes(each.colId) : false}
+                ></Checkbox>
+            );
+        });
+
         return content;
     }
 
@@ -92,7 +93,15 @@ export default (props) => {
                 {columnLoading ?
                     <div>
                         <div className='custom-columns'>
-                            {getColumns()}
+                            {
+                                displayColumnDefs.map((eachColumnGroup) => {
+                                    return <div key={eachColumnGroup.headerName}>
+                                        <span className="headerincustomview">{eachColumnGroup.headerName}</span>
+                                        {getColumns(eachColumnGroup)}
+                                        <br></br>
+                                    </div>
+                                })
+                            }
                         </div>
                         <Button primary onClick={saveViews}>Save View</Button>
                         <Button onClick={removeSaveViews}>Remove</Button>
