@@ -711,7 +711,7 @@ function App() {
 
               "tableId": 2,
 
-              "tableDescription": "CANCEL"
+              "tableDescription": "PARTIAL CANCEL"
 
             },
 
@@ -1199,7 +1199,7 @@ function App() {
     if (actionText === 'allaction') {
       actionTableApiService(requestDataForTable);
     }
-    if (actionText === 'cancel') {
+    if (actionText === 'partialcancel') {
       cancelTableApiService(requestDataForTable);
     }
     if (actionText === 'closeout+cancel') {
@@ -11723,7 +11723,7 @@ function App() {
                         </div> :
                         <ActionTable rowData={rowData} onGridReady={onGridReady} gridColumnApi={gridColumnApi} tableLoading={isActionTableLoading} gridApi={gridApi} />}
                     </Route>
-                    <Route exact path="/cancel">{isTableLoading ?
+                    <Route exact path="/partialcancel">{isTableLoading ?
                       <div className={classes.root}>
                         <CircularProgress color="secondary" />
                       </div> :

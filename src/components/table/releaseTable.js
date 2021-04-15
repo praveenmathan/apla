@@ -130,7 +130,8 @@ const ReleaseTable = (props) => {
                 </AgGridColumn>
 
                 <AgGridColumn headerName="Recommendation" headerClass='custom-font-color' >
-                    <AgGridColumn field="RecommendedAction" headerClass='custom-font-color' headerName="Action" />
+                    <AgGridColumn field="RecommendedAction" headerClass='custom-font-color' headerName="Action" tooltipField="RecommendedAction" tooltipComponent="customTooltip"
+                        tooltipComponentParams={{ color: '#ececec' }} />
                 </AgGridColumn>
 
                 <AgGridColumn headerName="Plan">
