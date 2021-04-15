@@ -204,7 +204,7 @@ const CategoryBar = (props) => {
 
     /* To handle division change */
     const handleDivisionChange = (e, { value }) => {
-        if (value != '') {
+        if (value.length != 0) {
             setDivisionError(false);
             setDivisionValue(value);
         } else {
@@ -353,7 +353,9 @@ const CategoryBar = (props) => {
                                         options={divisionOptions}
                                         placeholder='Division'
                                         clearable
-                                        search
+                                        multiple
+                                        fluid
+                                        selection
                                         searchInput={{ id: 'form-select-control-division' }}
                                         onChange={handleDivisionChange}
                                         error={divisionError ? {

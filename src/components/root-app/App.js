@@ -1132,10 +1132,14 @@ function App() {
           let selectionFilters = categoryApi[each];
           if (eachfilters === 'formattedDivisionData') {
             selectionFilters[eachfilters].map(eachDivision => {
-              if (newValue.division === eachDivision.divisionDescription) {
-                divisionarray.push({
-                  "divisionDescription": eachDivision.divisionDescription
-                })
+              if (newValue.division.length != 0) {
+                newValue.division.map(eachDivisionNewValue => {
+                  if (eachDivisionNewValue === eachDivision.divisionDescription) {
+                    divisionarray.push({
+                      "divisionDescription": eachDivision.divisionDescription
+                    })
+                  }
+                });
               }
             });
           }
