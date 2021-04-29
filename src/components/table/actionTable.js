@@ -364,6 +364,7 @@ const ActionTable = (props) => {
                         <AgGridColumn field="CurrentLCSellingPrice" />
                         <AgGridColumn field="TotalDiscount" />
                         <AgGridColumn field="LastMDDate" />
+                        <AgGridColumn field="ApsVsPlan" />
                         <AgGridColumn field="MDCount" />
                         <AgGridColumn field="ContributionMargin" />
                         <AgGridColumn field="PriceElasticitySC" />
@@ -374,6 +375,7 @@ const ActionTable = (props) => {
                         <AgGridColumn field="RecommendedMarkPCTInterval" />
                         <AgGridColumn field="RecommendedMarkPRCInterval" />
                         <AgGridColumn field="TotalDiscountAfterMarkInterval" />
+
                     </AgGridColumn>
                 </AgGridReact>
             </div>
