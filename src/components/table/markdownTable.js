@@ -272,6 +272,7 @@ const MarkdownTable = (props) => {
                     <AgGridColumn field="TotalDiscount" />
                     <AgGridColumn field="LastMDDate" />
                     <AgGridColumn field="MDCount" />
+                    <AgGridColumn field="MarkUp" />
                     <AgGridColumn field="ContributionMargin" />
                     <AgGridColumn field="PriceElasticitySC" />
 

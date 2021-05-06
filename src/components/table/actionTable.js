@@ -352,6 +352,7 @@ const ActionTable = (props) => {
                         <AgGridColumn field="DemandAURFourWeekAvgUSD" headerName="Demand AUR 4W avg USD" />
                         <AgGridColumn field="FirstOrderDate" />
                         <AgGridColumn field="DaysOnSale" />
+                        <AgGridColumn field="ApsVsPlan" />
                     </AgGridColumn>
 
                     <AgGridColumn headerName="Web Traffic">
@@ -378,8 +379,8 @@ const ActionTable = (props) => {
                         <AgGridColumn field="CurrentLCSellingPrice" />
                         <AgGridColumn field="TotalDiscount" />
                         <AgGridColumn field="LastMDDate" />
-                        <AgGridColumn field="ApsVsPlan" />
                         <AgGridColumn field="MDCount" />
+                        <AgGridColumn field="MarkUp" />
                         <AgGridColumn field="ContributionMargin" />
                         <AgGridColumn field="PriceElasticitySC" />
                         <AgGridColumn field="PriceElasticityConfidence" />
