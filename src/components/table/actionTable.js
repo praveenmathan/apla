@@ -110,7 +110,6 @@ const ActionTable = (props) => {
 
         setTimeout(() => { actionTableSaveView(props); }, 2000);
 
-
     }, [tableLoading, props.gridColumnApi]);
 
     function actionTableSaveView(props) {
@@ -122,11 +121,25 @@ const ActionTable = (props) => {
             allColumns.map((eachColumn) => {
                 distinctColumn.push(eachColumn.colId);
             });
+
             let filteredKeywords = distinctColumn.filter((eachColumn) => !savedColumns.includes(eachColumn));
             props.gridColumnApi.setColumnsVisible([...filteredKeywords], false);
+            props.gridColumnApi.moveColumns(savedColumns, 0);
+        }
+    }
 
-            console.log('filtered columns', filteredKeywords);
-            console.log('column state', props.gridColumnApi.getColumnState());
+    const orderSavedViewColumns = (e) => {
+        let savedColumnsinLs = JSON.parse(localStorage.getItem("savedColumns"));
+        if (savedColumnsinLs != null) {
+            let draggedColumns = e.columnApi.columnController.allDisplayedColumns;
+            let saveViewColumnsOrdered = [];
+            draggedColumns.forEach(each => {
+                saveViewColumnsOrdered.push(each.colId);
+            });
+
+            localStorage.removeItem('savedColumns');
+            let arrayStringified = JSON.stringify(saveViewColumnsOrdered);
+            localStorage.setItem("savedColumns", arrayStringified);
         }
     }
 
@@ -150,6 +163,7 @@ const ActionTable = (props) => {
                         tooltipComponent: 'customTooltip',
                         valueFormatter: numberParser,
                     }}
+                    onDragStopped={orderSavedViewColumns}
                     icons={{
                         'custom-stats':
                             '<span className="ag-icon ag-icon-custom-stats"></span>',
