@@ -62,6 +62,7 @@ const ActionTable = (props) => {
         { field: 'DOMsInventory', headerName: "DOMs Inventory" },
         { field: 'DOMsNDDCInventory', headerName: "DOMs NDDC Inventory" },
         { field: 'DOMsNSOInventory', headerName: "DOMs NSO Inventory" },
+        { field: 'DOMsNFSInventory', headerName: "DOMs NFS Inventory" },
         { field: 'DOMsEMPInventory', headerName: "DOMs EMP Inventory" },
         { field: 'DOMsGAInventory', headerName: "DOMs GA Inventory" },
         { field: 'SizeCountOwned' },
