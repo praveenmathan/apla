@@ -113,8 +113,18 @@ const ActionTable = (props) => {
 
     }, [tableLoading, props.gridColumnApi]);
 
+    function getNameOfTheCustomLayout() {
+        let customLayoutNameList = JSON.parse(localStorage.getItem('customLayoutNameList'));
+        if (customLayoutNameList !== null && customLayoutNameList.length !== 0) {
+            let lastItem;
+            lastItem = customLayoutNameList[customLayoutNameList.length - 1];
+            return lastItem;
+        }
+        return 'customLayout'
+    }
+
     function actionTableSaveView(props) {
-        let savedColumns = JSON.parse(localStorage.getItem("savedColumns"));
+        let savedColumns = JSON.parse(localStorage.getItem(getNameOfTheCustomLayout()));
         if (props.gridColumnApi !== null && savedColumns !== null && props.gridColumnApi.columnController !== undefined) {
             let allColumns = props.gridColumnApi.getColumnState();
 
@@ -123,9 +133,9 @@ const ActionTable = (props) => {
                 distinctColumn.push(eachColumn.colId);
             });
 
-            let filteredKeywords = distinctColumn.filter((eachColumn) => !savedColumns.includes(eachColumn));
+            let filteredKeywords = distinctColumn.filter((eachColumn) => !savedColumns.fields.includes(eachColumn));
             props.gridColumnApi.setColumnsVisible([...filteredKeywords], false);
-            props.gridColumnApi.moveColumns(savedColumns, 0);
+            props.gridColumnApi.moveColumns(savedColumns.fields, 0);
         }
     }
 
