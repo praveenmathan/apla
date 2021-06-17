@@ -241,7 +241,6 @@ const CategoryBar = (props) => {
             setSelectedChannel(channelValue);
             setSelectedMarketPlace(marketPlaceValue);
             setSelectionFiltersReqData(selectionFilterDataUpdated);
-            console.log('selction filters req data', selectionFilterDataUpdated);
             props.onCatergorySubmit(selectionFilterDataUpdated);
         }
     }

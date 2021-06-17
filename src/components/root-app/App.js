@@ -857,15 +857,34 @@ function App() {
     let capitalisedCategoryData = [];
     let uniqueRetailWeekData = [];
 
+    /*
+      * Change the object's value into lowercase and capitalise it.
+    */
     formattedData.selectionFilters.table.map(eachTable => {
       capitalisedTableData.push({ 'tableDescription': eachTable.tableDescription.toLowerCase().capitalize() });
     });
+
+    /*
+      * Add 'All genders' in the option';
+      * Change the object's value into lowercase and capitalise it.
+    */
+    formattedData.selectionFilters.gender.push({ 'genderDescription': 'All genders' })
     formattedData.selectionFilters.gender.map(eachTable => {
       capitalisedGenderData.push({ 'genderDescription': eachTable.genderDescription.toLowerCase().capitalize() });
     });
+
+    /*
+      * Change the object's value into lowercase and capitalise it.
+    */
     formattedData.selectionFilters.division.map(eachTable => {
       capitalisedDivisionData.push({ 'divisionDescription': eachTable.divisionDescription.toLowerCase().capitalize() });
     });
+
+    /*
+      * Add 'All categories' in the option';
+      * Change the object's value into lowercase and capitalise it.
+    */
+    formattedData.selectionFilters.category.push({ 'categoryDescription': 'All categories' });
     formattedData.selectionFilters.category.map(eachTable => {
       capitalisedCategoryData.push({ 'categoryDescription': eachTable.categoryDescription.toLowerCase().capitalize() });
     });
@@ -1075,6 +1094,12 @@ function App() {
   }
 
   function reqDataCategory(newValue) {
+    //Contains the selected options from category dropdown
+    let selectedCategoryAry = newValue.category;
+    if (selectedCategoryAry.includes('All categories')) {
+      selectedCategoryAry = ['All categories'];
+    }
+
     let categoryarray = [];
     Object.keys(categoryApi).map(each => {
       if (each === 'selectionFilters') {
@@ -1082,13 +1107,19 @@ function App() {
           let selectionFilters = categoryApi[each];
           if (eachfilters === 'formattedCategoryData') {
             selectionFilters[eachfilters].map(eachCategory => {
-              if (newValue.category.length != 0) {
-                newValue.category.map(eachCategoryNewValue => {
-                  if (eachCategoryNewValue === eachCategory.categoryDescription) {
+              if (selectedCategoryAry.length != 0) {
+                selectedCategoryAry.map(eachCategoryNewValue => {
+
+                  if (eachCategoryNewValue === 'All categories') {
+                    categoryarray.push(eachCategory);
+                  }
+
+                  if (eachCategoryNewValue !== 'All categories' && eachCategoryNewValue === eachCategory.categoryDescription) {
                     categoryarray.push({
                       "categoryDescription": eachCategory.categoryDescription
-                    });
+                    })
                   }
+
                 });
               }
             });
@@ -1096,10 +1127,18 @@ function App() {
         });
       }
     });
-    return categoryarray;
+
+    const categoryarrays = categoryarray.filter(each => each.categoryDescription !== 'All categories');
+    return categoryarrays;
   }
 
   function reqDataGender(newValue) {
+    //Contains the selected options from gender dropdown
+    let selectedGenderAry = newValue.gender;
+    if (selectedGenderAry.includes('All genders')) {
+      selectedGenderAry = ['All genders'];
+    }
+
     let genderarray = [];
     Object.keys(categoryApi).map(each => {
       if (each === 'selectionFilters') {
@@ -1107,13 +1146,19 @@ function App() {
           let selectionFilters = categoryApi[each];
           if (eachfilters === 'formattedGenderData') {
             selectionFilters[eachfilters].map(eachGender => {
-              if (newValue.gender.length != 0) {
-                newValue.gender.map(eachGenderNewValue => {
-                  if (eachGenderNewValue === eachGender.genderDescription) {
+              if (selectedGenderAry.length != 0) {
+                selectedGenderAry.map(eachGenderNewValue => {
+
+                  if (eachGenderNewValue === 'All genders') {
+                    genderarray.push(eachGender);
+                  }
+
+                  if (eachGenderNewValue !== 'All genders' && eachGenderNewValue === eachGender.genderDescription) {
                     genderarray.push({
                       "genderDescription": eachGender.genderDescription
-                    });
+                    })
                   }
+
                 });
               }
             });
@@ -1121,24 +1166,41 @@ function App() {
         });
       }
     });
-    return genderarray;
+
+    const genderarrays = genderarray.filter(each => each.genderDescription !== 'All genders');
+    return genderarrays;
   }
 
   function reqDataDivision(newValue) {
+    //Contains the selected options from division dropdown
+    let selectedDivisionAry = newValue.division;
+    if (selectedDivisionAry.includes('All divisions')) {
+      selectedDivisionAry = ['All divisions'];
+    }
+
     let divisionarray = [];
     Object.keys(categoryApi).map(each => {
+
       if (each === 'selectionFilters') {
         Object.keys(categoryApi[each]).map(eachfilters => {
           let selectionFilters = categoryApi[each];
+
           if (eachfilters === 'formattedDivisionData') {
             selectionFilters[eachfilters].map(eachDivision => {
-              if (newValue.division.length != 0) {
-                newValue.division.map(eachDivisionNewValue => {
-                  if (eachDivisionNewValue === eachDivision.divisionDescription) {
+
+              if (selectedDivisionAry.length != 0) {
+                selectedDivisionAry.map(eachDivisionNewValue => {
+
+                  if (eachDivisionNewValue === 'All divisions') {
+                    divisionarray.push(eachDivision);
+                  }
+
+                  if (eachDivisionNewValue !== 'All divisions' && eachDivisionNewValue === eachDivision.divisionDescription) {
                     divisionarray.push({
                       "divisionDescription": eachDivision.divisionDescription
                     })
                   }
+
                 });
               }
             });
@@ -1146,7 +1208,9 @@ function App() {
         });
       }
     });
-    return divisionarray;
+
+    const divisionarrays = divisionarray.filter(each => each.divisionDescription !== 'All divisions');
+    return divisionarrays;
   }
 
   function reqDataTable(newValue) {
