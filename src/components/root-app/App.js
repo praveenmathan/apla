@@ -213,6 +213,64 @@ function App() {
 
               ]
 
+            },
+            {
+
+              "userAccessMode": "Read",
+
+              "marketplaceId": "1",
+
+              "marketplaceDescription": "India",
+
+              "channels": [
+
+                {
+
+                  "channelId": 1,
+
+                  "channelDescription": "NDDC"
+
+                },
+
+                {
+
+                  "channelId": 3,
+
+                  "channelDescription": "NSO"
+
+                }
+
+              ]
+
+            },
+            {
+
+              "userAccessMode": "Read",
+
+              "marketplaceId": "1",
+
+              "marketplaceDescription": "South East Asia",
+
+              "channels": [
+
+                {
+
+                  "channelId": 1,
+
+                  "channelDescription": "NDDC"
+
+                },
+
+                {
+
+                  "channelId": 3,
+
+                  "channelDescription": "NSO"
+
+                }
+
+              ]
+
             }
           ]
 

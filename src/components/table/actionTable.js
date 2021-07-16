@@ -4,75 +4,91 @@ import { RowDetailsContext, SaveBtnContext, SelectedChannelContext } from '../co
 import { AllModules } from "@ag-grid-enterprise/all-modules";
 import CustomTooltip from './customTooltip.jsx';
 import CustomStatsToolPanel from './customToolPanel.jsx';
+import {
+    actionInventoryColumnJapan, actionInventoryColumnMexico, actionInventoryColumnIndonesia,
+    actionInventoryColumnMalaysia, actionInventoryColumnIndia, actionInventoryColumnPhilippines,
+    actionInventoryColumnSingapore, actionInventoryColumnThailand, actionInventoryColumnVietnam,
+    actionInventoryColumnSouthEastAsia
+} from './customs/Inventorydetails/actionTableInventories'
+import { actionSalesColumnCommon, actionSalesColumnSouthEastAsia } from './customs/Salesdetails/actionTableSales';
+import { actionPriceColumnEachSea, actionPriceColumnSouthEastAsia } from './customs/Pricedetails/actionTablePrice';
 
 const ActionTable = (props) => {
     let consolidatedRows = [];
     let tableLoading = props.tableLoading;
 
+    const actionSalesColumnDefault = [
+        { field: 'NetUnitsLastWeek' },
+        { field: 'NetUnitsFourWkAvg', headerName: 'Net Units 4W Avg' },
+        { field: 'NetUnitsFourWkRolling', headerName: 'Net Units 4W rolling' },
+        { field: 'NetUnitsThirteenWkAvg', headerName: 'Net Units 13W Avg' },
+        { field: 'NetUnitsMTD' },
+        { field: 'NetUnitsSTD' },
+        { field: 'NetSalesLW' },
+        { field: 'NetSalesFourWkAvg', headerName: 'Net Sales 4w avg' },
+        { field: 'NetSalesFourWkRolling', headerName: 'Net Sales 4w rolling' },
+        { field: 'NetSalesMTD' },
+        { field: 'NetSalesSTD' },
+        { field: 'NetAURLW', headerName: 'Net AUR LW' },
+        { field: 'NetAURFourWeekAvg', headerName: 'Net AUR 4W Avg' },
+        { field: 'NetSalesLWUSD' },
+        { field: 'NetSalesFourWeekRollingUSD', headerName: 'Net Sales 4w rolling USD' },
+        { field: 'NetSalesFourWeekAvgUSD', headerName: 'Net Sales 4W Avg USD' },
+        { field: 'NetSalesMTDUSD' },
+        { field: 'NetSalesSTDUSD' },
+        { field: 'NetAURLWUSD', headerName: 'Net AUR LW USD' },
+        { field: 'NetAURFourWeekAvgUSD', headerName: 'Net AUR 4W Avg USD' },
+        { field: 'DemandUnitsLW' },
+        { field: 'DemandUnitsFourWeekRolling', headerName: 'Demand Units 4W rolling' },
+        { field: 'DemandUnitsFourWeekAvg', headerName: 'Demand Units 4W avg' },
+        { field: 'DemandUnitsThirteenWeekAvg', headerName: 'Demand Units 13W avg' },
+        { field: 'DemandUnitsMTD' },
+        { field: 'DemandUnitsSTD' },
+        { field: 'DemandSalesLW' },
+        { field: 'DemandSalesFourWeekRolling', headerName: 'Demand Sales 4W rolling' },
+        { field: 'DemandSalesFourWeekAvg', headerName: 'Demand Sales 4W avg' },
+        { field: 'DemandSalesMTD' },
+        { field: 'DemandSalesSTD' },
+        { field: 'DemandAURLW', headerName: 'Demand AUR LW' },
+        { field: 'DemandAURFourWeekAvg', headerName: 'Demand AUR 4W avg' },
+        { field: 'DemandSalesLWUSD' },
+        { field: 'DemandSalesFourWeekRollingUSD', headerName: 'Demand Sales 4W rolling USD' },
+        { field: 'DemandSalesFourWeekAvgUSD', headerName: 'Demand Sales 4W Avg USD' },
+        { field: 'DemandSalesMTDUSD' },
+        { field: 'DemandSalesSTDUSD' },
+        { field: 'DemandAURLWUSD', headerName: 'Demand AUR LW USD' },
+        { field: 'DemandAURFourWeekAvgUSD', headerName: 'Demand AUR 4W avg USD' },
+        { field: 'FirstOrderDate' },
+        { field: 'DaysOnSale' },
+        { field: 'ApsVsPlan' },
+    ];
+
+    const actionPriceColumnDefault = [
+        { field: 'MSRP' },
+        { field: 'WholesalePriceLocal' },
+        { field: 'CurrentLCSellingPrice' },
+        { field: 'TotalDiscount' },
+        { field: 'LastMDDate' },
+        { field: 'MDCount' },
+        { field: 'MarkUp' },
+        { field: 'ContributionMargin' },
+        { field: 'PriceElasticitySC' },
+        { field: 'PriceElasticityConfidence' },
+        { field: 'RecommendedMarkPCTElasticity' },
+        { field: 'RecommendedMarkPRCElasticity' },
+        { field: 'TotalDiscountAfterMarkElasticity' },
+        { field: 'RecommendedMarkPCTInterval' },
+        { field: 'RecommendedMarkPRCInterval' },
+        { field: 'TotalDiscountAfterMarkInterval' },
+    ];
+
     const [inventory, setInventory] = React.useState([]);
+    const [sales, setSales] = React.useState(actionSalesColumnDefault);
+    const [price, setPrice] = React.useState(actionPriceColumnDefault);
 
     const { setRowDetailValue } = React.useContext(RowDetailsContext);
     const { setSaveBtnDisable } = React.useContext(SaveBtnContext);
-    const { selectedChannel, selectedMarketPlace } = React.useContext(SelectedChannelContext);
-
-    const actionInventoryColumnJapan = [
-        { field: 'Contracts' },
-        { field: 'UnassignedZerotoThirtyDaysOut', headerName: 'Unassigned Qty 0_30' },
-        { field: 'UnassignedThirtyonetoSixtyDaysOut', headerName: 'Unassigned Qty 31_60' },
-        { field: 'UnassignedSixtyonePlusDaysOut', headerName: 'Unassigned Qty 61 Plus' },
-        { field: '1083_Contracts', headerName: '1083 Contracts' },
-        { field: '1084_Contracts', headerName: '1084 Contracts' },
-        { field: '1085_Contracts', headerName: '1085 Contracts' },
-        { field: selectedChannel === 'NDDC' ? 'NSO_Contracts' : selectedChannel === 'NSO' ? 'NDDC_Contracts' : null },
-        { field: 'WholesaleContract' },
-        { field: 'StoreIOH' },
-        { field: 'InTransit' },
-        { field: 'OnOrder' },
-        { field: 'GA_1083', headerName: "GA 1083" },
-        { field: 'GA_1084', headerName: "GA 1084" },
-        { field: 'GA_1085', headerName: "GA 1085" },
-        { field: 'DOMsInventory', headerName: "DOMs Inventory" },
-        { field: 'DOMsNDDCInventory', headerName: "DOMs NDDC Inventory" },
-        { field: 'DOMsZOZOInventory', headerName: "DOMs ZOZO Inventory" },
-        { field: 'DOMsNSOInventory', headerName: "DOMs NSO Inventory" },
-        { field: 'DOMsNFSInventory', headerName: "DOMs NFS Inventory" },
-        { field: 'DOMsEMPInventory', headerName: "DOMs EMP Inventory" },
-        { field: 'DOMsGAInventory', headerName: "DOMs GA Inventory" },
-        { field: 'SizeCountOwned' },
-        { field: 'SizeCountTotal' },
-        { field: 'SizeIntegrity' },
-        { field: 'ChannelWOH' },
-        { field: 'MarketPlaceWOH' },
-        { field: 'RecommendedChaseUnits' },
-        { field: 'RecommendedCancelUnits' }
-    ];
-
-    const actionInventoryColumnMexico = [
-        { field: 'Contracts' },
-        { field: 'UnassignedZerotoThirtyDaysOut', headerName: 'Unassigned Qty 0_30' },
-        { field: 'UnassignedThirtyonetoSixtyDaysOut', headerName: 'Unassigned Qty 31_60' },
-        { field: 'UnassignedSixtyonePlusDaysOut', headerName: 'Unassigned Qty 61 Plus' },
-        { field: '1098_Contracts', headerName: '1098 Contracts' },
-        { field: selectedChannel === 'NDDC' ? 'NSO_Contracts' : null },
-        { field: 'WholesaleContract' },
-        { field: 'StoreIOH' },
-        { field: 'InTransit' },
-        { field: 'OnOrder' },
-        { field: 'GA_1098', headerName: "GA 1098" },
-        { field: 'DOMsInventory', headerName: "DOMs Inventory" },
-        { field: 'DOMsNDDCInventory', headerName: "DOMs NDDC Inventory" },
-        { field: 'DOMsNSOInventory', headerName: "DOMs NSO Inventory" },
-        { field: 'DOMsNFSInventory', headerName: "DOMs NFS Inventory" },
-        { field: 'DOMsEMPInventory', headerName: "DOMs EMP Inventory" },
-        { field: 'DOMsGAInventory', headerName: "DOMs GA Inventory" },
-        { field: 'SizeCountOwned' },
-        { field: 'SizeCountTotal' },
-        { field: 'SizeIntegrity' },
-        { field: 'ChannelWOH' },
-        { field: 'MarketPlaceWOH' },
-        { field: 'RecommendedChaseUnits' },
-        { field: 'RecommendedCancelUnits' }
-    ];
+    const { selectedMarketPlace, selectedChannel } = React.useContext(SelectedChannelContext);
 
     const onCellValueChanged = (params) => {
         if (!(params.oldValue === null && (params.newValue === undefined || params.newValue === ''))) {
@@ -84,34 +100,88 @@ const ActionTable = (props) => {
     }
 
     function numberParser(params) {
-        // if (typeof (params.value) === 'number' && params.value !== 0) {
-        //     if (params.value % 1 != 0) {
-        //         var sansDec = params.value.toFixed(0);
-        //         var formatted = sansDec.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-        //         return `${formatted}`;
-        //     }
-        // }
         if (params.value === null || params.value === 0 || params.value === undefined) {
             return '-'
         }
     }
 
     useEffect(() => {
-        /* If Mexico, Mexico related columns for Inventory */
+
+        setSales(actionSalesColumnCommon);
+
+        /* If selected marketplace is Mexico, Mexico related columns for Inventory */
         if (selectedMarketPlace === 'Mexico') {
             let filteredColumn = actionInventoryColumnMexico.filter(each => each.field != null);
             setInventory(filteredColumn);
         }
 
-        /* If Japan, Japan related columns for Inventory */
+        /* If selected marketplace is Japan, Japan related columns for Inventory */
         if (selectedMarketPlace === 'Japan') {
             let filteredColumn = actionInventoryColumnJapan.filter(each => each.field != null);
             setInventory(filteredColumn);
         }
 
+        /* If selected marketplace is Indonesia, Indonesia related columns for Inventory, price */
+        if (selectedMarketPlace === 'Indonesia') {
+            let filteredColumn = actionInventoryColumnIndonesia.filter(each => each.field != null);
+            setInventory(filteredColumn);
+            setPrice(actionPriceColumnEachSea);
+        }
+
+        /* If selected marketplace is Malaysia, Malaysia related columns for Inventory, price */
+        if (selectedMarketPlace === 'Malaysia') {
+            let filteredColumn = actionInventoryColumnMalaysia.filter(each => each.field != null);
+            setInventory(filteredColumn);
+            setPrice(actionPriceColumnEachSea);
+        }
+
+        /* If selected marketplace is Philippines, Philippines related columns for Inventory, price */
+        if (selectedMarketPlace === 'Philippines') {
+            let filteredColumn = actionInventoryColumnPhilippines.filter(each => each.field != null);
+            setInventory(filteredColumn);
+            setPrice(actionPriceColumnEachSea);
+        }
+
+        /* If selected marketplace is India, India related columns for Inventory, price */
+        if (selectedMarketPlace === 'India') {
+            let filteredColumn = actionInventoryColumnIndia.filter(each => each.field != null);
+            setInventory(filteredColumn);
+            setPrice(actionPriceColumnEachSea);
+        }
+
+        /* If selected marketplace is Thailand, Thailand related columns for Inventory, price */
+        if (selectedMarketPlace === 'Thailand') {
+            let filteredColumn = actionInventoryColumnThailand.filter(each => each.field != null);
+            setInventory(filteredColumn);
+            setPrice(actionPriceColumnEachSea);
+        }
+
+
+        /* If selected marketplace is Singapore, Singapore related columns for Inventory, price */
+        if (selectedMarketPlace === 'Singapore') {
+            let filteredColumn = actionInventoryColumnSingapore.filter(each => each.field != null);
+            setInventory(filteredColumn);
+            setPrice(actionPriceColumnEachSea);
+        }
+
+        /* If selected marketplace is Vietnam, Vietnam related columns for Inventory, price, */
+        if (selectedMarketPlace === 'Vietnam') {
+            let filteredColumn = actionInventoryColumnVietnam.filter(each => each.field != null);
+            setInventory(filteredColumn);
+            setPrice(actionPriceColumnEachSea);
+        }
+
+        /* If selected marketplace is SEA aggregate, SEA aggregate related columns for Inventory, price, sales */
+        if (selectedMarketPlace === 'South East Asia') {
+            let filteredColumn = actionInventoryColumnSouthEastAsia.filter(each => each.field != null);
+            setInventory(filteredColumn);
+            setPrice(actionPriceColumnSouthEastAsia);
+            setSales(actionSalesColumnSouthEastAsia);
+        }
+
         setTimeout(() => { actionTableSaveView(props); }, 2000);
 
-    }, [tableLoading, props.gridColumnApi]);
+    }, [tableLoading, props.gridColumnApi, selectedMarketPlace]);
 
     function actionTableSaveView(props) {
         let savedColumns = JSON.parse(localStorage.getItem("savedColumns"));
@@ -276,84 +346,10 @@ const ActionTable = (props) => {
                         ))}
                     </AgGridColumn>
 
-                    {/* <AgGridColumn headerName="Inventory">
-                        <AgGridColumn field="Contracts" />
-                        <AgGridColumn field="UnassignedZerotoThirtyDaysOut" headerName='Unassigned Qty 0_30' />
-                        <AgGridColumn field="UnassignedThirtyonetoSixtyDaysOut" headerName='Unassigned Qty 31_60' />
-                        <AgGridColumn field="UnassignedSixtyonePlusDaysOut" headerName='Unassigned Qty 61 Plus' />
-                        {selectedMarketPlace === 'Japan' ? <AgGridColumn field="1083_Contracts" headerName='1083 Contracts' /> : <AgGridColumn hide={hideColumn} />}
-                        {selectedMarketPlace === 'Japan' ? <AgGridColumn field="1084_Contracts" headerName='1084 Contracts' /> : <AgGridColumn hide={hideColumn} />}
-                        {selectedMarketPlace === 'Japan' ? <AgGridColumn field="1085_Contracts" headerName='1085 Contracts' /> : <AgGridColumn hide={hideColumn} />}
-                        {selectedMarketPlace === 'Mexico' ? <AgGridColumn field="1098_Contracts" headerName='1098 Contracts' /> : <AgGridColumn hide={hideColumn} />}
-                        {selectedChannel === 'NDDC' ? <AgGridColumn field="NSO_Contracts" /> : selectedChannel === 'NSO' ? <AgGridColumn field="NDDC_Contracts" /> : <AgGridColumn hide={hideColumn} />}
-                        <AgGridColumn field="WholesaleContract" />
-                        <AgGridColumn field="StoreIOH" />
-                        <AgGridColumn field="InTransit" />
-                        <AgGridColumn field="OnOrder" />
-                        {selectedMarketPlace === 'Japan' ? <AgGridColumn field="GA_1083" headerName="GA 1083" /> : <AgGridColumn hide={hideColumn} />}
-                        {selectedMarketPlace === 'Japan' ? <AgGridColumn field="GA_1084" headerName="GA 1084" /> : <AgGridColumn hide={hideColumn} />}
-                        {selectedMarketPlace === 'Japan' ? <AgGridColumn field="GA_1085" headerName="GA 1085" /> : <AgGridColumn hide={hideColumn} />}
-                        {selectedMarketPlace === 'Mexico' ? <AgGridColumn field="GA_1098" headerName="GA 1098" /> : <AgGridColumn hide={hideColumn} />}
-                        <AgGridColumn field="DOMsInventory" headerName="DOMs Inventory" />
-                        <AgGridColumn field="DOMsNDDCInventory" headerName="DOMs NDDC Inventory" />
-                        {selectedMarketPlace === 'Japan' ? <AgGridColumn field="DOMsZOZOInventory" headerName="DOMs ZOZO Inventory" /> : <AgGridColumn hide={hideColumn} />}
-                        <AgGridColumn field="DOMsNSOInventory" headerName="DOMs NSO Inventory" />
-                        {selectedMarketPlace === 'Japan' ? <AgGridColumn field="DOMsNFSInventory" headerName="DOMs NFS Inventory" /> : <AgGridColumn hide={hideColumn} />}
-                        <AgGridColumn field="DOMsEMPInventory" headerName="DOMs EMP Inventory" />
-                        <AgGridColumn field="DOMsGAInventory" headerName="DOMs GA Inventory" />
-                        <AgGridColumn field="SizeCountOwned" />
-                        <AgGridColumn field="SizeCountTotal" />
-                        <AgGridColumn field="SizeIntegrity" />
-                        <AgGridColumn field="ChannelWOH" />
-                        <AgGridColumn field="MarketPlaceWOH" />
-                        <AgGridColumn field="RecommendedChaseUnits" />
-                        <AgGridColumn field="RecommendedCancelUnits" />
-                    </AgGridColumn> */}
-
                     <AgGridColumn headerName="Sales">
-                        <AgGridColumn field="NetUnitsLastWeek" />
-                        <AgGridColumn field="NetUnitsFourWkAvg" headerName="Net Units 4W Avg" />
-                        <AgGridColumn field="NetUnitsFourWkRolling" headerName="Net Units 4W rolling" />
-                        <AgGridColumn field="NetUnitsThirteenWkAvg" headerName="Net Units 13W Avg" />
-                        <AgGridColumn field="NetUnitsMTD" />
-                        <AgGridColumn field="NetUnitsSTD" />
-                        <AgGridColumn field="NetSalesLW" />
-                        <AgGridColumn field="NetSalesFourWkAvg" headerName="Net Sales 4w avg" />
-                        <AgGridColumn field="NetSalesFourWkRolling" headerName="Net Sales 4w rolling" />
-                        <AgGridColumn field="NetSalesMTD" />
-                        <AgGridColumn field="NetSalesSTD" />
-                        <AgGridColumn field="NetAURLW" headerName="Net AUR LW" />
-                        <AgGridColumn field="NetAURFourWeekAvg" headerName="Net AUR 4W Avg" />
-                        <AgGridColumn field="NetSalesLWUSD" />
-                        <AgGridColumn field="NetSalesFourWeekRollingUSD" headerName="Net Sales 4w rolling USD" />
-                        <AgGridColumn field="NetSalesFourWeekAvgUSD" headerName="Net Sales 4W Avg USD" />
-                        <AgGridColumn field="NetSalesMTDUSD" />
-                        <AgGridColumn field="NetSalesSTDUSD" />
-                        <AgGridColumn field="NetAURLWUSD" headerName="Net AUR LW USD" />
-                        <AgGridColumn field="NetAURFourWeekAvgUSD" headerName="Net AUR 4W Avg USD" />
-                        <AgGridColumn field="DemandUnitsLW" />
-                        <AgGridColumn field="DemandUnitsFourWeekRolling" headerName="Demand Units 4W rolling" />
-                        <AgGridColumn field="DemandUnitsFourWeekAvg" headerName="Demand Units 4W avg" />
-                        <AgGridColumn field="DemandUnitsThirteenWeekAvg" headerName="Demand Units 13W avg" />
-                        <AgGridColumn field="DemandUnitsMTD" />
-                        <AgGridColumn field="DemandUnitsSTD" />
-                        <AgGridColumn field="DemandSalesLW" />
-                        <AgGridColumn field="DemandSalesFourWeekRolling" headerName="Demand Sales 4W rolling" />
-                        <AgGridColumn field="DemandSalesFourWeekAvg" headerName="Demand Sales 4W avg" />
-                        <AgGridColumn field="DemandSalesMTD" />
-                        <AgGridColumn field="DemandSalesSTD" />
-                        <AgGridColumn field="DemandAURLW" headerName="Demand AUR LW" />
-                        <AgGridColumn field="DemandAURFourWeekAvg" headerName="Demand AUR 4W avg" />
-                        <AgGridColumn field="DemandSalesLWUSD" />
-                        <AgGridColumn field="DemandSalesFourWeekRollingUSD" headerName="Demand Sales 4W rolling USD" />
-                        <AgGridColumn field="DemandSalesFourWeekAvgUSD" headerName="Demand Sales 4W Avg USD" />
-                        <AgGridColumn field="DemandSalesMTDUSD" />
-                        <AgGridColumn field="DemandSalesSTDUSD" />
-                        <AgGridColumn field="DemandAURLWUSD" headerName="Demand AUR LW USD" />
-                        <AgGridColumn field="DemandAURFourWeekAvgUSD" headerName="Demand AUR 4W avg USD" />
-                        <AgGridColumn field="FirstOrderDate" />
-                        <AgGridColumn field="DaysOnSale" />
-                        <AgGridColumn field="ApsVsPlan" />
+                        {sales.map(column => (
+                            <AgGridColumn {...column} key={column.field} />
+                        ))}
                     </AgGridColumn>
 
                     <AgGridColumn headerName="Web Traffic">
@@ -375,7 +371,10 @@ const ActionTable = (props) => {
                     </AgGridColumn>
 
                     <AgGridColumn headerName="Price">
-                        <AgGridColumn field="MSRP" />
+                        {price.map(column => (
+                            <AgGridColumn {...column} key={column.field} />
+                        ))}
+                        {/* <AgGridColumn field="MSRP" />
                         <AgGridColumn field="WholesalePriceLocal" />
                         <AgGridColumn field="CurrentLCSellingPrice" />
                         <AgGridColumn field="TotalDiscount" />
@@ -390,8 +389,7 @@ const ActionTable = (props) => {
                         <AgGridColumn field="TotalDiscountAfterMarkElasticity" />
                         <AgGridColumn field="RecommendedMarkPCTInterval" />
                         <AgGridColumn field="RecommendedMarkPRCInterval" />
-                        <AgGridColumn field="TotalDiscountAfterMarkInterval" />
-
+                        <AgGridColumn field="TotalDiscountAfterMarkInterval" /> */}
                     </AgGridColumn>
                 </AgGridReact>
             </div>
