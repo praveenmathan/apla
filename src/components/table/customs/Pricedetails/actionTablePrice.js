@@ -19,7 +19,7 @@ export const actionPriceColumnDefault = [
 
 export const actionPriceColumnEachSea = [
     { field: 'MSRP' },
-    { field: 'MSRPUSD' },
+    { field: 'MSRPUSD', headerName: 'MSRP USD' },
     { field: 'WholesalePriceLocal' },
     { field: 'CurrentLCSellingPrice' },
     { field: 'TotalDiscount' },
@@ -38,7 +38,7 @@ export const actionPriceColumnEachSea = [
 ];
 
 export const actionPriceColumnSouthEastAsia = [
-    { field: 'MSRPUSD' },
+    { field: 'MSRPUSD', headerName: 'MSRP USD' },
     { field: 'WholesalePriceUSD' },
     { field: 'CurrentUSDSellingPrice' },
     { field: 'TotalDiscount' },

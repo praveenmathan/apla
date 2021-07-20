@@ -83,8 +83,8 @@ const ActionTable = (props) => {
     ];
 
     const [inventory, setInventory] = React.useState([]);
-    const [sales, setSales] = React.useState(actionSalesColumnDefault);
-    const [price, setPrice] = React.useState(actionPriceColumnDefault);
+    const [sales, setSales] = React.useState([]);
+    const [price, setPrice] = React.useState([]);
 
     const { setRowDetailValue } = React.useContext(RowDetailsContext);
     const { setSaveBtnDisable } = React.useContext(SaveBtnContext);
@@ -255,13 +255,13 @@ const ActionTable = (props) => {
                                     suppressSideButtons: true
                                 },
                             },
-                            {
-                                id: 'customStats',
-                                labelDefault: 'Custom View',
-                                labelKey: 'customStats',
-                                iconKey: 'custom-stats',
-                                toolPanel: 'customStatsToolPanel',
-                            },
+                            // {
+                            //     id: 'customStats',
+                            //     labelDefault: 'Custom View',
+                            //     labelKey: 'customStats',
+                            //     iconKey: 'custom-stats',
+                            //     toolPanel: 'customStatsToolPanel',
+                            // },
                         ]
                     }}
                     onGridReady={props.onGridReady}
@@ -270,7 +270,7 @@ const ActionTable = (props) => {
                     enableCellTextSelection={true}
                     suppressDragLeaveHidesColumns={true}
                     tooltipShowDelay={0}
-                    frameworkComponents={{ customTooltip: CustomTooltip, customStatsToolPanel: CustomStatsToolPanel }}
+                //frameworkComponents={{ customTooltip: CustomTooltip, customStatsToolPanel: CustomStatsToolPanel }}
                 >
                     <AgGridColumn headerName="Product">
                         <AgGridColumn field="StyleColor" pinned="left" lockPinned={true} cellClass="lock-pinned"
